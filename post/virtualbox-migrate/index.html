@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>文章归档 | Winking</title>
+<title>VirtualBox 迁移 | Winking</title>
 <meta name="description" content="还愣着干啥！点赞啊！">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -91,60 +97,73 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          
+          <div class="post-detail">
+            <h2 class="post-title">VirtualBox 迁移</h2>
+            <div class="post-date">2018-10-19</div>
+            
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/virtualbox-migrate.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>当虚拟机需要在办公室和家里同时使用时，可以将虚拟机文件，拷贝到移动硬盘上，在办公室和家里都以该文件创建环境即可。</p>
+<!-- more -->
+<ol>
+<li>
+<p>点击新建，创建虚拟机，填写名称等信息。选择使用已有的虚拟硬盘文件，并选择对应的硬盘文件，点击创建；</p>
+<p><img src="https://winking324.github.io/post-images/1561190019003.png" alt=""></p>
+</li>
+<li>
+<p>选择刚创建的虚拟机，并点击设置；</p>
+<p><img src="https://winking324.github.io/post-images/1561190028782.png" alt=""></p>
+</li>
+<li>
+<p>修改网络配置，添加 Host-Only 模式；</p>
+<p><img src="https://winking324.github.io/post-images/1561190039617.png" alt=""></p>
+</li>
+<li>
+<p>修改存储配置，添加之前创建的虚拟磁盘；</p>
+<p><img src="https://winking324.github.io/post-images/1561190049647.png" alt=""></p>
+</li>
+<li>
+<p>开机并登陆，检查网络和磁盘状态；</p>
+<p><img src="https://winking324.github.io/post-images/1561190060306.png" alt=""></p>
+</li>
+</ol>
 
-          <h2 class="archives-title">文章归档</h2>
-          <div class="archives-container">
+            </div>
             
-              <h2 class="year" data-aos="fade-in" data-aos-delay="500">2018</h2>
+              <div class="tag-container">
+                
+                  <a href="https://winking324.github.io/tag/DQac7d40n" class="tag">
+                    Ubuntu
+                  </a>
+                
+                  <a href="https://winking324.github.io/tag/b_9ddV3eS" class="tag">
+                    VirtualBox
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://winking324.github.io/post/virtualbox-disk">
+                  <h3 class="post-title">
+                    VirtualBox 配置虚拟硬盘
+                  </h3>
+                </a>
+              </div>
+            
+
+            
               
-                
-                  <article class="post">
-                    <a href="https://winking324.github.io/post/virtualbox-migrate">
-                      <h2 class="post-title">
-                        VirtualBox 迁移
-                      </h2>
-                    </a>
-                  </article>
-                
+                <div id="gitalk-container" data-aos="fade-in"></div>
               
-                
-                  <article class="post">
-                    <a href="https://winking324.github.io/post/virtualbox-disk">
-                      <h2 class="post-title">
-                        VirtualBox 配置虚拟硬盘
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://winking324.github.io/post/virtualbox-hostonly">
-                      <h2 class="post-title">
-                        VirtualBox 配置 Ubuntu 主机网络
-                      </h2>
-                    </a>
-                  </article>
-                
-              
-                
-                  <article class="post">
-                    <a href="https://winking324.github.io/post/virtualbox-ubuntu">
-                      <h2 class="post-title">
-                        VirtualBox 安装 Ubuntu 18.04
-                      </h2>
-                    </a>
-                  </article>
-                
+
               
             
+
           </div>
-
-          <div class="pagination-container">
-  
-  
-</div>
 
         </div>
       </div>
@@ -166,6 +185,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'cf71cf503e8d0441d9ac',
+        clientSecret: 'c1c3d8f77fa2a097546464880636cd5080d492e7',
+        repo: 'winking324.github.io',
+        owner: 'winking324',
+        admin: ['winking324'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
