@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>VirtualBox 安装 Ubuntu 18.04 | Winking</title>
+<meta name="description" content="还愣着干啥！点赞啊！">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1561182301485">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://winking324.github.io">
+        <img src="https://winking324.github.io/images/avatar.png?v=1561182301485" class="site-logo">
+        <h1 class="site-title">Winking</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      还愣着干啥！点赞啊！
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/winking324/winking324.github.io" target="_blank">winking324</a> | <a class="rss" href="https://winking324.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">VirtualBox 安装 Ubuntu 18.04</h2>
+            <div class="post-date">2018-10-19</div>
+            
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/virtualbox-ubuntu.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>虚拟机软件有很多种，这里使用 VirtualBox 作为主要工具，来说明如何安装 Ubuntu 18.04。</p>
+<!-- more -->
+<h1 id="1-下载-ubuntu-镜像">1 下载 Ubuntu 镜像</h1>
+<ul>
+<li><a href="http://releases.ubuntu.com/14.04/ubuntu-14.04.5-server-amd64.iso.torrent">Ubuntu 14.04.5 Server 64 bit</a></li>
+<li><a href="http://releases.ubuntu.com/16.04/ubuntu-16.04.5-server-amd64.iso.torrent">Ubuntu 16.04.5 Server 64 bit</a></li>
+<li><a href="http://releases.ubuntu.com/18.04/ubuntu-18.04.1-live-server-amd64.iso.torrent">Ubuntu 18.04.1 Server 64 bit</a></li>
+</ul>
+<h1 id="2-安装">2 安装</h1>
+<ol>
+<li>
+<p>点击新建，输入名称并配置各个选项后，点击创建；</p>
+<p><img src="https://winking324.github.io/post-images/1561180826920.png" alt=""></p>
+</li>
+<li>
+<p>选择虚拟机存储位置和存储大小，之后点击创建；</p>
+<p><img src="https://winking324.github.io/post-images/1561181047927.png" alt=""></p>
+</li>
+<li>
+<p>选择刚创建的虚拟机，进行设置，在存储的光驱控制器上，选择已经下载好的 Ubuntu 镜像文件；</p>
+<p><img src="https://winking324.github.io/post-images/1561181065977.png" alt=""></p>
+</li>
+<li>
+<p>选择刚创建的虚拟机，点击启动按钮，进入系统安装界面，选择语言后回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181083153.png" alt=""></p>
+</li>
+<li>
+<p>选择键盘布局，回车；</p>
+</li>
+</ol>
+<p><img src="https://winking324.github.io/post-images/1561181099645.png" alt=""></p>
+<ol start="6">
+<li>
+<p>选择安装，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181114897.png" alt=""></p>
+</li>
+<li>
+<p>选择网卡，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181141509.png" alt=""></p>
+</li>
+<li>
+<p>如果有代理，输入代理地址，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181154682.png" alt=""></p>
+</li>
+<li>
+<p>默认，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181165536.png" alt=""></p>
+</li>
+<li>
+<p>使用整个硬盘，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181178995.png" alt=""></p>
+</li>
+<li>
+<p>初始化硬盘，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181189517.png" alt=""></p>
+</li>
+<li>
+<p>默认，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181199754.png" alt=""></p>
+</li>
+<li>
+<p>选择继续，进行硬盘初始化，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181209910.png" alt=""></p>
+</li>
+<li>
+<p>输入用户名和密码等，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181221443.png" alt=""></p>
+</li>
+<li>
+<p>空格选择需要安装的应用，回车继续；</p>
+<p><img src="https://winking324.github.io/post-images/1561181238681.png" alt=""></p>
+</li>
+<li>
+<p>等待安装结束；</p>
+<p><img src="https://winking324.github.io/post-images/1561181248013.png" alt=""></p>
+</li>
+<li>
+<p>安装结束，重启系统；</p>
+<p><img src="https://winking324.github.io/post-images/1561181258294.png" alt=""></p>
+</li>
+<li>
+<p>回车移除安装镜像，并自动重启；</p>
+<p><img src="https://winking324.github.io/post-images/1561181267710.png" alt=""></p>
+</li>
+<li>
+<p>安装成功，进入登录界面，输入配置的用户名和密码；</p>
+<p><img src="https://winking324.github.io/post-images/1561181278437.png" alt=""></p>
+</li>
+<li>
+<p>进入 Ubuntu 系统；</p>
+<p><img src="https://winking324.github.io/post-images/1561181288951.png" alt=""></p>
+</li>
+</ol>
+
+            </div>
+            
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'cf71cf503e8d0441d9ac',
+        clientSecret: 'c1c3d8f77fa2a097546464880636cd5080d492e7',
+        repo: 'winking324.github.io',
+        owner: 'winking324',
+        admin: ['winking324'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

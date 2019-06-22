@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-06-22T05:12:53.558Z</updated>
+    <updated>2019-06-22T05:45:04.866Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -11,35 +11,106 @@
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://winking324.github.io/post/hello-gridea</id>
-        <link href="https://winking324.github.io/post/hello-gridea">
+        <title type="html"><![CDATA[VirtualBox 安装 Ubuntu 18.04]]></title>
+        <id>https://winking324.github.io/post/virtualbox-ubuntu</id>
+        <link href="https://winking324.github.io/post/virtualbox-ubuntu">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <updated>2018-10-18T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>虚拟机软件有很多种，这里使用 VirtualBox 作为主要工具，来说明如何安装 Ubuntu 18.04。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <content type="html"><![CDATA[<p>虚拟机软件有很多种，这里使用 VirtualBox 作为主要工具，来说明如何安装 Ubuntu 18.04。</p>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="http://hvenotes.fehey.com/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>𝖶𝗂𝗇𝖽𝗈𝗐𝗌</strong> 或 <strong>𝖬𝖺𝖼𝖮𝖲</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<h1 id="1-下载-ubuntu-镜像">1 下载 Ubuntu 镜像</h1>
+<ul>
+<li><a href="http://releases.ubuntu.com/14.04/ubuntu-14.04.5-server-amd64.iso.torrent">Ubuntu 14.04.5 Server 64 bit</a></li>
+<li><a href="http://releases.ubuntu.com/16.04/ubuntu-16.04.5-server-amd64.iso.torrent">Ubuntu 16.04.5 Server 64 bit</a></li>
+<li><a href="http://releases.ubuntu.com/18.04/ubuntu-18.04.1-live-server-amd64.iso.torrent">Ubuntu 18.04.1 Server 64 bit</a></li>
+</ul>
+<h1 id="2-安装">2 安装</h1>
+<ol>
+<li>
+<p>点击新建，输入名称并配置各个选项后，点击创建；</p>
+<p><img src="https://winking324.github.io/post-images/1561180826920.png" alt=""></p>
+</li>
+<li>
+<p>选择虚拟机存储位置和存储大小，之后点击创建；</p>
+<p><img src="https://winking324.github.io/post-images/1561181047927.png" alt=""></p>
+</li>
+<li>
+<p>选择刚创建的虚拟机，进行设置，在存储的光驱控制器上，选择已经下载好的 Ubuntu 镜像文件；</p>
+<p><img src="https://winking324.github.io/post-images/1561181065977.png" alt=""></p>
+</li>
+<li>
+<p>选择刚创建的虚拟机，点击启动按钮，进入系统安装界面，选择语言后回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181083153.png" alt=""></p>
+</li>
+<li>
+<p>选择键盘布局，回车；</p>
+</li>
+</ol>
+<p><img src="https://winking324.github.io/post-images/1561181099645.png" alt=""></p>
+<ol start="6">
+<li>
+<p>选择安装，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181114897.png" alt=""></p>
+</li>
+<li>
+<p>选择网卡，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181141509.png" alt=""></p>
+</li>
+<li>
+<p>如果有代理，输入代理地址，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181154682.png" alt=""></p>
+</li>
+<li>
+<p>默认，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181165536.png" alt=""></p>
+</li>
+<li>
+<p>使用整个硬盘，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181178995.png" alt=""></p>
+</li>
+<li>
+<p>初始化硬盘，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181189517.png" alt=""></p>
+</li>
+<li>
+<p>默认，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181199754.png" alt=""></p>
+</li>
+<li>
+<p>选择继续，进行硬盘初始化，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181209910.png" alt=""></p>
+</li>
+<li>
+<p>输入用户名和密码等，回车；</p>
+<p><img src="https://winking324.github.io/post-images/1561181221443.png" alt=""></p>
+</li>
+<li>
+<p>空格选择需要安装的应用，回车继续；</p>
+<p><img src="https://winking324.github.io/post-images/1561181238681.png" alt=""></p>
+</li>
+<li>
+<p>等待安装结束；</p>
+<p><img src="https://winking324.github.io/post-images/1561181248013.png" alt=""></p>
+</li>
+<li>
+<p>安装结束，重启系统；</p>
+<p><img src="https://winking324.github.io/post-images/1561181258294.png" alt=""></p>
+</li>
+<li>
+<p>回车移除安装镜像，并自动重启；</p>
+<p><img src="https://winking324.github.io/post-images/1561181267710.png" alt=""></p>
+</li>
+<li>
+<p>安装成功，进入登录界面，输入配置的用户名和密码；</p>
+<p><img src="https://winking324.github.io/post-images/1561181278437.png" alt=""></p>
+</li>
+<li>
+<p>进入 Ubuntu 系统；</p>
+<p><img src="https://winking324.github.io/post-images/1561181288951.png" alt=""></p>
+</li>
+</ol>
 ]]></content>
     </entry>
 </feed>
