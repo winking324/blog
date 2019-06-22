@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>VirtualBox 配置虚拟硬盘 | Winking</title>
+<title>Ubuntu 下 Samba 安装与配置 | Winking</title>
 <meta name="description" content="还愣着干啥！点赞啊！">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -102,122 +102,48 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">VirtualBox 配置虚拟硬盘</h2>
-            <div class="post-date">2018-10-19</div>
+            <h2 class="post-title">Ubuntu 下 Samba 安装与配置</h2>
+            <div class="post-date">2019-02-19</div>
             
-              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/virtualbox-disk.png')">
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/ubuntu-samba.png')">
               </div>
             
             <div class="post-content">
-              <p>一般工作环境，不建议与系统环境放在一起。所以我们通过挂载磁盘方式，增加磁盘空间，并设置工作环境。</p>
+              <p>SMB（Server Messages Block，信息服务块）是一种在局域网上共享文件和打印机的一种通信协议，它为局域网内的不同计算机之间提供文件及打印机等资源的共享服务。</p>
 <!-- more -->
-<h1 id="1-创建虚拟硬盘">1 创建虚拟硬盘</h1>
+<p>Samba 是在 Linux 和 UNIX 系统上实现 SMB 协议的一个免费软件，由服务器及客户端程序构成。</p>
 <ol>
 <li>
-<p>关机已经打开的虚拟机；</p>
+<p>安装 Samba 服务；</p>
+<p><code>sudo apt-get install samba</code></p>
 </li>
 <li>
-<p>点击设置，并进入存储页面，并选择添加虚拟硬盘；</p>
-<p><img src="https://winking324.github.io/post-images/1561184554078.png" alt=""></p>
+<p>添加系统用户 <code>share</code>；</p>
+<p><code>sudo adduser share</code></p>
 </li>
 <li>
-<p>选择创建新的虚拟盘；</p>
-<p><img src="https://winking324.github.io/post-images/1561184568359.png" alt=""></p>
+<p>为该用户创建 Samba 密码；</p>
+<p><code>sudo smbpasswd -a share</code></p>
 </li>
 <li>
-<p>选择类型，并继续；</p>
-<p><img src="https://winking324.github.io/post-images/1561184581108.png" alt=""></p>
+<p>修改 Samba 配置，设置更新目录；</p>
+<p><code>sudo vi /etc/samba/smb.conf</code></p>
+<pre><code>[share]
+   comment = Share
+   path = /data/share
+   public = yes
+   writable = yes
+   guest ok = no
+   valid user = share
+</code></pre>
 </li>
 <li>
-<p>选择分配模式，并继续；</p>
-<p><img src="https://winking324.github.io/post-images/1561184593217.png" alt=""></p>
+<p>重启 Samba 服务；</p>
+<p><code>sudo service samba restart</code></p>
 </li>
 <li>
-<p>选择存储位置，并调整大小，点击创建；</p>
-<p><img src="https://winking324.github.io/post-images/1561184603974.png" alt=""></p>
-</li>
-<li>
-<p>创建成功；</p>
-<p><img src="https://winking324.github.io/post-images/1561184615522.png" alt=""></p>
-</li>
-</ol>
-<h1 id="2-磁盘分区">2 磁盘分区</h1>
-<ol>
-<li>
-<p>开机并登录系统；</p>
-<p><img src="https://winking324.github.io/post-images/1561184641855.png" alt=""></p>
-</li>
-<li>
-<p>查看当前磁盘信息；</p>
-<p><img src="https://winking324.github.io/post-images/1561184651517.png" alt=""></p>
-</li>
-<li>
-<p>操作对应的磁盘，输入 m 查看帮助；</p>
-<p><img src="https://winking324.github.io/post-images/1561184660552.png" alt=""></p>
-</li>
-<li>
-<p>支持的磁盘操作；</p>
-<p><img src="https://winking324.github.io/post-images/1561184671799.png" alt=""></p>
-</li>
-<li>
-<p>输入 p，查看当前分区；</p>
-<p><img src="https://winking324.github.io/post-images/1561184682439.png" alt=""></p>
-</li>
-<li>
-<p>输入 n，创建分区，选择主分区还是扩展分区，默认主分区；</p>
-<p><img src="https://winking324.github.io/post-images/1561184693348.png" alt=""></p>
-</li>
-<li>
-<p>选择磁盘分区在该硬盘中的序号；</p>
-<p><img src="https://winking324.github.io/post-images/1561184702415.png" alt=""></p>
-</li>
-<li>
-<p>磁盘起始位置；</p>
-<p><img src="https://winking324.github.io/post-images/1561184715648.png" alt=""></p>
-</li>
-<li>
-<p>磁盘结束位置；</p>
-<p><img src="https://winking324.github.io/post-images/1561184735442.png" alt=""></p>
-</li>
-<li>
-<p>创建分区结束，按 p 显示分区信息；</p>
-<p><img src="https://winking324.github.io/post-images/1561184747832.png" alt=""></p>
-</li>
-<li>
-<p>输入 w，保存并退出；</p>
-<p><img src="https://winking324.github.io/post-images/1561184761053.png" alt=""></p>
-</li>
-</ol>
-<h1 id="3-格式化分区">3 格式化分区</h1>
-<ol>
-<li>
-<p>格式化创建的分区，并等待格式化完成；</p>
-<p><img src="https://winking324.github.io/post-images/1561184771160.png" alt=""></p>
-</li>
-</ol>
-<h1 id="4-挂载硬盘">4 挂载硬盘</h1>
-<ol>
-<li>
-<p>创建 <code>/data</code> 目录；</p>
-<p><img src="https://winking324.github.io/post-images/1561184810771.png" alt=""></p>
-</li>
-<li>
-<p>挂载硬盘到 <code>/data</code> 路径下；</p>
-<p><img src="https://winking324.github.io/post-images/1561184820459.png" alt=""></p>
-</li>
-</ol>
-<h1 id="5-开机自动挂载硬盘">5 开机自动挂载硬盘</h1>
-<ol>
-<li>
-<p>编辑 <code>/etc/fstab</code> 文件；</p>
-<p><img src="https://winking324.github.io/post-images/1561184831895.png" alt=""></p>
-</li>
-<li>
-<p>在文件中，追加以下内容；</p>
-<p><img src="https://winking324.github.io/post-images/1561184841113.png" alt=""></p>
-</li>
-<li>
-<p>保存并退出；</p>
+<p>客户端连接；</p>
+<p>在文件浏览器中，打开 <code>smb://192.168.100.110</code> 以访问对应的 Samba 文件服务器。</p>
 </li>
 </ol>
 
@@ -229,18 +155,14 @@
                     Ubuntu
                   </a>
                 
-                  <a href="https://winking324.github.io/tag/b_9ddV3eS" class="tag">
-                    VirtualBox
-                  </a>
-                
               </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://winking324.github.io/post/virtualbox-hostonly">
+                <a href="https://winking324.github.io/post/raspberry-pi-init">
                   <h3 class="post-title">
-                    VirtualBox 配置 Ubuntu 主机网络
+                    Raspberry Pi 初始化
                   </h3>
                 </a>
               </div>

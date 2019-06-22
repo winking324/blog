@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-06-22T09:23:05.314Z</updated>
+    <updated>2019-06-22T09:34:06.721Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,53 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[Ubuntu 下 Samba 安装与配置]]></title>
+        <id>https://winking324.github.io/post/ubuntu-samba</id>
+        <link href="https://winking324.github.io/post/ubuntu-samba">
+        </link>
+        <updated>2019-02-19T09:25:51.000Z</updated>
+        <summary type="html"><![CDATA[<p>SMB（Server Messages Block，信息服务块）是一种在局域网上共享文件和打印机的一种通信协议，它为局域网内的不同计算机之间提供文件及打印机等资源的共享服务。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>SMB（Server Messages Block，信息服务块）是一种在局域网上共享文件和打印机的一种通信协议，它为局域网内的不同计算机之间提供文件及打印机等资源的共享服务。</p>
+<!-- more -->
+<p>Samba 是在 Linux 和 UNIX 系统上实现 SMB 协议的一个免费软件，由服务器及客户端程序构成。</p>
+<ol>
+<li>
+<p>安装 Samba 服务；</p>
+<p><code>sudo apt-get install samba</code></p>
+</li>
+<li>
+<p>添加系统用户 <code>share</code>；</p>
+<p><code>sudo adduser share</code></p>
+</li>
+<li>
+<p>为该用户创建 Samba 密码；</p>
+<p><code>sudo smbpasswd -a share</code></p>
+</li>
+<li>
+<p>修改 Samba 配置，设置更新目录；</p>
+<p><code>sudo vi /etc/samba/smb.conf</code></p>
+<pre><code>[share]
+   comment = Share
+   path = /data/share
+   public = yes
+   writable = yes
+   guest ok = no
+   valid user = share
+</code></pre>
+</li>
+<li>
+<p>重启 Samba 服务；</p>
+<p><code>sudo service samba restart</code></p>
+</li>
+<li>
+<p>客户端连接；</p>
+<p>在文件浏览器中，打开 <code>smb://192.168.100.110</code> 以访问对应的 Samba 文件服务器。</p>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Raspberry Pi 初始化]]></title>
         <id>https://winking324.github.io/post/raspberry-pi-init</id>
