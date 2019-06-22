@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>VirtualBox 配置 Ubuntu 主机网络 | Winking</title>
+<title>Ubuntu 下 Jenkins 安装与配置 | Winking</title>
 <meta name="description" content="还愣着干啥！点赞啊！">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -102,69 +102,124 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">VirtualBox 配置 Ubuntu 主机网络</h2>
-            <div class="post-date">2018-10-19</div>
+            <h2 class="post-title">Ubuntu 下 Jenkins 安装与配置</h2>
+            <div class="post-date">2019-10-25</div>
             
-              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/virtualbox-hostonly.png')">
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/ubuntu-jenkins.png')">
               </div>
             
             <div class="post-content">
-              <p>在公司等企业网中，一般不使用 DHCP 自动获取 IP 地址，所以一般虚拟机创建后会有无法联网的问题。如果使用 NAT 方式，则又无法从主机链接到虚拟机环境。这里介绍使用 Host-Only（主机网络）方式进行主机和虚拟机之间链接。</p>
+              <p>Jenkins 是一个开源软件项目，是基于 Java 开发的一种持续集成工具，用于监控持续重复的工作，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。</p>
 <!-- more -->
-<h1 id="1-创建主机网络">1 创建主机网络</h1>
+<h1 id="1-安装-java">1 安装 Java</h1>
+<p>Jenkins 依赖于 Java， 所以需要<a href="http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html">安装 JDK 环境</a>。</p>
 <ol>
 <li>
-<p>关机已经打开的虚拟机；</p>
+<p>增加 java 源（只能装 Java8 版本，其他版本 Jenkins 不支持）；</p>
+<pre><code class="language-sh">sudo add-apt-repository ppa:webupd8team/java
+sudo apt update
+</code></pre>
 </li>
 <li>
-<p>全局工具，选择主机网络管理器；</p>
-<p><img src="https://winking324.github.io/post-images/1561182841555.png" alt=""></p>
+<p>安装 java 8；</p>
+<pre><code class="language-sh">sudo apt install oracle-java8-installer
+</code></pre>
+<p>确认 License：</p>
+<p><img src="https://winking324.github.io/post-images/1561193202986.png" alt=""></p>
+<p><img src="https://winking324.github.io/post-images/1561193220461.png" alt=""></p>
 </li>
 <li>
-<p>创建主机网络；</p>
-<p><img src="https://winking324.github.io/post-images/1561182861315.png" alt=""></p>
+<p>安装 java 环境设置；</p>
+<pre><code class="language-sh">sudo apt install oracle-java8-set-default
+</code></pre>
 </li>
 <li>
-<p>修改主机网络属性；</p>
-<p><img src="https://winking324.github.io/post-images/1561182870810.png" alt=""></p>
+<p>验证 java 版本 &gt;= 1.8；</p>
+<pre><code class="language-sh">java -version
+</code></pre>
+<p>出现以下结果：</p>
+<pre><code class="language-sh">java version &quot;1.8.0_191&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_191-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.191-b12, mixed mode)
+</code></pre>
+</li>
+<li>
+<p>打开编辑以下文件，设置 java 环境；</p>
+<pre><code class="language-sh">sudo vi /etc/environment
+</code></pre>
+</li>
+<li>
+<p>输入 Java 环境设置，保存并关闭文件；</p>
+<pre><code class="language-sh">JAVA_HOME=&quot;/usr/lib/jvm/java-8-oracle/&quot;
+JRE_HOME=&quot;/usr/lib/jvm/java-8-oracle/jre/&quot;
+</code></pre>
+</li>
+<li>
+<p>更新环境设置；</p>
+<pre><code class="language-sh">source /etc/environment
+</code></pre>
 </li>
 </ol>
-<h1 id="2-配置服务器网卡">2 配置服务器网卡</h1>
+<h1 id="2-安装-jenkins">2 安装 Jenkins</h1>
+<pre><code class="language-sh"># 1. 增加 Jenkins 源；
+wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+
+# 2. 安装 Jenkins；
+sudo apt-get install jenkins
+</code></pre>
+<h1 id="3-初始化-jenkins">3 初始化 Jenkins</h1>
 <ol>
 <li>
-<p>选择需要配置的服务器，并点击设置；</p>
-<p><img src="https://winking324.github.io/post-images/1561182886261.png" alt=""></p>
+<p>修改 Jenkins 配置；</p>
+<pre><code class="language-sh"># 1. 创建工作路径（方便迁移管理）；
+sudo mkdir /data/jenkins
+sudo chown -R jenkins:jenkins /data/jenkins
+
+# 2. 打开编辑环境变量文件；
+sudo vi /etc/environment
+
+# 3. 配置 JENKINS_HOME 环境变量，并保存退出
+JENKINS_HOME=&quot;/data/jenkins&quot;
+
+# 4. 更新配置；
+source /etc/environment
+
+# 5. 重启 Jenkins 服务；
+sudo service jenkins restart
+</code></pre>
 </li>
 <li>
-<p>在网络中，点击网卡 2，进行以下设置；</p>
-<p><img src="https://winking324.github.io/post-images/1561182898489.png" alt=""></p>
-</li>
-</ol>
-<h1 id="3-配置服务器网络">3 配置服务器网络</h1>
-<ol>
-<li>
-<p>启动服务器并登陆；</p>
-<p><img src="https://winking324.github.io/post-images/1561182910432.png" alt=""></p>
+<p>查看初始密码；</p>
+<pre><code class="language-sh">sudo cat $JENKINS_HOME/secrets/initialAdminPassword
+</code></pre>
 </li>
 <li>
-<p>查看当前网卡的信息，这里新增的网卡为 <code>enp0s8</code>；</p>
-<p><img src="https://winking324.github.io/post-images/1561182920307.png" alt=""></p>
+<p>登录 Jenkins；</p>
+<p>打开浏览器，输入 <code>http://192.168.100.110:8080</code> 登录到 Jenkins，第一次登录需要初始密码。</p>
+<p><img src="https://winking324.github.io/post-images/1561193245385.png" alt=""></p>
 </li>
 <li>
-<p>进入 <code>/etc/netplan</code> 目录，并打开编辑 <code>50-cloud-init.yaml</code> 文件；</p>
-<p><img src="https://winking324.github.io/post-images/1561182933107.png" alt=""></p>
+<p>安装插件，选择<code>建议安装的插件</code>即可，选择后等待安装；</p>
+<p><img src="https://winking324.github.io/post-images/1561193273723.png" alt=""></p>
+<p><img src="https://winking324.github.io/post-images/1561193302049.png" alt=""></p>
 </li>
 <li>
-<p>输入以下配置内容，保存关闭；</p>
-<p><img src="https://winking324.github.io/post-images/1561182942706.png" alt=""></p>
+<p>创建Admin用户，点击保存并完成；</p>
+<p><img src="https://winking324.github.io/post-images/1561193315181.png" alt=""></p>
 </li>
 <li>
-<p>更新网络配置，并查看；</p>
-<p><img src="https://winking324.github.io/post-images/1561182953055.png" alt=""></p>
+<p>实例配置，点击保存并完成；</p>
+<p><img src="https://winking324.github.io/post-images/1561193323980.png" alt=""></p>
 </li>
 <li>
-<p>测试网络；</p>
-<p><img src="https://winking324.github.io/post-images/1561182962337.png" alt=""></p>
+<p>结束配置；</p>
+<p><img src="https://winking324.github.io/post-images/1561193332769.png" alt=""></p>
+</li>
+<li>
+<p>进入 Jenkins；</p>
+<p><img src="https://winking324.github.io/post-images/1561193343039.png" alt=""></p>
 </li>
 </ol>
 
@@ -172,12 +227,12 @@
             
               <div class="tag-container">
                 
-                  <a href="https://winking324.github.io/tag/DQac7d40n" class="tag">
-                    Ubuntu
+                  <a href="https://winking324.github.io/tag/X9yVMh_PL" class="tag">
+                    Jenkins
                   </a>
                 
-                  <a href="https://winking324.github.io/tag/b_9ddV3eS" class="tag">
-                    VirtualBox
+                  <a href="https://winking324.github.io/tag/DQac7d40n" class="tag">
+                    Ubuntu
                   </a>
                 
               </div>
@@ -185,9 +240,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://winking324.github.io/post/virtualbox-ubuntu">
+                <a href="https://winking324.github.io/post/ubuntu-mysql">
                   <h3 class="post-title">
-                    VirtualBox 安装 Ubuntu 18.04
+                    Ubuntu 下 MySQL 安装与配置
                   </h3>
                 </a>
               </div>
