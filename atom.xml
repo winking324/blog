@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-06-22T05:45:57.167Z</updated>
+    <updated>2019-06-22T06:06:48.791Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,74 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[VirtualBox 配置 Ubuntu 主机网络]]></title>
+        <id>https://winking324.github.io/post/virtualbox-hostonly</id>
+        <link href="https://winking324.github.io/post/virtualbox-hostonly">
+        </link>
+        <updated>2018-10-24T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>在公司等企业网中，一般不使用 DHCP 自动获取 IP 地址，所以一般虚拟机创建后会有无法联网的问题。如果使用 NAT 方式，则又无法从主机链接到虚拟机环境。这里介绍使用 Host-Only（主机网络）方式进行主机和虚拟机之间链接。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在公司等企业网中，一般不使用 DHCP 自动获取 IP 地址，所以一般虚拟机创建后会有无法联网的问题。如果使用 NAT 方式，则又无法从主机链接到虚拟机环境。这里介绍使用 Host-Only（主机网络）方式进行主机和虚拟机之间链接。</p>
+<!-- more -->
+<h1 id="1-创建主机网络">1 创建主机网络</h1>
+<ol>
+<li>
+<p>关机已经打开的虚拟机；</p>
+</li>
+<li>
+<p>全局工具，选择主机网络管理器；</p>
+<p><img src="https://winking324.github.io/post-images/1561182841555.png" alt=""></p>
+</li>
+<li>
+<p>创建主机网络；</p>
+<p><img src="https://winking324.github.io/post-images/1561182861315.png" alt=""></p>
+</li>
+<li>
+<p>修改主机网络属性；</p>
+<p><img src="https://winking324.github.io/post-images/1561182870810.png" alt=""></p>
+</li>
+</ol>
+<h1 id="2-配置服务器网卡">2 配置服务器网卡</h1>
+<ol>
+<li>
+<p>选择需要配置的服务器，并点击设置；</p>
+<p><img src="https://winking324.github.io/post-images/1561182886261.png" alt=""></p>
+</li>
+<li>
+<p>在网络中，点击网卡 2，进行以下设置；</p>
+<p><img src="https://winking324.github.io/post-images/1561182898489.png" alt=""></p>
+</li>
+</ol>
+<h1 id="3-配置服务器网络">3 配置服务器网络</h1>
+<ol>
+<li>
+<p>启动服务器并登陆；</p>
+<p><img src="https://winking324.github.io/post-images/1561182910432.png" alt=""></p>
+</li>
+<li>
+<p>查看当前网卡的信息，这里新增的网卡为 <code>enp0s8</code>；</p>
+<p><img src="https://winking324.github.io/post-images/1561182920307.png" alt=""></p>
+</li>
+<li>
+<p>进入 <code>/etc/netplan</code> 目录，并打开编辑 <code>50-cloud-init.yaml</code> 文件；</p>
+<p><img src="https://winking324.github.io/post-images/1561182933107.png" alt=""></p>
+</li>
+<li>
+<p>输入以下配置内容，保存关闭；</p>
+<p><img src="https://winking324.github.io/post-images/1561182942706.png" alt=""></p>
+</li>
+<li>
+<p>更新网络配置，并查看；</p>
+<p><img src="https://winking324.github.io/post-images/1561182953055.png" alt=""></p>
+</li>
+<li>
+<p>测试网络；</p>
+<p><img src="https://winking324.github.io/post-images/1561182962337.png" alt=""></p>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[VirtualBox 安装 Ubuntu 18.04]]></title>
         <id>https://winking324.github.io/post/virtualbox-ubuntu</id>
