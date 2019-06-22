@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>VirtualBox 迁移 | Winking</title>
+<title>Raspberry Pi 初始化 | Winking</title>
 <meta name="description" content="还愣着干啥！点赞啊！">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -102,48 +102,72 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">VirtualBox 迁移</h2>
-            <div class="post-date">2018-10-19</div>
+            <h2 class="post-title">Raspberry Pi 初始化</h2>
+            <div class="post-date">2019-02-19</div>
             
-              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/virtualbox-migrate.png')">
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/raspberry-pi-init.png')">
               </div>
             
             <div class="post-content">
-              <p>当虚拟机需要在办公室和家里同时使用时，可以将虚拟机文件，拷贝到移动硬盘上，在办公室和家里都以该文件创建环境即可。</p>
+              <p>树莓派是一款基于 ARM 的微型电脑主板，具备所有 PC 的基本功能。默认情况下其系统基于 Linux，可以在树莓派上安装一些简单的服务，提供访问。</p>
 <!-- more -->
+<h1 id="1-安装系统">1 安装系统</h1>
 <ol>
-<li>
-<p>点击新建，创建虚拟机，填写名称等信息。选择使用已有的虚拟硬盘文件，并选择对应的硬盘文件，点击创建；</p>
-<p><img src="https://winking324.github.io/post-images/1561190019003.png" alt=""></p>
-</li>
-<li>
-<p>选择刚创建的虚拟机，并点击设置；</p>
-<p><img src="https://winking324.github.io/post-images/1561190028782.png" alt=""></p>
-</li>
-<li>
-<p>修改网络配置，添加 Host-Only 模式；</p>
-<p><img src="https://winking324.github.io/post-images/1561190039617.png" alt=""></p>
-</li>
-<li>
-<p>修改存储配置，添加之前创建的虚拟磁盘；</p>
-<p><img src="https://winking324.github.io/post-images/1561190049647.png" alt=""></p>
-</li>
-<li>
-<p>开机并登陆，检查网络和磁盘状态；</p>
-<p><img src="https://winking324.github.io/post-images/1561190060306.png" alt=""></p>
-</li>
+<li>从官网<a href="https://www.raspberrypi.org/downloads/">下载页面</a>下载系统镜像文件；</li>
+<li>下载镜像烧录软件，Mac 上可以使用 <a href="https://www.balena.io/etcher/">balenaEtcher</a>；</li>
+<li>将镜像烧录到 SD 卡上；</li>
+<li>将 SD 卡查到树莓派上，上电启动；</li>
+</ol>
+<p>注意:</p>
+<ol>
+<li>树莓派默认情况下只支持从 SD 卡上启动系统；</li>
+<li>树莓派 3 及以上版本支持从 U盘启动系统，但是需要先用 SD 卡启动后修改 boot 参数；</li>
+<li>树莓派 3b+ 及以上版本支持 1000 Mbps 网卡；</li>
+</ol>
+<h1 id="2-u盘启动系统">2 U盘启动系统</h1>
+<p>可以通过外部 U盘或者 SSD 进入系统，三种情况下有对应的<a href="https://www.raspberrypi.org/forums/viewtopic.php?t=199414">系统速度测试</a>，默认的 SD 卡速度最慢。</p>
+<p>所以这里<a href="https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/msd.md">使用 U盘启动系统</a>（实际因为手头 U盘太多，SD 卡反而没几个）。</p>
+<ol>
+<li>使用 SD 卡进入系统；</li>
+<li>执行 <code>echo program_usb_boot_mode=1 | sudo tee -a /boot/config.txt</code> 写入配置；</li>
+<li>执行 <code>sudo reboot</code> 重启系统；</li>
+<li>执行 <code>vcgencmd otp_dump | grep 17:</code> 查看是否成功，成功结果应该为 <code>17:3020000a</code>；</li>
+<li>执行 <code>sudo poweroff</code> 关机，并断电；</li>
+<li>拔出 SD 卡，插入烧录好系统的 U盘，上电启动；</li>
+<li>进入 U盘系统；</li>
+</ol>
+<h1 id="3-设置键盘布局">3 设置键盘布局</h1>
+<p>默认情况下，键盘布局为英式键盘布局，而我们常用的是美式键盘布局，很多键位是不一样的，所以需要更改键盘布局。</p>
+<ol>
+<li>执行 <code>sudo raspi-config</code>；</li>
+<li>找到键盘布局更改选项，并执行；</li>
+<li>选择 Generic 101-key pc；</li>
+<li>选择 Other；</li>
+<li>选择国家为 English(US)；</li>
+<li>选择布局为 English(US)；</li>
+<li>选择 The default for the keyboard layout；</li>
+<li>选择 No compose key；</li>
+<li>执行 <code>sudo reboot</code> 重启系统；</li>
+</ol>
+<h1 id="4-打开-ssh">4 打开 SSH</h1>
+<p>默认情况下，SSH 是关闭的，即不能远程登录，所以需要打开 SSH 以提供远程登录。</p>
+<ol>
+<li>执行 <code>sudo raspi-config</code>；</li>
+<li>找到 SSH 选项，选择打开；</li>
+</ol>
+<h1 id="5-配置-wifi">5 配置 WiFi</h1>
+<ol>
+<li>执行 <code>sudo raspi-config</code>；</li>
+<li>找到 WiFi 选项；</li>
+<li>输入 WiFi 名称和密码；</li>
 </ol>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://winking324.github.io/tag/DQac7d40n" class="tag">
-                    Ubuntu
-                  </a>
-                
-                  <a href="https://winking324.github.io/tag/b_9ddV3eS" class="tag">
-                    VirtualBox
+                  <a href="https://winking324.github.io/tag/q7UccH_pD" class="tag">
+                    RaspberryPi
                   </a>
                 
               </div>
@@ -151,9 +175,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://winking324.github.io/post/virtualbox-disk">
+                <a href="https://winking324.github.io/post/ubuntu-jenkins">
                   <h3 class="post-title">
-                    VirtualBox 配置虚拟硬盘
+                    Ubuntu 下 Jenkins 安装与配置
                   </h3>
                 </a>
               </div>
