@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-06-22T09:34:38.495Z</updated>
+    <updated>2019-06-22T09:45:55.808Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,126 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[Ubuntu 下 Let's Encrypt 生成 HTTPS 证书]]></title>
+        <id>https://winking324.github.io/post/lets-encrypt</id>
+        <link href="https://winking324.github.io/post/lets-encrypt">
+        </link>
+        <updated>2019-06-13T09:38:31.000Z</updated>
+        <summary type="html"><![CDATA[<p>Let's Encrypt 这个认证机构，可以提供期限是 90 天的免费证书，且可以无限次更新，本文介绍如何使用 Let's Encrypt 来使自己的网站支持 HTTPS。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Let's Encrypt 这个认证机构，可以提供期限是 90 天的免费证书，且可以无限次更新，本文介绍如何使用 Let's Encrypt 来使自己的网站支持 HTTPS。</p>
+<!-- more -->
+<p>想要创建一个 HTTPS 的网站，需要以下几个步骤：</p>
+<ol>
+<li>一个域名；</li>
+<li>一个外网可以访问的服务器；</li>
+<li>一个认证的证书；</li>
+</ol>
+<h1 id="1-下载并初始化-certbot">1 下载并初始化 Certbot</h1>
+<p>Certbot 是 Let's Encrypt 官方提供的工具，直接通过工具可以自动化生成证书。</p>
+<pre><code class="language-sh"># 下载 Certbot
+wget https://dl.eff.org/certbot-auto
+
+# 设置为可执行程序
+chmod a+x certbot-auto
+
+# 移动到官方推荐目录下
+sudo mv certbot-auto /usr/local/bin
+
+# 修改用户及用户组
+sudo chown root:root /usr/local/bin/certbot-auto
+
+# 执行初始化
+sudo certbot-auto
+</code></pre>
+<p>由于初始化需要安装很多 Python 的库，这个过程可能会比较漫长，如果需要，可以通过优化 Python 的源来进行加速。</p>
+<pre><code class="language-sh"># 创建 pip 配置目录
+sudo mkdir ~/.pip
+
+# 创建 pip 配置
+touch ~/.pip/pip.conf
+
+# 输入以下内容到 pip.conf 中
+[global]
+index-url=http://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host=mirrors.aliyun.com
+</code></pre>
+<h1 id="2-创建-nginx-服务">2 创建 Nginx 服务</h1>
+<p>在漫长的初始化过程中，可以先执行下一步操作。在生成证书时，一般有两种模式可以选择：</p>
+<ul>
+<li>webroot：在已有的 HTTP 服务中增加 HTTPS；</li>
+<li>standalone：帮助创建带有 HTTPS 的服务；</li>
+</ul>
+<p>这里我们选择使用 webroot 模式，所以我们需要事先准备好一个 HTTP 服务。</p>
+<pre><code class="language-sh"># 安装 Nginx
+sudo apt install nginx
+
+# 创建 HTTP Root 路径
+sudo mkdir /var/www/winking
+
+# 修改 Nginx 配置
+sudo vi /etc/nginx/sites-enabled/default
+
+# 将 root 修改为
+root /var/www/winking;
+
+# 保存配置，并重新加载
+sudo systemctl reload nginx
+</code></pre>
+<h1 id="3-创建-certbot-配置">3 创建 Certbot 配置</h1>
+<p>这个时候，Certbot 应该已经初始化完成了，可以生产证书文件了。</p>
+<p>首先，我们创建 Certbot 的配置，来指导生产证书文件。</p>
+<pre><code class="language-sh"># 创建配置文件路径
+sudo mkdir -p /etc/letsencrypt/configs
+
+# 创建配置文件，并编辑
+sudo vi /etc/letsencrypt/configs/winking.io.conf
+
+# 输入配置内容
+domains = winking.io
+rsa-key-size = 2048
+email = your-email@example.com
+text = True
+authenticator = webroot
+webroot-path = /var/www/winking
+</code></pre>
+<p>其中，webroot-path 是我们在上一步中创建的 HTTP Root 路径。在生成证书的过程中，Certbot 会在这个路径中自动生成一个文件，来进行验证域名配置的正确性。</p>
+<h1 id="4-生成证书">4 生成证书</h1>
+<p>调用 Certbot，并根据配置来生成证书。</p>
+<pre><code class="language-sh">sudo certbot-auto -c /etc/letsencrypt/configs/winking.io.conf certonly
+</code></pre>
+<p>运行顺利，则会在 <code>/etc/letsencrypt/live/winking.io/</code> 这个路径下，生成以下几个文件：</p>
+<ul>
+<li>cert.pem</li>
+<li>privkey.pem</li>
+<li>chain.pem</li>
+<li>fullchain.pem</li>
+</ul>
+<h1 id="5-配置-https">5 配置 HTTPS</h1>
+<p>顺利生成证书后，我们需要将 Nginx 的 HTTP 服务，修改为 HTTPS 服务。</p>
+<pre><code class="language-sh"># 修改 Nginx 配置文件
+sudo vi /etc/nginx/sites-enabled/default
+
+# 增加以下内容
+listen 443 ssl default_server;
+listen [::]:443 ssl default_server;
+ssl_certificate /etc/letsencrypt/live/miai.winking.io/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/miai.winking.io/privkey.pem;
+
+# 保存配置，并重新加载
+sudo systemctl reload nginx
+</code></pre>
+<p>这样，就可以用 HTTPS 的方式打开你的网站了。</p>
+<h1 id="6-参考">6 参考</h1>
+<ul>
+<li><a href="https://ksmx.me/letsencrypt-ssl-https/">LET'S ENCRYPT 给网站加 HTTPS 完全指南</a></li>
+<li><a href="https://www.linuxidc.com/Linux/2017-03/142248.htm">部署Let’s Encrypt免费SSL证书&amp;&amp;自动续期</a></li>
+<li><a href="https://www.jianshu.com/p/3c67562b88a5">使用let's encrypt工具配置Nginx HTTPS</a></li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Ubuntu 下 Samba 安装与配置]]></title>
         <id>https://winking324.github.io/post/ubuntu-samba</id>
