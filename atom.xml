@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-06-22T09:45:55.808Z</updated>
+    <updated>2019-06-24T01:48:40.200Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,126 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[斐讯 N1 盒子刷机]]></title>
+        <id>https://winking324.github.io/post/reinstall-n1</id>
+        <link href="https://winking324.github.io/post/reinstall-n1">
+        </link>
+        <updated>2019-06-16T09:50:25.000Z</updated>
+        <summary type="html"><![CDATA[<p>现在市面上的各种盒子，广告很多，体验很差。618 入了一个明基投影仪，打算买一个盒子的前提下，刚好好多朋友推荐斐讯 N1 盒子，优点是性能很强大，价格便宜，刷机后非常给力。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>现在市面上的各种盒子，广告很多，体验很差。618 入了一个明基投影仪，打算买一个盒子的前提下，刚好好多朋友推荐斐讯 N1 盒子，优点是性能很强大，价格便宜，刷机后非常给力。</p>
+<!-- more -->
+<p>所以从拼多多上入了一个 N1 盒子 + T1 原装遥控器 + 刷机线，总价 119.9 元（斐讯在淘宝/京东/咸鱼/拼多多上都已经被屏蔽，需要搜索 N1 盒子来查找）。</p>
+<h2 id="1-刷机准备">1 刷机准备</h2>
+<p>设备：</p>
+<ol>
+<li>N1 盒子一台；</li>
+<li>刷机线一根；</li>
+<li>显示器一台；</li>
+<li>网线一根；</li>
+<li>鼠标一个；</li>
+<li>Windows 电脑一台；</li>
+<li>网络环境；</li>
+</ol>
+<p>工具：</p>
+<ol>
+<li>系统降级工具；</li>
+<li>进入线刷模式工具；</li>
+<li>刷机软件：UsbBurningTool；</li>
+<li>刷机系统 Rom；</li>
+<li>驱动人生；</li>
+</ol>
+<h2 id="2-系统降级">2 系统降级</h2>
+<p>由于 N1 最新的系统固件，已经被加密，所以在不降级的前提下，无法进行刷机。</p>
+<ol>
+<li>
+<p>N1 连接显示器/网线/鼠标/电源，开机，进入以下界面；</p>
+<p><img src="https://winking324.github.io/post-images/1561197081153.jpg" alt=""></p>
+</li>
+<li>
+<p>鼠标连续点击固件版本这行字，直到出现下方“打开adb”；</p>
+</li>
+<li>
+<p>连接刷机线，注意 N1 盒子是对应 HDMI 旁边 USB 口；</p>
+</li>
+<li>
+<p>在 Windows 上，打开驱动人生，打开外设驱动，安装安卓驱动；</p>
+<p><img src="https://winking324.github.io/post-images/1561340510118.jpg" alt=""></p>
+</li>
+<li>
+<p>在 Windows 电脑上，解压 《N1-T1降刷机助手v1.1版本》压缩包；</p>
+</li>
+<li>
+<p>进入解压后的目录中，运行 <code>T1_N1降级工具v1.1.exe</code>；</p>
+<p><img src="https://winking324.github.io/post-images/1561340522634.jpg" alt=""></p>
+</li>
+<li>
+<p>选择降级设备为 N1，设备 IP 为 N1 盒子对应的 IP，点击开始降级；</p>
+</li>
+<li>
+<p>没有意外的话，最终工作状态会显示为降级成功；</p>
+</li>
+<li>
+<p>断开 USB 和电源，重启 N1 盒子；</p>
+</li>
+<li>
+<p>重启后，进入初始界面，但是上面固件版本仍然为原来的版本，这个不要在意，因为刷机的固件版本，跟显示的这个固件版本，是两个东西，只要降级工具里面显示成功即可；</p>
+</li>
+</ol>
+<h2 id="3-刷机">3 刷机</h2>
+<p>系统降级成功后，可以选择需要的 Rom 进行刷机，常见的 Rom 有很多，大家可以自行百度查找适合自己的 Rom，这里以常见的《斐讯盒子N1_YYFROM讯飞语音实用版190421》进行示例。</p>
+<ol>
+<li>
+<p>连接刷机线；</p>
+</li>
+<li>
+<p>安装 UsbBurningTool，软件会自动安装 USB 驱动；</p>
+<p><img src="https://winking324.github.io/post-images/1561340535289.jpg" alt=""></p>
+</li>
+<li>
+<p>打开 UsbBurningTool，在“文件”中加载刷机包，加载完成后，点击开始按钮（<strong>注意擦除 FLASH 和擦除Bootloader 前面的对号要去掉</strong>）；</p>
+<p><img src="https://winking324.github.io/post-images/1561340546055.jpg" alt=""></p>
+</li>
+<li>
+<p>解压《使N1进入线刷模式》压缩包，双击运行 <code>reboot_to_usb_burn/进入线刷模式.bat</code> 脚本；</p>
+</li>
+<li>
+<p>这时候盒子会进入重启状态（如果显示器有内容显示，先不要管），对应 Windows 电脑会有 USB 设备插入的提示声；</p>
+</li>
+<li>
+<p>XP 以上 Windows 系统，需要手动添加驱动；</p>
+</li>
+<li>
+<p>在我的电脑上右键，选择管理，并打开设备管理器，然后在操作中，添加过时硬件；</p>
+<p><img src="https://winking324.github.io/post-images/1561340557223.jpg" alt=""></p>
+<p><img src="https://winking324.github.io/post-images/1561340568358.jpg" alt=""></p>
+<p><img src="https://winking324.github.io/post-images/1561340578604.jpg" alt=""></p>
+<p><img src="https://winking324.github.io/post-images/1561340586822.jpg" alt=""></p>
+</li>
+<li>
+<p>驱动安装完成后，N1 进行断电重启；</p>
+</li>
+<li>
+<p>重启后，重新运行  <code>reboot_to_usb_burn/进入线刷模式.bat</code> 脚本；</p>
+</li>
+<li>
+<p>这时候，UsbBurningTool 可以识别到设备，并开始进行刷机；</p>
+<p><img src="https://winking324.github.io/post-images/1561340596193.jpg" alt=""></p>
+</li>
+<li>
+<p>刷机完成后，关掉 UsbBurningTool，并断电重启 N1，之后可以进入刷机的系统；</p>
+<p><img src="https://winking324.github.io/post-images/1561340605374.jpg" alt=""></p>
+</li>
+</ol>
+<h2 id="4-参考地址">4 参考地址</h2>
+<ul>
+<li><a href="https://www.right.com.cn/forum/thread-318044-1-1.html">斐讯天天链N1刷机小白教程</a></li>
+<li><a href="https://www.right.com.cn/forum/thread-336688-1-1.html">T1_N1一键降级工具v1.1版本</a></li>
+<li><a href="https://pan.baidu.com/s/11ll1an5qHuYKTIIotuRuwA">其他工具(czez)</a></li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Ubuntu 下 Let's Encrypt 生成 HTTPS 证书]]></title>
         <id>https://winking324.github.io/post/lets-encrypt</id>
@@ -816,109 +936,6 @@ source ~/.zshrc
 <li>
 <p>测试网络；</p>
 <p><img src="https://winking324.github.io/post-images/1561182962337.png" alt=""></p>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[VirtualBox 安装 Ubuntu 18.04]]></title>
-        <id>https://winking324.github.io/post/virtualbox-ubuntu</id>
-        <link href="https://winking324.github.io/post/virtualbox-ubuntu">
-        </link>
-        <updated>2018-10-18T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>虚拟机软件有很多种，这里使用 VirtualBox 作为主要工具，来说明如何安装 Ubuntu 18.04。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>虚拟机软件有很多种，这里使用 VirtualBox 作为主要工具，来说明如何安装 Ubuntu 18.04。</p>
-<!-- more -->
-<h1 id="1-下载-ubuntu-镜像">1 下载 Ubuntu 镜像</h1>
-<ul>
-<li><a href="http://releases.ubuntu.com/14.04/ubuntu-14.04.5-server-amd64.iso.torrent">Ubuntu 14.04.5 Server 64 bit</a></li>
-<li><a href="http://releases.ubuntu.com/16.04/ubuntu-16.04.5-server-amd64.iso.torrent">Ubuntu 16.04.5 Server 64 bit</a></li>
-<li><a href="http://releases.ubuntu.com/18.04/ubuntu-18.04.1-live-server-amd64.iso.torrent">Ubuntu 18.04.1 Server 64 bit</a></li>
-</ul>
-<h1 id="2-安装">2 安装</h1>
-<ol>
-<li>
-<p>点击新建，输入名称并配置各个选项后，点击创建；</p>
-<p><img src="https://winking324.github.io/post-images/1561180826920.png" alt=""></p>
-</li>
-<li>
-<p>选择虚拟机存储位置和存储大小，之后点击创建；</p>
-<p><img src="https://winking324.github.io/post-images/1561181047927.png" alt=""></p>
-</li>
-<li>
-<p>选择刚创建的虚拟机，进行设置，在存储的光驱控制器上，选择已经下载好的 Ubuntu 镜像文件；</p>
-<p><img src="https://winking324.github.io/post-images/1561181065977.png" alt=""></p>
-</li>
-<li>
-<p>选择刚创建的虚拟机，点击启动按钮，进入系统安装界面，选择语言后回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181083153.png" alt=""></p>
-</li>
-<li>
-<p>选择键盘布局，回车；</p>
-</li>
-</ol>
-<p><img src="https://winking324.github.io/post-images/1561181099645.png" alt=""></p>
-<ol start="6">
-<li>
-<p>选择安装，回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181114897.png" alt=""></p>
-</li>
-<li>
-<p>选择网卡，回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181141509.png" alt=""></p>
-</li>
-<li>
-<p>如果有代理，输入代理地址，回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181154682.png" alt=""></p>
-</li>
-<li>
-<p>默认，回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181165536.png" alt=""></p>
-</li>
-<li>
-<p>使用整个硬盘，回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181178995.png" alt=""></p>
-</li>
-<li>
-<p>初始化硬盘，回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181189517.png" alt=""></p>
-</li>
-<li>
-<p>默认，回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181199754.png" alt=""></p>
-</li>
-<li>
-<p>选择继续，进行硬盘初始化，回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181209910.png" alt=""></p>
-</li>
-<li>
-<p>输入用户名和密码等，回车；</p>
-<p><img src="https://winking324.github.io/post-images/1561181221443.png" alt=""></p>
-</li>
-<li>
-<p>空格选择需要安装的应用，回车继续；</p>
-<p><img src="https://winking324.github.io/post-images/1561181238681.png" alt=""></p>
-</li>
-<li>
-<p>等待安装结束；</p>
-<p><img src="https://winking324.github.io/post-images/1561181248013.png" alt=""></p>
-</li>
-<li>
-<p>安装结束，重启系统；</p>
-<p><img src="https://winking324.github.io/post-images/1561181258294.png" alt=""></p>
-</li>
-<li>
-<p>回车移除安装镜像，并自动重启；</p>
-<p><img src="https://winking324.github.io/post-images/1561181267710.png" alt=""></p>
-</li>
-<li>
-<p>安装成功，进入登录界面，输入配置的用户名和密码；</p>
-<p><img src="https://winking324.github.io/post-images/1561181278437.png" alt=""></p>
-</li>
-<li>
-<p>进入 Ubuntu 系统；</p>
-<p><img src="https://winking324.github.io/post-images/1561181288951.png" alt=""></p>
 </li>
 </ol>
 ]]></content>

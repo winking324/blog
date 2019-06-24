@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>斐讯 N1 盒子刷机 | Winking</title>
+<meta name="description" content="还愣着干啥！点赞啊！">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1561340916318">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://winking324.github.io">
+        <img src="https://winking324.github.io/images/avatar.png?v=1561340916318" class="site-logo">
+        <h1 class="site-title">Winking</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/winking324" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      还愣着干啥！点赞啊！
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/winking324/winking324.github.io" target="_blank">winking324</a> | <a class="rss" href="https://winking324.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">斐讯 N1 盒子刷机</h2>
+            <div class="post-date">2019-06-16</div>
+            
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/reinstall-n1.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>现在市面上的各种盒子，广告很多，体验很差。618 入了一个明基投影仪，打算买一个盒子的前提下，刚好好多朋友推荐斐讯 N1 盒子，优点是性能很强大，价格便宜，刷机后非常给力。</p>
+<!-- more -->
+<p>所以从拼多多上入了一个 N1 盒子 + T1 原装遥控器 + 刷机线，总价 119.9 元（斐讯在淘宝/京东/咸鱼/拼多多上都已经被屏蔽，需要搜索 N1 盒子来查找）。</p>
+<h2 id="1-刷机准备">1 刷机准备</h2>
+<p>设备：</p>
+<ol>
+<li>N1 盒子一台；</li>
+<li>刷机线一根；</li>
+<li>显示器一台；</li>
+<li>网线一根；</li>
+<li>鼠标一个；</li>
+<li>Windows 电脑一台；</li>
+<li>网络环境；</li>
+</ol>
+<p>工具：</p>
+<ol>
+<li>系统降级工具；</li>
+<li>进入线刷模式工具；</li>
+<li>刷机软件：UsbBurningTool；</li>
+<li>刷机系统 Rom；</li>
+<li>驱动人生；</li>
+</ol>
+<h2 id="2-系统降级">2 系统降级</h2>
+<p>由于 N1 最新的系统固件，已经被加密，所以在不降级的前提下，无法进行刷机。</p>
+<ol>
+<li>
+<p>N1 连接显示器/网线/鼠标/电源，开机，进入以下界面；</p>
+<p><img src="https://winking324.github.io/post-images/1561197081153.jpg" alt=""></p>
+</li>
+<li>
+<p>鼠标连续点击固件版本这行字，直到出现下方“打开adb”；</p>
+</li>
+<li>
+<p>连接刷机线，注意 N1 盒子是对应 HDMI 旁边 USB 口；</p>
+</li>
+<li>
+<p>在 Windows 上，打开驱动人生，打开外设驱动，安装安卓驱动；</p>
+<p><img src="https://winking324.github.io/post-images/1561340510118.jpg" alt=""></p>
+</li>
+<li>
+<p>在 Windows 电脑上，解压 《N1-T1降刷机助手v1.1版本》压缩包；</p>
+</li>
+<li>
+<p>进入解压后的目录中，运行 <code>T1_N1降级工具v1.1.exe</code>；</p>
+<p><img src="https://winking324.github.io/post-images/1561340522634.jpg" alt=""></p>
+</li>
+<li>
+<p>选择降级设备为 N1，设备 IP 为 N1 盒子对应的 IP，点击开始降级；</p>
+</li>
+<li>
+<p>没有意外的话，最终工作状态会显示为降级成功；</p>
+</li>
+<li>
+<p>断开 USB 和电源，重启 N1 盒子；</p>
+</li>
+<li>
+<p>重启后，进入初始界面，但是上面固件版本仍然为原来的版本，这个不要在意，因为刷机的固件版本，跟显示的这个固件版本，是两个东西，只要降级工具里面显示成功即可；</p>
+</li>
+</ol>
+<h2 id="3-刷机">3 刷机</h2>
+<p>系统降级成功后，可以选择需要的 Rom 进行刷机，常见的 Rom 有很多，大家可以自行百度查找适合自己的 Rom，这里以常见的《斐讯盒子N1_YYFROM讯飞语音实用版190421》进行示例。</p>
+<ol>
+<li>
+<p>连接刷机线；</p>
+</li>
+<li>
+<p>安装 UsbBurningTool，软件会自动安装 USB 驱动；</p>
+<p><img src="https://winking324.github.io/post-images/1561340535289.jpg" alt=""></p>
+</li>
+<li>
+<p>打开 UsbBurningTool，在“文件”中加载刷机包，加载完成后，点击开始按钮（<strong>注意擦除 FLASH 和擦除Bootloader 前面的对号要去掉</strong>）；</p>
+<p><img src="https://winking324.github.io/post-images/1561340546055.jpg" alt=""></p>
+</li>
+<li>
+<p>解压《使N1进入线刷模式》压缩包，双击运行 <code>reboot_to_usb_burn/进入线刷模式.bat</code> 脚本；</p>
+</li>
+<li>
+<p>这时候盒子会进入重启状态（如果显示器有内容显示，先不要管），对应 Windows 电脑会有 USB 设备插入的提示声；</p>
+</li>
+<li>
+<p>XP 以上 Windows 系统，需要手动添加驱动；</p>
+</li>
+<li>
+<p>在我的电脑上右键，选择管理，并打开设备管理器，然后在操作中，添加过时硬件；</p>
+<p><img src="https://winking324.github.io/post-images/1561340557223.jpg" alt=""></p>
+<p><img src="https://winking324.github.io/post-images/1561340568358.jpg" alt=""></p>
+<p><img src="https://winking324.github.io/post-images/1561340578604.jpg" alt=""></p>
+<p><img src="https://winking324.github.io/post-images/1561340586822.jpg" alt=""></p>
+</li>
+<li>
+<p>驱动安装完成后，N1 进行断电重启；</p>
+</li>
+<li>
+<p>重启后，重新运行  <code>reboot_to_usb_burn/进入线刷模式.bat</code> 脚本；</p>
+</li>
+<li>
+<p>这时候，UsbBurningTool 可以识别到设备，并开始进行刷机；</p>
+<p><img src="https://winking324.github.io/post-images/1561340596193.jpg" alt=""></p>
+</li>
+<li>
+<p>刷机完成后，关掉 UsbBurningTool，并断电重启 N1，之后可以进入刷机的系统；</p>
+<p><img src="https://winking324.github.io/post-images/1561340605374.jpg" alt=""></p>
+</li>
+</ol>
+<h2 id="4-参考地址">4 参考地址</h2>
+<ul>
+<li><a href="https://www.right.com.cn/forum/thread-318044-1-1.html">斐讯天天链N1刷机小白教程</a></li>
+<li><a href="https://www.right.com.cn/forum/thread-336688-1-1.html">T1_N1一键降级工具v1.1版本</a></li>
+<li><a href="https://pan.baidu.com/s/11ll1an5qHuYKTIIotuRuwA">其他工具(czez)</a></li>
+</ul>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://winking324.github.io/post/lets-encrypt">
+                  <h3 class="post-title">
+                    Ubuntu 下 Let&#39;s Encrypt 生成 HTTPS 证书
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'cf71cf503e8d0441d9ac',
+        clientSecret: 'c1c3d8f77fa2a097546464880636cd5080d492e7',
+        repo: 'winking324.github.io',
+        owner: 'winking324',
+        admin: ['winking324'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
