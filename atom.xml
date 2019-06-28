@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-06-24T01:48:40.200Z</updated>
+    <updated>2019-06-28T05:38:37.859Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,70 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[WSGI + uWSGI + uwsgi]]></title>
+        <id>https://winking324.github.io/post/wsgi-uwsgi-uwsgi</id>
+        <link href="https://winking324.github.io/post/wsgi-uwsgi-uwsgi">
+        </link>
+        <updated>2019-06-28T05:36:18.000Z</updated>
+        <summary type="html"><![CDATA[<p>一直以来，给外部系统提供服务，都是使用 RESTful API 方式。但是对于更多的用户来说，更喜欢的是使用浏览器直接打开页面，点击几个按钮来操作。所以在此基础上，学习了一下 Flask，接触到了 uWSGI，这里进行总结一下。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一直以来，给外部系统提供服务，都是使用 RESTful API 方式。但是对于更多的用户来说，更喜欢的是使用浏览器直接打开页面，点击几个按钮来操作。所以在此基础上，学习了一下 Flask，接触到了 uWSGI，这里进行总结一下。</p>
+<!-- more -->
+<h2 id="wsgi">WSGI</h2>
+<p>说到 uWSGI，需要先理解一下 WSGI。</p>
+<p>对于一个 Web 服务来说，处理用户的请求的过程如下：</p>
+<ol>
+<li>用户使用浏览器，发起 HTTP 请求；</li>
+<li>Web 服务器根据接收到请求，生成对应的 HTML 文档；</li>
+<li>Web 服务器将 HTML 文档，作为 Response 发送给浏览器；</li>
+<li>浏览器收到 HTML 文档，渲染展示出来给用户；</li>
+</ol>
+<p>对于静态页面，即 HTML 文档内容固定不变，可以用现在很成熟的 Nginx 等 Web 服务器来实现。</p>
+<p>对于动态页面，即 HTML 文档需要根据不同用户请求的不同内容来生成，就需要自己来实现 Web 服务器了。但是如果对于基本的 HTTP 协议都去开发一遍的话，工作量就太大了。</p>
+<p>所以更好的方式是，由 Nginx 这些成熟的 Web 服务器来负责接收处理 HTTP 等请求，而我们自己的应用程序，专心负责生成对应的 HTML 文档，这就是 WSGI 的意义了。</p>
+<p>WSGI（Web Server Gateway Interface），是 Python 应用程序（或框架）与 Web 服务器之间的一种接口规范。只要遵循这个接口规范，开发者实现的 Python 应用程序就可以和 Web 服务器进行对接。</p>
+<p>WSGI 是专指 Python 和 Web 服务器之间的接口规范，同时还有其他例如 CGI、FastCGI、Servlet等规范，其对比如下：</p>
+<table>
+<thead>
+<tr>
+<th>规范</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CGI</td>
+<td>Common Gateway Interface，最早出现的外部扩展应用程序与 Web 服务器交互的标准接口。</td>
+</tr>
+<tr>
+<td>FastCGI</td>
+<td>FastCGI 是 CGI 的优化版本，CGI 每次执行都需要 fork 一次，效率很低，而 FastCGI 是常驻类型，且支持分布式的运算，大大提高了性能。</td>
+</tr>
+<tr>
+<td>Servlet</td>
+<td>Java 专用的外部扩展应用程序与 Web 服务器交互的标准接口。</td>
+</tr>
+<tr>
+<td>WSGI</td>
+<td>Python 专用的外部扩展应用程序与 Web 服务器交互的标准接口。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="uwsgi">uWSGI</h2>
+<p>uWSGI 是一个遵循 WSGI 规范的 Web 服务器，它实现了 WSGI、uwsgi、HTTP 等协议。</p>
+<h2 id="uwsgi-2">uwsgi</h2>
+<p>uwsgi 是 uWSGI 服务器使用的本地协议。</p>
+<p>uwsgi 是一个二进制协议，可以携带任何类型的数据。一个 uwsgi 分组的前 4 个字节，描述了这个分组包含的数据类型。</p>
+<p>由于 uwsgi 使用二进制来存储数据，比 FastCGI 这种字符存储数据，在存储空间和解析速度上有很大的优势。</p>
+<h2 id="参考地址">参考地址</h2>
+<ul>
+<li><a href="https://www.jianshu.com/p/29f66eb4e55a">说说我对 WSGI 的理解</a></li>
+<li><a href="https://uwsgi-docs-zh.readthedocs.io/zh_CN/latest/index.html">uWSGI 项目文档</a></li>
+<li><a href="https://www.cnblogs.com/Xjng/p/aa4dd23918359c6414d54e4b972e9081.html">Nginx+uWSGI+Django原理</a></li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[斐讯 N1 盒子刷机]]></title>
         <id>https://winking324.github.io/post/reinstall-n1</id>
@@ -868,74 +932,6 @@ source ~/.zshrc
 </li>
 <li>
 <p>保存并退出；</p>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[VirtualBox 配置 Ubuntu 主机网络]]></title>
-        <id>https://winking324.github.io/post/virtualbox-hostonly</id>
-        <link href="https://winking324.github.io/post/virtualbox-hostonly">
-        </link>
-        <updated>2018-10-19T02:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>在公司等企业网中，一般不使用 DHCP 自动获取 IP 地址，所以一般虚拟机创建后会有无法联网的问题。如果使用 NAT 方式，则又无法从主机链接到虚拟机环境。这里介绍使用 Host-Only（主机网络）方式进行主机和虚拟机之间链接。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>在公司等企业网中，一般不使用 DHCP 自动获取 IP 地址，所以一般虚拟机创建后会有无法联网的问题。如果使用 NAT 方式，则又无法从主机链接到虚拟机环境。这里介绍使用 Host-Only（主机网络）方式进行主机和虚拟机之间链接。</p>
-<!-- more -->
-<h1 id="1-创建主机网络">1 创建主机网络</h1>
-<ol>
-<li>
-<p>关机已经打开的虚拟机；</p>
-</li>
-<li>
-<p>全局工具，选择主机网络管理器；</p>
-<p><img src="https://winking324.github.io/post-images/1561182841555.png" alt=""></p>
-</li>
-<li>
-<p>创建主机网络；</p>
-<p><img src="https://winking324.github.io/post-images/1561182861315.png" alt=""></p>
-</li>
-<li>
-<p>修改主机网络属性；</p>
-<p><img src="https://winking324.github.io/post-images/1561182870810.png" alt=""></p>
-</li>
-</ol>
-<h1 id="2-配置服务器网卡">2 配置服务器网卡</h1>
-<ol>
-<li>
-<p>选择需要配置的服务器，并点击设置；</p>
-<p><img src="https://winking324.github.io/post-images/1561182886261.png" alt=""></p>
-</li>
-<li>
-<p>在网络中，点击网卡 2，进行以下设置；</p>
-<p><img src="https://winking324.github.io/post-images/1561182898489.png" alt=""></p>
-</li>
-</ol>
-<h1 id="3-配置服务器网络">3 配置服务器网络</h1>
-<ol>
-<li>
-<p>启动服务器并登陆；</p>
-<p><img src="https://winking324.github.io/post-images/1561182910432.png" alt=""></p>
-</li>
-<li>
-<p>查看当前网卡的信息，这里新增的网卡为 <code>enp0s8</code>；</p>
-<p><img src="https://winking324.github.io/post-images/1561182920307.png" alt=""></p>
-</li>
-<li>
-<p>进入 <code>/etc/netplan</code> 目录，并打开编辑 <code>50-cloud-init.yaml</code> 文件；</p>
-<p><img src="https://winking324.github.io/post-images/1561182933107.png" alt=""></p>
-</li>
-<li>
-<p>输入以下配置内容，保存关闭；</p>
-<p><img src="https://winking324.github.io/post-images/1561182942706.png" alt=""></p>
-</li>
-<li>
-<p>更新网络配置，并查看；</p>
-<p><img src="https://winking324.github.io/post-images/1561182953055.png" alt=""></p>
-</li>
-<li>
-<p>测试网络；</p>
-<p><img src="https://winking324.github.io/post-images/1561182962337.png" alt=""></p>
 </li>
 </ol>
 ]]></content>
