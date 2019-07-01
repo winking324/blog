@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-06-28T05:38:37.859Z</updated>
+    <updated>2019-07-01T02:40:53.435Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -12,8 +12,8 @@
     <rights>All rights reserved 2019, Winking</rights>
     <entry>
         <title type="html"><![CDATA[WSGI + uWSGI + uwsgi]]></title>
-        <id>https://winking324.github.io/post/wsgi-uwsgi-uwsgi</id>
-        <link href="https://winking324.github.io/post/wsgi-uwsgi-uwsgi">
+        <id>https://winking324.github.io/post/uwsgi</id>
+        <link href="https://winking324.github.io/post/uwsgi">
         </link>
         <updated>2019-06-28T05:36:18.000Z</updated>
         <summary type="html"><![CDATA[<p>一直以来，给外部系统提供服务，都是使用 RESTful API 方式。但是对于更多的用户来说，更喜欢的是使用浏览器直接打开页面，点击几个按钮来操作。所以在此基础上，学习了一下 Flask，接触到了 uWSGI，这里进行总结一下。</p>
