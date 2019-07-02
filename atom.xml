@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-07-02T11:07:01.476Z</updated>
+    <updated>2019-07-02T11:44:18.816Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,91 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[Nginx + uWSGI + Flask + WebSocket]]></title>
+        <id>https://winking324.github.io/post/nginx-uwsgi-flask-websocket</id>
+        <link href="https://winking324.github.io/post/nginx-uwsgi-flask-websocket">
+        </link>
+        <updated>2019-07-02T11:31:38.000Z</updated>
+        <summary type="html"><![CDATA[<p>一个应用服务器，想要提供短链接和长连接两类服务类型时，一般短链接用 HTTP 方式，而长链接采用 WebSocket 方式。</p>
+<p>所以用 Flask 如何提供这两种服务类型呢？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一个应用服务器，想要提供短链接和长连接两类服务类型时，一般短链接用 HTTP 方式，而长链接采用 WebSocket 方式。</p>
+<p>所以用 Flask 如何提供这两种服务类型呢？</p>
+<!-- more -->
+<p>这里使用 <a href="https://github.com/zeekay/flask-uwsgi-websocket">Flask-uWSGI-WebSocket</a> 这个插件，采用 Nginx + uWSGI + Flask + WebSocket 的方式来提供 HTTP 和 WebSocket 两种服务类型。</p>
+<ol>
+<li>
+<p>安装 Flask-uWSGI-WebSocket 插件；</p>
+<pre><code class="language-sh">sudo pip3 install Flask-uWSGI-WebSocket
+</code></pre>
+</li>
+<li>
+<p>修改 uwsgi 配置文件：</p>
+<pre><code class="language-ini">[uwsgi]
+socket = 127.0.0.1:5051
+master = true
+project = /data/projects/flaskr/
+pythonpath = %(project)
+module = app
+wsgi-file = %(project)/app.py
+callable = app
+processes = 1
+threads = 1
+daemonize = %(project)/server.log
+stats = %(project)/uwsgi/uwsgi.status
+pidfile = %(project)/uwsgi/uwsgi.pid
+
+# 增加
+gevent = 100
+</code></pre>
+</li>
+<li>
+<p>修改 Flask 相关逻辑；</p>
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+__author__ = &quot;winking324@gmail.com&quot;
+__copyright__ = &quot;Copyright (c) 2019 winking.io, Inc.&quot;
+
+
+from flask import Flask
+from flask_uwsgi_websocket import GeventWebSocket
+
+
+app = Flask(__name__, instance_relative_config=True)
+websocket = GeventWebSocket(app)
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+
+  
+@websocket.route('/echo')
+def echo(ws):
+    while True:
+        msg = ws.receive()
+        if msg is not None:
+            if msg:
+                ws.send(msg)
+        else:
+            return
+
+              
+if __name__ == '__main__':
+    app.run()
+</code></pre>
+</li>
+<li>
+<p>重启 uwsgi；</p>
+<pre><code class="language-sh">uwsgi --reload /data/projects/flaskr/uwsgi/uwsgi.pid
+</code></pre>
+</li>
+<li>
+<p>测试 WebSocket 服务；</p>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Nginx + uWSGI + Flask]]></title>
         <id>https://winking324.github.io/post/nginx-uwsgi-flask</id>
@@ -879,40 +964,6 @@ plugins=(git, autojump)
 source ~/.zshrc
 </code></pre>
 <p>使用时，只需要 <code>j data</code> 就可以跳转到历史中路径中包含 <code>data</code> 的路径中。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[VirtualBox 迁移]]></title>
-        <id>https://winking324.github.io/post/virtualbox-migrate</id>
-        <link href="https://winking324.github.io/post/virtualbox-migrate">
-        </link>
-        <updated>2018-10-19T07:55:56.000Z</updated>
-        <summary type="html"><![CDATA[<p>当虚拟机需要在办公室和家里同时使用时，可以将虚拟机文件，拷贝到移动硬盘上，在办公室和家里都以该文件创建环境即可。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>当虚拟机需要在办公室和家里同时使用时，可以将虚拟机文件，拷贝到移动硬盘上，在办公室和家里都以该文件创建环境即可。</p>
-<!-- more -->
-<ol>
-<li>
-<p>点击新建，创建虚拟机，填写名称等信息。选择使用已有的虚拟硬盘文件，并选择对应的硬盘文件，点击创建；</p>
-<p><img src="https://winking324.github.io/post-images/1561190019003.png" alt=""></p>
-</li>
-<li>
-<p>选择刚创建的虚拟机，并点击设置；</p>
-<p><img src="https://winking324.github.io/post-images/1561190028782.png" alt=""></p>
-</li>
-<li>
-<p>修改网络配置，添加 Host-Only 模式；</p>
-<p><img src="https://winking324.github.io/post-images/1561190039617.png" alt=""></p>
-</li>
-<li>
-<p>修改存储配置，添加之前创建的虚拟磁盘；</p>
-<p><img src="https://winking324.github.io/post-images/1561190049647.png" alt=""></p>
-</li>
-<li>
-<p>开机并登陆，检查网络和磁盘状态；</p>
-<p><img src="https://winking324.github.io/post-images/1561190060306.png" alt=""></p>
-</li>
-</ol>
 ]]></content>
     </entry>
 </feed>
