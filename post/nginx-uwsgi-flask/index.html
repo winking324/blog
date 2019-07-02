@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Ubuntu 下 MySQL 安装与配置 | Winking</title>
+<title>Nginx + uWSGI + Flask | Winking</title>
 <meta name="description" content="还愣着干啥！点赞啊！">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,114 +111,109 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Ubuntu 下 MySQL 安装与配置</h2>
-            <div class="post-date">2018-10-20</div>
+            <h2 class="post-title">Nginx + uWSGI + Flask</h2>
+            <div class="post-date">2019-07-02</div>
             
-              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/ubuntu-mysql.png')">
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/nginx-uwsgi-flask.png')">
               </div>
             
             <div class="post-content">
-              <p>MySQL 所使用的 SQL 语言是用于访问数据库的最常用标准化语言。MySQL 软件采用了双授权政策，分为社区版和商业版，由于其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，一般中小型网站的开发都选择 MySQL 作为网站数据库。</p>
+              <p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式：</p>
+<ul>
+<li>Nginx 负责提供对外的 Web 服务；</li>
+<li>uWSGI 充当中间件，桥接对外的 Web 服务和实际的应用服务；</li>
+<li>Flask 提供应用服务，完成业务逻辑；</li>
+</ul>
 <!-- more -->
-<h1 id="1-安装-mysql">1 安装 MySQL</h1>
+<h1 id="1-nginx-配置">1 Nginx 配置</h1>
+<p>在这里，使用 Nginx 的主要目的如下：</p>
 <ol>
-<li>
-<p>执行以下命令，安装 mysql；</p>
-<pre><code class="language-sh">sudo apt install mysql-server
-</code></pre>
-</li>
-<li>
-<p>查看初始用户名密码；</p>
-<pre><code class="language-sh">sudo cat /etc/mysql/debian.cnf
-</code></pre>
-<p><img src="https://winking324.github.io/post-images/1561192105213.png" alt=""></p>
-</li>
-<li>
-<p>登录数据库；</p>
-<pre><code class="language-sh">mysql -udebian-sys-maint -h127.0.0.1 -P3306 -pDrxCn6t800jO2AIL
-</code></pre>
-<p><img src="https://winking324.github.io/post-images/1561192117492.png" alt=""></p>
-</li>
-<li>
-<p>创建用户，并设置密码；</p>
-<pre><code class="language-mysql">GRANT ALL ON *.* TO 'u'@'127.0.0.1' IDENTIFIED BY 'u';
-</code></pre>
-</li>
-<li>
-<p>赋予用户u创建grant权限；</p>
-<pre><code class="language-mysql">use mysql;
-update user set grant_priv='Y' where user='u';
-</code></pre>
-</li>
-<li>
-<p>刷新；</p>
-<pre><code class="language-mysql">flush privileges;
-</code></pre>
-</li>
-<li>
-<p>退出并用创建的新用户登录；</p>
-<pre><code class="language-sh">mysql -uu -h127.0.0.1 -P3306 -pu
-</code></pre>
-<p><img src="https://winking324.github.io/post-images/1561192134492.png" alt=""></p>
-</li>
+<li>安全。客户端对 Web 服务器的访问需要先经过 Nginx。这样可以防止外部程序直接对应用服务器的恶意攻击；</li>
+<li>负载均衡。在有多个应用服务器的情况下，Nginx 可以根据应用服务器的负载情况，动态地把请求交给不同的应用服务器来处理；</li>
+<li>提升 IO 性能。一个 HTTP 请求的数据，从客户端传输给服务器，是需要时间的，例如 N 秒，如果直接传给应用服务器，应用服务器就需要让一个进程（或线程）阻塞 N 秒，进行 IO 操作，这样会降低应用服务器的性能。如果先让 Nginx 接收完整的 HTTP 请求，再把请求发给应用服务器，就能提升应用服务器的性能。还有一些静态文件的请求，可以直接交给 Nginx 来处理，不需要经过应用服务器，降低了应用服务器的 QPS。</li>
 </ol>
-<h1 id="2-外网访问权限">2 外网访问权限</h1>
-<p>MySQL 安装后，默认情况下只能本机访问，如果需要其他机器的访问权限，需要以下步骤。</p>
-<ol>
-<li>
-<p>设置绑定地址；</p>
-<pre><code class="language-sh"># 1. 编辑配置文件；
-sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+<p>但是默认情况下，Nginx 不具备 WSGI 规范的能力，需要通过 <a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html">ngx_http_uwsgi_module</a> 模块进行扩展，这个模块默认已经集成在 Nginx，所以不需要重新编译 Nginx。</p>
+<pre><code class="language-sh"># 修改 Nginx 配置
+sudo vi /etc/nginx/sites-enabled/default
 
-# 2. 修改 bind-address 为 0.0.0.0
-bind-address            = 0.0.0.0
+# 修改 location 部分
+location / {
+	include        uwsgi_params;
+	uwsgi_pass     127.0.0.1:5051;
+	uwsgi_param UWSGI_CHDIR  /data/projects/flaskr;
+	uwsgi_param UWSGI_SCRIPT app:app;
+}
 
-# 3. 保存退出;
-# 4. 重启 MySQL 服务；
-sudo service mysql restart
-
-# 5. 检查绑定地址是否正确；
-sudo netstat -antp | grep mysql
-
-# 6. 如果结果如下，则正确；
-# tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      3826/mysqld
+# 保存配置，并重新加载
+sudo systemctl reload nginx
 </code></pre>
-</li>
-<li>
-<p>登录 MySQL，为对应访问用户开放权限；</p>
-<pre><code class="language-sh"># 1. 登录 MySQL；
-mysql -uu -h127.0.0.1 -P3306 -pu
+<h1 id="2-uwsgi-配置">2 uWSGI 配置</h1>
+<p>Python 默认情况下，没有 uWSGI，所以需要手动安装一下：</p>
+<pre><code class="language-sh">sudo pip3 install uwsgi
+</code></pre>
+<p>之后，在 Flask 项目中，创建 uWSGI 的配置文件 <code>/data/projects/flaskr/uwsgi_config.ini</code>，并配置如下：</p>
+<pre><code class="language-ini">[uwsgi]
+socket = 127.0.0.1:5051
+master = true
+project = /data/projects/flaskr/
+pythonpath = %(project)
+module = app
+wsgi-file = %(project)/app.py
+callable = app
+processes = 1
+threads = 1
+daemonize = %(project)/server.log
+stats = %(project)/uwsgi/uwsgi.status
+pidfile = %(project)/uwsgi/uwsgi.pid
+</code></pre>
+<h1 id="3-flask-应用">3 Flask 应用</h1>
+<p>编写一个简单的 Flask 应用，先用来测试。创建 <code>/data/projects/flaskr/app.py</code> 文件，并输入：</p>
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+__author__ = &quot;winking324@gmail.com&quot;
+__copyright__ = &quot;Copyright (c) 2019 winking.io, Inc.&quot;
 
-# 2. 假设要访问用户的 IP 为 192.168.1.100，用户名为 u，密码为 u；
-GRANT ALL ON *.* TO 'u'@'192.168.1.100' IDENTIFIED BY 'u';
+
+from flask import Flask
+
+
+app = Flask(__name__, instance_relative_config=True)
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+
+
+if __name__ == '__main__':
+    app.run()
 </code></pre>
-</li>
-</ol>
-<h1 id="3-创建数据库">3. 创建数据库</h1>
-<p>创建 HttpRunnerManager 需要的数据库。</p>
-<ol>
-<li>
-<p>登录 MySQL；</p>
-<pre><code class="language-sh">mysql -uu -h127.0.0.1 -P3306 -pu
+<p>使用 uwsgi 命令启动 Flask 应用服务：</p>
+<pre><code class="language-sh">uwsgi --ini /data/projects/flaskr/uwsgi_config.ini
 </code></pre>
-</li>
-<li>
-<p>创建名称为 HttpRunner 的数据库；</p>
-<pre><code class="language-mysql">CREATE DATABASE IF NOT EXISTS HttpRunner DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+<p>如果需要重启 uwsgi，使用：</p>
+<pre><code class="language-sh">uwsgi --reload /data/projects/flaskr/uwsgi/uwsgi.pid
 </code></pre>
-</li>
-</ol>
+<p>如果需要停止服务，使用：</p>
+<pre><code class="language-sh">uwsgi --stop /data/projects/flaskr/uwsgi/uwsgi.pid
+</code></pre>
+<h1 id="4-请求测试">4 请求测试</h1>
+<p>在浏览器中，访问对应 Nginx 的地址，会在浏览器中显示 <code>Hello world!</code>。</p>
+<h1 id="5-参考链接">5 参考链接</h1>
+<ul>
+<li><a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html">ngx_http_uwsgi_module 说明文档</a></li>
+<li><a href="https://www.cnblogs.com/cuchadanfan/p/6237584.html">ngx_http_uwsgi_module 中文文档</a></li>
+</ul>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://winking324.github.io/tag/pasC5w41Q" class="tag">
-                    MySQL
+                  <a href="https://winking324.github.io/tag/j4moLT6pe" class="tag">
+                    Flask
                   </a>
                 
-                  <a href="https://winking324.github.io/tag/DQac7d40n" class="tag">
-                    Ubuntu
+                  <a href="https://winking324.github.io/tag/2FjjLFFx4" class="tag">
+                    Nginx
                   </a>
                 
               </div>
@@ -226,9 +221,9 @@ GRANT ALL ON *.* TO 'u'@'192.168.1.100' IDENTIFIED BY 'u';
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://winking324.github.io/post/ubuntu-init">
+                <a href="https://winking324.github.io/post/uwsgi">
                   <h3 class="post-title">
-                    Ubuntu 环境初始化
+                    WSGI + uWSGI + uwsgi
                   </h3>
                 </a>
               </div>

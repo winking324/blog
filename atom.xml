@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-07-01T02:43:57.185Z</updated>
+    <updated>2019-07-02T11:07:01.476Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,106 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[Nginx + uWSGI + Flask]]></title>
+        <id>https://winking324.github.io/post/nginx-uwsgi-flask</id>
+        <link href="https://winking324.github.io/post/nginx-uwsgi-flask">
+        </link>
+        <updated>2019-07-02T11:00:29.000Z</updated>
+        <summary type="html"><![CDATA[<p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式：</p>
+<ul>
+<li>Nginx 负责提供对外的 Web 服务；</li>
+<li>uWSGI 充当中间件，桥接对外的 Web 服务和实际的应用服务；</li>
+<li>Flask 提供应用服务，完成业务逻辑；</li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式：</p>
+<ul>
+<li>Nginx 负责提供对外的 Web 服务；</li>
+<li>uWSGI 充当中间件，桥接对外的 Web 服务和实际的应用服务；</li>
+<li>Flask 提供应用服务，完成业务逻辑；</li>
+</ul>
+<!-- more -->
+<h1 id="1-nginx-配置">1 Nginx 配置</h1>
+<p>在这里，使用 Nginx 的主要目的如下：</p>
+<ol>
+<li>安全。客户端对 Web 服务器的访问需要先经过 Nginx。这样可以防止外部程序直接对应用服务器的恶意攻击；</li>
+<li>负载均衡。在有多个应用服务器的情况下，Nginx 可以根据应用服务器的负载情况，动态地把请求交给不同的应用服务器来处理；</li>
+<li>提升 IO 性能。一个 HTTP 请求的数据，从客户端传输给服务器，是需要时间的，例如 N 秒，如果直接传给应用服务器，应用服务器就需要让一个进程（或线程）阻塞 N 秒，进行 IO 操作，这样会降低应用服务器的性能。如果先让 Nginx 接收完整的 HTTP 请求，再把请求发给应用服务器，就能提升应用服务器的性能。还有一些静态文件的请求，可以直接交给 Nginx 来处理，不需要经过应用服务器，降低了应用服务器的 QPS。</li>
+</ol>
+<p>但是默认情况下，Nginx 不具备 WSGI 规范的能力，需要通过 <a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html">ngx_http_uwsgi_module</a> 模块进行扩展，这个模块默认已经集成在 Nginx，所以不需要重新编译 Nginx。</p>
+<pre><code class="language-sh"># 修改 Nginx 配置
+sudo vi /etc/nginx/sites-enabled/default
+
+# 修改 location 部分
+location / {
+	include        uwsgi_params;
+	uwsgi_pass     127.0.0.1:5051;
+	uwsgi_param UWSGI_CHDIR  /data/projects/flaskr;
+	uwsgi_param UWSGI_SCRIPT app:app;
+}
+
+# 保存配置，并重新加载
+sudo systemctl reload nginx
+</code></pre>
+<h1 id="2-uwsgi-配置">2 uWSGI 配置</h1>
+<p>Python 默认情况下，没有 uWSGI，所以需要手动安装一下：</p>
+<pre><code class="language-sh">sudo pip3 install uwsgi
+</code></pre>
+<p>之后，在 Flask 项目中，创建 uWSGI 的配置文件 <code>/data/projects/flaskr/uwsgi_config.ini</code>，并配置如下：</p>
+<pre><code class="language-ini">[uwsgi]
+socket = 127.0.0.1:5051
+master = true
+project = /data/projects/flaskr/
+pythonpath = %(project)
+module = app
+wsgi-file = %(project)/app.py
+callable = app
+processes = 1
+threads = 1
+daemonize = %(project)/server.log
+stats = %(project)/uwsgi/uwsgi.status
+pidfile = %(project)/uwsgi/uwsgi.pid
+</code></pre>
+<h1 id="3-flask-应用">3 Flask 应用</h1>
+<p>编写一个简单的 Flask 应用，先用来测试。创建 <code>/data/projects/flaskr/app.py</code> 文件，并输入：</p>
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+__author__ = &quot;winking324@gmail.com&quot;
+__copyright__ = &quot;Copyright (c) 2019 winking.io, Inc.&quot;
+
+
+from flask import Flask
+
+
+app = Flask(__name__, instance_relative_config=True)
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+
+
+if __name__ == '__main__':
+    app.run()
+</code></pre>
+<p>使用 uwsgi 命令启动 Flask 应用服务：</p>
+<pre><code class="language-sh">uwsgi --ini /data/projects/flaskr/uwsgi_config.ini
+</code></pre>
+<p>如果需要重启 uwsgi，使用：</p>
+<pre><code class="language-sh">uwsgi --reload /data/projects/flaskr/uwsgi/uwsgi.pid
+</code></pre>
+<p>如果需要停止服务，使用：</p>
+<pre><code class="language-sh">uwsgi --stop /data/projects/flaskr/uwsgi/uwsgi.pid
+</code></pre>
+<h1 id="4-请求测试">4 请求测试</h1>
+<p>在浏览器中，访问对应 Nginx 的地址，会在浏览器中显示 <code>Hello world!</code>。</p>
+<h1 id="5-参考链接">5 参考链接</h1>
+<ul>
+<li><a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html">ngx_http_uwsgi_module 说明文档</a></li>
+<li><a href="https://www.cnblogs.com/cuchadanfan/p/6237584.html">ngx_http_uwsgi_module 中文文档</a></li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[WSGI + uWSGI + uwsgi]]></title>
         <id>https://winking324.github.io/post/uwsgi</id>
@@ -811,127 +911,6 @@ source ~/.zshrc
 <li>
 <p>开机并登陆，检查网络和磁盘状态；</p>
 <p><img src="https://winking324.github.io/post-images/1561190060306.png" alt=""></p>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[VirtualBox 配置虚拟硬盘]]></title>
-        <id>https://winking324.github.io/post/virtualbox-disk</id>
-        <link href="https://winking324.github.io/post/virtualbox-disk">
-        </link>
-        <updated>2018-10-19T06:20:23.000Z</updated>
-        <summary type="html"><![CDATA[<p>一般工作环境，不建议与系统环境放在一起。所以我们通过挂载磁盘方式，增加磁盘空间，并设置工作环境。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>一般工作环境，不建议与系统环境放在一起。所以我们通过挂载磁盘方式，增加磁盘空间，并设置工作环境。</p>
-<!-- more -->
-<h1 id="1-创建虚拟硬盘">1 创建虚拟硬盘</h1>
-<ol>
-<li>
-<p>关机已经打开的虚拟机；</p>
-</li>
-<li>
-<p>点击设置，并进入存储页面，并选择添加虚拟硬盘；</p>
-<p><img src="https://winking324.github.io/post-images/1561184554078.png" alt=""></p>
-</li>
-<li>
-<p>选择创建新的虚拟盘；</p>
-<p><img src="https://winking324.github.io/post-images/1561184568359.png" alt=""></p>
-</li>
-<li>
-<p>选择类型，并继续；</p>
-<p><img src="https://winking324.github.io/post-images/1561184581108.png" alt=""></p>
-</li>
-<li>
-<p>选择分配模式，并继续；</p>
-<p><img src="https://winking324.github.io/post-images/1561184593217.png" alt=""></p>
-</li>
-<li>
-<p>选择存储位置，并调整大小，点击创建；</p>
-<p><img src="https://winking324.github.io/post-images/1561184603974.png" alt=""></p>
-</li>
-<li>
-<p>创建成功；</p>
-<p><img src="https://winking324.github.io/post-images/1561184615522.png" alt=""></p>
-</li>
-</ol>
-<h1 id="2-磁盘分区">2 磁盘分区</h1>
-<ol>
-<li>
-<p>开机并登录系统；</p>
-<p><img src="https://winking324.github.io/post-images/1561184641855.png" alt=""></p>
-</li>
-<li>
-<p>查看当前磁盘信息；</p>
-<p><img src="https://winking324.github.io/post-images/1561184651517.png" alt=""></p>
-</li>
-<li>
-<p>操作对应的磁盘，输入 m 查看帮助；</p>
-<p><img src="https://winking324.github.io/post-images/1561184660552.png" alt=""></p>
-</li>
-<li>
-<p>支持的磁盘操作；</p>
-<p><img src="https://winking324.github.io/post-images/1561184671799.png" alt=""></p>
-</li>
-<li>
-<p>输入 p，查看当前分区；</p>
-<p><img src="https://winking324.github.io/post-images/1561184682439.png" alt=""></p>
-</li>
-<li>
-<p>输入 n，创建分区，选择主分区还是扩展分区，默认主分区；</p>
-<p><img src="https://winking324.github.io/post-images/1561184693348.png" alt=""></p>
-</li>
-<li>
-<p>选择磁盘分区在该硬盘中的序号；</p>
-<p><img src="https://winking324.github.io/post-images/1561184702415.png" alt=""></p>
-</li>
-<li>
-<p>磁盘起始位置；</p>
-<p><img src="https://winking324.github.io/post-images/1561184715648.png" alt=""></p>
-</li>
-<li>
-<p>磁盘结束位置；</p>
-<p><img src="https://winking324.github.io/post-images/1561184735442.png" alt=""></p>
-</li>
-<li>
-<p>创建分区结束，按 p 显示分区信息；</p>
-<p><img src="https://winking324.github.io/post-images/1561184747832.png" alt=""></p>
-</li>
-<li>
-<p>输入 w，保存并退出；</p>
-<p><img src="https://winking324.github.io/post-images/1561184761053.png" alt=""></p>
-</li>
-</ol>
-<h1 id="3-格式化分区">3 格式化分区</h1>
-<ol>
-<li>
-<p>格式化创建的分区，并等待格式化完成；</p>
-<p><img src="https://winking324.github.io/post-images/1561184771160.png" alt=""></p>
-</li>
-</ol>
-<h1 id="4-挂载硬盘">4 挂载硬盘</h1>
-<ol>
-<li>
-<p>创建 <code>/data</code> 目录；</p>
-<p><img src="https://winking324.github.io/post-images/1561184810771.png" alt=""></p>
-</li>
-<li>
-<p>挂载硬盘到 <code>/data</code> 路径下；</p>
-<p><img src="https://winking324.github.io/post-images/1561184820459.png" alt=""></p>
-</li>
-</ol>
-<h1 id="5-开机自动挂载硬盘">5 开机自动挂载硬盘</h1>
-<ol>
-<li>
-<p>编辑 <code>/etc/fstab</code> 文件；</p>
-<p><img src="https://winking324.github.io/post-images/1561184831895.png" alt=""></p>
-</li>
-<li>
-<p>在文件中，追加以下内容；</p>
-<p><img src="https://winking324.github.io/post-images/1561184841113.png" alt=""></p>
-</li>
-<li>
-<p>保存并退出；</p>
 </li>
 </ol>
 ]]></content>

@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1561948899138">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1562065618962">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
 
@@ -39,7 +39,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://winking324.github.io">
-        <img src="https://winking324.github.io/images/avatar.png?v=1561948899138" class="site-logo">
+        <img src="https://winking324.github.io/images/avatar.png?v=1562065618962" class="site-logo">
         <h1 class="site-title">Winking</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -104,6 +104,32 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://winking324.github.io/post/nginx-uwsgi-flask">
+                  <h2 class="post-title">Nginx + uWSGI + Flask</h2>
+                </a>
+                <div class="post-date">
+                  2019-07-02
+                </div>
+                <div class="post-abstract">
+                  <p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式：</p>
+<ul>
+<li>Nginx 负责提供对外的 Web 服务；</li>
+<li>uWSGI 充当中间件，桥接对外的 Web 服务和实际的应用服务；</li>
+<li>Flask 提供应用服务，完成业务逻辑；</li>
+</ul>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://winking324.github.io/post/nginx-uwsgi-flask">
+                  <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/nginx-uwsgi-flask.png')">
+                  </div>
+                </a>
+              
+            </article>
           
             <article class="post-item">
               <div class="left">
@@ -289,27 +315,6 @@
               
                 <a class="right" href="https://winking324.github.io/post/virtualbox-migrate">
                   <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/virtualbox-migrate.png')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://winking324.github.io/post/virtualbox-disk">
-                  <h2 class="post-title">VirtualBox 配置虚拟硬盘</h2>
-                </a>
-                <div class="post-date">
-                  2018-10-19
-                </div>
-                <div class="post-abstract">
-                  <p>一般工作环境，不建议与系统环境放在一起。所以我们通过挂载磁盘方式，增加磁盘空间，并设置工作环境。</p>
-
-                </div>
-              </div>
-              
-                <a class="right" href="https://winking324.github.io/post/virtualbox-disk">
-                  <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/virtualbox-disk.png')">
                   </div>
                 </a>
               
