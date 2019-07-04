@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>树莓派红外模块对接 | Winking</title>
+<meta name="description" content="还愣着干啥！点赞啊！">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1562217110458">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143048051-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-143048051-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://winking324.github.io">
+        <img src="https://winking324.github.io/images/avatar.png?v=1562217110458" class="site-logo">
+        <h1 class="site-title">Winking</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/winking324" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      还愣着干啥！点赞啊！
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/winking324/winking324.github.io" target="_blank">winking324</a> | <a class="rss" href="https://winking324.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">树莓派红外模块对接</h2>
+            <div class="post-date">2019-07-04</div>
+            
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/raspberry-lirc.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>随着家里的电器越来越多，遥控器也越来越多，例如投影仪遥控、电视盒子遥控、HDMI 分线器遥控、NAS 存储遥控、音响遥控、电灯遥控、小夜灯遥控、空调遥控等等。所以当我想看一部电影时，需要用先打开投影仪，再打开电视盒子，然后打开 NAS 存储，接着打开 HDMI 分线器，跟着打开音响，甚至还要关上电灯。</p>
+<p>一系列的操作简直烦不胜烦，然后就想是不是可以用一个遥控器，控制所有电器呢？毕竟大部分电器的遥控器，无非也就是按一下开关键而已。</p>
+<!-- more -->
+<p>所以计划用树莓派和红外模块来进行电器的整体控制。</p>
+<h1 id="1-红外模块">1 红外模块</h1>
+<p>树莓派已经有了，那现在缺的是一个红外模块，所以先淘宝和各种论坛搜了一下，找到了这个不错的红外模块。</p>
+<p><img src="https://winking324.github.io/post-images/1562216778147.png" alt=""></p>
+<p>这个模块有接收和发送两个部分，另外让淘宝老板多加了一个红外发射器 D2，到货时，老板已经贴心的帮忙焊了上去。</p>
+<p>但是我的树莓派加了一个合金的外壳，并且有散热风扇，如下：</p>
+<p><img src="https://winking324.github.io/post-images/1562216791197.png" alt=""></p>
+<p>另外看了一下树莓派阵脚的定义，如下（这个是扩展模块，每一列都是一样的，所以只看一列就可以了）：</p>
+<p><img src="https://winking324.github.io/post-images/1562216808667.png" alt=""></p>
+<p>就会有两个问题：</p>
+<ol>
+<li>插上这个模块，需要把外壳移除；</li>
+<li>这个模块占用了 5v 正极，导致散热风扇也没法用；</li>
+</ol>
+<p>所以大概看了一下红外模块的阵脚，发现其实它只用了以下几个阵脚：</p>
+<ol>
+<li>3.3v：正极；</li>
+<li>GND：负极；</li>
+<li>P17：红外发射；</li>
+<li>P18：红外接收；</li>
+<li>P27：开关1；</li>
+<li>P22：开关2；</li>
+</ol>
+<p>所以用排线把这几个阵脚对应连起来就可以了，这样好处就是解决了上面的两个问题，但是缺点是加了排线，导致整体看起来比较乱，不够精简。不过后面可以放到自制的盒子里面，把这些遮挡起来，就可以解决了。</p>
+<p>具体的阵脚链接，大家可以参考：</p>
+<p><img src="https://winking324.github.io/post-images/1562216822476.png" alt=""></p>
+<p><img src="https://winking324.github.io/post-images/1562216832768.png" alt=""></p>
+<h1 id="2-测试模块">2 测试模块</h1>
+<p>接线结束后，首先要测试一下模块是不是工作正常，如果整体工作正常，才能细化各部分逻辑。否则开发了半天，发现模块工作不正常，各种事情都要返工，就得不偿失了。</p>
+<p>测试过程中，查了不少资料，也绕了不少弯路，主要问题总结如下：</p>
+<ol>
+<li>
+<p>很多资料比较老，在内核 4.19.x 以上版本，都不能跟资料介绍的那样正常工作；</p>
+<p>由于在内核 4.19.x 以上版本，移除了对 <code>dtoverlay=lirc-rpi</code> 的支持，改为 <code>dtoverlay=gpio-ir</code> 以及 <code>dtoverlay=gpio-ir-tx</code> 方式。所以如果查看资料中，是以 <code>lirc-rpi</code> 方式集成的，那就可以无视这个资料了；</p>
+</li>
+<li>
+<p>lirc 这个模块的最新版本，配置也跟之前老版本的不同，不需要 <code>/etc/lirc/hardware.conf</code> 等配置文件；</p>
+</li>
+</ol>
+<p>踩了好多坑，正确的姿势应该按照下面的步骤执行。</p>
+<h2 id="21-确认内核版本">2.1 确认内核版本</h2>
+<pre><code class="language-sh">uname -a
+# 输出如下
+# Linux raspberrypi 4.14.79-v7+ #1159 SMP Sun Nov 4 17:50:20 GMT 2018 armv7l GNU/Linux
+</code></pre>
+<p>对于输出内容的说明如下：</p>
+<ul>
+<li><code>Linux</code>：kernel name</li>
+<li><code>raspberrypi</code>：network node hostname</li>
+<li><code>4.14.79-v7+</code>：kernel release</li>
+<li><code>#1159 SMP Sun Nov 4 17:50:20 GMT 2018</code>：kernel version</li>
+<li><code>armv7l</code>：machine hardware name</li>
+<li><code>GNU/Linux</code>：operating system</li>
+</ul>
+<p>可以看到当前的内核版本为 <code>4.14.79-v7+</code>。打开 <code>/boot/overlays/README</code> 并搜索 <code>lirc-rpi</code> 后，发现：</p>
+<pre><code>Name:   lirc-rpi
+Info:   This overlay has been deprecated and removed - see gpio-ir
+Load:   &lt;Deprecated&gt;
+</code></pre>
+<p><code>lirc-rpi</code> 已经被标记成已废弃，并且==已经移除==，使用 <code>gpio-ir</code> 来替换。</p>
+<p>所以首先要先确认自己的内核版本，并查看 <code>/boot/overlays/README</code>，确定 <code>lirc-rpi</code> 在自己的系统上是否可用（如果可用的话，可以直接找相关的集成文档，这部分有很多资料，这里就不多说了）。</p>
+<h2 id="22-安装-lirc">2.2 安装 lirc</h2>
+<p><a href="http://www.lirc.org/">lirc</a> 是 Linux 下，提供红外信号编解码，以及收发能力的一个模块。有了这个模块，我们不需要去实现红外信号处理等很复杂的逻辑。</p>
+<p>安装：</p>
+<pre><code class="language-sh">sudo apt-get install -y lirc
+</code></pre>
+<h2 id="23-配置-gpio">2.3 配置 gpio</h2>
+<p>首先，配置 gpio，让系统知道红外模块是通过哪几个引脚来进行控制的。</p>
+<p>在前面，我们在接线的时候，提到：</p>
+<ul>
+<li>
+<p>P17：红外发射；</p>
+</li>
+<li>
+<p>P18：红外接收；</p>
+</li>
+</ul>
+<p>所以需要将这两个引脚配置到系统中。</p>
+<pre><code class="language-sh"># 打开编辑 /boot/config.txt 文件
+sudo vi /boot/config.txt
+
+# 找到 dtoverlay 的声明位置，增加以下声明
+dtoverlay=gpio-ir,gpio_pin=18
+dtoverlay=gpio-ir-tx,gpio_pin=17
+
+# 保存退出，并重启树莓派
+sudo reboot
+</code></pre>
+<p>重启后，进入系统，执行 <code>ls /dev</code> 可以看到 <code>lirc0</code> 和 <code>lirc1</code> 这两个设备，说明配置成功。</p>
+<h2 id="24-测试红外接收">2.4 测试红外接收</h2>
+<p>停掉 lircd 服务：</p>
+<pre><code class="language-sh">sudo systemctl stop lircd
+</code></pre>
+<p>读取红外模块接收的内容：</p>
+<pre><code class="language-sh">mode2 -d /dev/lirc1
+</code></pre>
+<p>进入红外读取状态：</p>
+<pre><code class="language-sh">Using driver devinput on device /dev/lirc1
+Trying device: /dev/lirc1
+Using device: /dev/lirc1
+</code></pre>
+<p>然后用遥控器随便按一个键，会出现以下内容：</p>
+<pre><code class="language-sh">code: 0xffffff006d532500bb22000166110000
+code: 0x26020001240200005602000106020000
+code: 0x220200013e0200002502000125020000
+code: 0x3c02000120020000240200013c020000
+code: 0x40020001090200003f0200011e020000
+Partial read 12 bytes on /dev/lirc1
+</code></pre>
+<h2 id="25-测试红外发送">2.5 测试红外发送</h2>
+<p>waiting for update</p>
+<h1 id="3-参考链接">3 参考链接</h1>
+<ul>
+<li>
+<p><a href="http://www.lirc.org/">LIRC</a></p>
+</li>
+<li>
+<p><a href="https://www.raspberrypi.org/forums/viewtopic.php?t=235256">Using LIRC with kernel 4.19.X and gpio-ir</a></p>
+</li>
+<li>
+<p><a href="https://superuser.com/questions/1441396/rpi-3b-lirc-wont-setup-device-could-not-get-file-information-for-dev-lirc0">RPi 3B — LIRC won't setup device: could not get file information for /dev/lirc0</a></p>
+</li>
+<li>
+<p><a href="https://www.raspberrypi.org/forums/viewtopic.php?t=235918">lirc on Raspberry Pi Zero W with gpio-ir</a></p>
+</li>
+<li>
+<p><a href="https://www.sunfounder.com/learn/sensor-kit-v2-0-for-raspberry-pi-b-plus/lesson-23-ir-remote-control-sensor-kit-v2-0-for-b-plus.html">Lesson 23 IR Remote Control</a></p>
+</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://winking324.github.io/tag/q7UccH_pD" class="tag">
+                    RaspberryPi
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://winking324.github.io/post/nginx-uwsgi-flask-websocket">
+                  <h3 class="post-title">
+                    Nginx + uWSGI + Flask + WebSocket
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'cf71cf503e8d0441d9ac',
+        clientSecret: 'c1c3d8f77fa2a097546464880636cd5080d492e7',
+        repo: 'winking324.github.io',
+        owner: 'winking324',
+        admin: ['winking324'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
