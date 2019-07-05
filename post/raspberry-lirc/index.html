@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1562217110458">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1562342633290">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://winking324.github.io">
-        <img src="https://winking324.github.io/images/avatar.png?v=1562217110458" class="site-logo">
+        <img src="https://winking324.github.io/images/avatar.png?v=1562342633290" class="site-logo">
         <h1 class="site-title">Winking</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -212,10 +212,11 @@ sudo reboot
 <p>重启后，进入系统，执行 <code>ls /dev</code> 可以看到 <code>lirc0</code> 和 <code>lirc1</code> 这两个设备，说明配置成功。</p>
 <h2 id="24-测试红外接收">2.4 测试红外接收</h2>
 <p>停掉 lircd 服务：</p>
-<pre><code class="language-sh">sudo systemctl stop lircd
+<pre><code class="language-sh">sudo systemctl stop lircd.socket
+sudo systemctl stop lircd.service
 </code></pre>
 <p>读取红外模块接收的内容：</p>
-<pre><code class="language-sh">mode2 -d /dev/lirc1
+<pre><code class="language-sh">mode2 --driver default --device /dev/lirc1
 </code></pre>
 <p>进入红外读取状态：</p>
 <pre><code class="language-sh">Using driver devinput on device /dev/lirc1
@@ -223,12 +224,127 @@ Trying device: /dev/lirc1
 Using device: /dev/lirc1
 </code></pre>
 <p>然后用遥控器随便按一个键，会出现以下内容：</p>
-<pre><code class="language-sh">code: 0xffffff006d532500bb22000166110000
-code: 0x26020001240200005602000106020000
-code: 0x220200013e0200002502000125020000
-code: 0x3c02000120020000240200013c020000
-code: 0x40020001090200003f0200011e020000
-Partial read 12 bytes on /dev/lirc1
+<pre><code class="language-sh">space 16777215
+pulse 95
+space 182
+pulse 1616
+space 221
+pulse 766
+space 76
+pulse 443
+space 277
+pulse 149
+space 387
+pulse 908
+space 168
+pulse 94
+space 348
+pulse 741
+space 80
+pulse 738
+space 485
+pulse 82
+space 152
+pulse 344
+space 74
+pulse 132
+space 4898
+pulse 515
+space 641
+pulse 443
+space 748
+pulse 94
+space 170
+pulse 89
+space 1894
+pulse 383
+space 647
+pulse 86
+space 256
+pulse 179
+space 797
+pulse 89
+space 944
+pulse 198
+space 1061
+pulse 314
+space 1883
+pulse 257
+space 1861
+pulse 116
+space 224
+pulse 84
+space 1884
+pulse 454
+space 1698
+pulse 87
+space 175
+pulse 120
+space 1932
+pulse 476
+space 1778
+pulse 496
+space 1802
+pulse 96
+space 2153
+pulse 355
+space 1953
+pulse 375
+space 591
+pulse 545
+space 1726
+pulse 334
+space 933
+pulse 386
+space 643
+pulse 493
+space 643
+pulse 386
+space 2091
+pulse 239
+space 641
+pulse 340
+space 798
+pulse 486
+space 1779
+pulse 496
+space 747
+pulse 90
+space 2209
+pulse 308
+space 1805
+pulse 84
+space 115
+pulse 241
+space 1751
+pulse 87
+space 175
+pulse 174
+space 719
+pulse 471
+space 1857
+pulse 92
+pulse 21981
+space 61979
+space 40451
+pulse 89
+space 143
+pulse 96
+space 221
+pulse 904
+space 121
+pulse 1057
+space 84
+pulse 2610
+space 303
+pulse 1550
+space 83
+pulse 95
+space 188
+pulse 1004
+space 2820
+pulse 381
+pulse 19764
 </code></pre>
 <h2 id="25-测试红外发送">2.5 测试红外发送</h2>
 <p>waiting for update</p>
