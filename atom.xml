@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-07-09T04:22:53.937Z</updated>
+    <updated>2019-07-09T04:23:29.098Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -628,20 +628,15 @@ if __name__ == '__main__':
         <link href="https://winking324.github.io/post/nginx-uwsgi-flask">
         </link>
         <updated>2019-07-02T11:00:29.000Z</updated>
-        <summary type="html"><![CDATA[<p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式：</p>
-<ul>
-<li>Nginx 负责提供对外的 Web 服务；</li>
-<li>uWSGI 充当中间件，桥接对外的 Web 服务和实际的应用服务；</li>
-<li>Flask 提供应用服务，完成业务逻辑；</li>
-</ul>
+        <summary type="html"><![CDATA[<p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式：</p>
+        <content type="html"><![CDATA[<p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式。</p>
+<!-- more -->
 <ul>
 <li>Nginx 负责提供对外的 Web 服务；</li>
 <li>uWSGI 充当中间件，桥接对外的 Web 服务和实际的应用服务；</li>
 <li>Flask 提供应用服务，完成业务逻辑；</li>
 </ul>
-<!-- more -->
 <h1 id="1-nginx-配置">1 Nginx 配置</h1>
 <p>在这里，使用 Nginx 的主要目的如下：</p>
 <ol>
