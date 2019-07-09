@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>树莓派报警器 | Winking</title>
+<meta name="description" content="还愣着干啥！点赞啊！">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1562645902867">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143048051-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-143048051-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://winking324.github.io">
+        <img src="https://winking324.github.io/images/avatar.png?v=1562645902867" class="site-logo">
+        <h1 class="site-title">Winking</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/winking324" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      还愣着干啥！点赞啊！
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/winking324/winking324.github.io" target="_blank">winking324</a> | <a class="rss" href="https://winking324.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">树莓派报警器</h2>
+            <div class="post-date">2019-07-09</div>
+            
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/raspberry-alarm.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>随着公司不断变大，作为报警监控用的“大电视”也越来越重要。但是更换位置之后，“大电视”被各种显示器遮挡，出现情况后，无法第一眼看到，所以做一个报警器来监控一下。</p>
+<!-- more -->
+<h1 id="1-材料">1 材料</h1>
+<p>准备需要的材料如下：</p>
+<ul>
+<li>
+<p>树莓派一个；</p>
+</li>
+<li>
+<p>SD 卡一张；</p>
+</li>
+<li>
+<p>报警器一个；</p>
+</li>
+<li>
+<p>电源线（带插头）一根；</p>
+</li>
+<li>
+<p>继电器一个；</p>
+</li>
+<li>
+<p>杜邦线数根；</p>
+</li>
+<li>
+<p>USB 数据线一根；</p>
+</li>
+<li>
+<p>HDMI 线一根；</p>
+</li>
+<li>
+<p>键盘一个；</p>
+</li>
+<li>
+<p>显示器一台；</p>
+</li>
+</ul>
+<p>主要设备如下：</p>
+<p><img src="https://winking324.github.io/post-images/1562645732607.png" alt=""></p>
+<h1 id="2-安装环境">2 安装环境</h1>
+<h2 id="21-烧录系统">2.1 烧录系统</h2>
+<p>准备好一个<a href="https://www.raspberrypi.org/downloads/">树莓派镜像</a>，这里使用的是 <a href="https://downloads.raspberrypi.org/raspbian_lite_latest.torrent">Raspbian Buster Lite</a>。</p>
+<p>另外使用 <a href="https://www.balena.io/etcher/">balenaEtcher</a> 烧录软件，进行镜像的烧录，如果有其他的软件，可以根据需要自行进行系统的烧录。</p>
+<ol>
+<li>
+<p>选择镜像，并选择对应的 SD 卡，点击烧录；</p>
+<p><img src="https://winking324.github.io/post-images/1562645746399.png" alt=""></p>
+</li>
+<li>
+<p>烧录成功；</p>
+<p><img src="https://winking324.github.io/post-images/1562645756401.png" alt=""></p>
+</li>
+</ol>
+<h2 id="22-初始化环境">2.2 初始化环境</h2>
+<p>将烧录好的 SD 卡，插到树莓派上，并给树莓派链接显示器、键盘、网线（非必须），之后插入 USB 上电。</p>
+<p>经过一次自动重启后，树莓派会成功载入系统，并跳出登陆界面。输入用户名 pi 和默认密码 raspberry 后，进入到系统中。</p>
+<p>设置 SSH 及 WiFi（如有必要设置键盘布局）等：</p>
+<pre><code class="language-sh"># 进入设置
+sudo raspi-config
+</code></pre>
+<p>更新 apt 源及系统：</p>
+<pre><code class="language-sh"># apt source
+sudo sed -i 's#://raspbian.raspberrypi.org#s://mirrors.ustc.edu.cn/raspbian#g' /etc/apt/sources.list
+sudo sed -i 's#://archive.raspberrypi.org/debian#s://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian#g' /etc/apt/sources.list.d/raspi.list
+
+# update and upgrade
+sudo apt-get update
+sudo apt-get upgrade -y
+</code></pre>
+<p>安装后面需要的模块及软件：</p>
+<pre><code class="language-sh">sudo apt-get install -y nginx python3-pip python3-rpi.gpio
+sudo pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple flask uwsgi
+</code></pre>
+<h1 id="3-调试继电器">3 调试继电器</h1>
+<p>由于报警灯默认是用 220V 的交流电，上来直接测试，会有比较大的安全风险，所以我们这里先用 LED 灯来进行测试，如果成功，再将 LED 灯替换为报警灯。</p>
+<h2 id="31-继电器">3.1 继电器</h2>
+<p>继电器很简单，一端接树莓派进行开关控制，另外一端接设备，如图：</p>
+<p><img src="https://winking324.github.io/post-images/1562645785924.png" alt=""></p>
+<p>这个继电器对内是直接用树莓派的 5V 电压，对外可以接：</p>
+<ul>
+<li>10A 250V 交流电</li>
+<li>10A 125V 交流电</li>
+<li>10A 30V 直流电</li>
+<li>10A 28V 的直流电</li>
+</ul>
+<p>从上图可以看到，对外三个接口对应的开关状态，中间接火线，如果希望默认开关长闭状态，对应左边；如果希望默认开关长开状态，对应右边。我们这里希望报警器默认是关闭的，所以接入右边。</p>
+<h2 id="32-led">3.2 LED</h2>
+<p>LED 灯就比较简单了，直接两个阵脚，一个接入 GPIO，一个接入负极。</p>
+<p>最后整体如图：</p>
+<p><img src="https://winking324.github.io/post-images/1562645777502.png" alt=""></p>
+<h2 id="32-调试">3.2 调试</h2>
+<p>这里用 Python3 简单调试一下，代码如下：</p>
+<pre><code class="language-python">import RPi.GPIO as GPIO
+import time
+
+# GPIO 17
+led_pin = 11
+# GPIO 18
+relay_pin = 12
+
+
+def setup():
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(led_pin, GPIO.OUT)
+    GPIO.setup(relay_pin, GPIO.OUT)
+
+    # led on
+    GPIO.output(led_pin, GPIO.HIGH)
+    # relay off
+    GPIO.output(relay_pin, GPIO.LOW)
+
+
+def loop():
+    relay = 0
+    while True:
+        GPIO.output(relay_pin, GPIO.HIGH if relay == 1 else GPIO.LOW)
+        time.sleep(2)
+        relay = int(input('0: Close, 1: Open'))
+
+
+def destroy():
+    GPIO.output(led_pin, GPIO.LOW)
+    GPIO.output(relay_pin, GPIO.LOW)
+
+    # Release resource
+    GPIO.cleanup()
+
+
+if __name__ == '__main__':
+    setup()
+    try:
+        loop()
+    except KeyboardInterrupt:
+        # When 'Ctrl+C' is pressed,
+        # the child program destroy() will be  executed.
+        destroy()
+</code></pre>
+<p>逻辑很简单，当输入 1 时，继电器进入闭合状态，LED 会亮起来；当输入 0 时，继电器进入打开状态，LED 会关闭。</p>
+<h1 id="4-调试报警灯">4 调试报警灯</h1>
+<p>链接报警灯：</p>
+<p><img src="https://winking324.github.io/post-images/1562645797278.png" alt=""></p>
+<p>当然这是初步连接，用于给大家展示接口，有需要尝试的小伙伴，一定要用电工胶布，把裸露的电线包好，避免出现意外事故。</p>
+<p>连接好之后，插入电源，用下面的代码进行测试。</p>
+<pre><code class="language-python">import RPi.GPIO as GPIO
+import time
+
+# GPIO 18
+relay_pin = 12
+
+
+def setup():
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(relay_pin, GPIO.OUT)
+    GPIO.output(relay_pin, GPIO.LOW)
+
+
+def loop():
+    relay = 0
+    while True:
+        GPIO.output(relay_pin, GPIO.HIGH if relay == 1 else GPIO.LOW)
+        time.sleep(2)
+        relay = int(input('0: Close, 1: Open'))
+
+
+def destroy():
+    GPIO.output(relay_pin, GPIO.LOW)
+    GPIO.cleanup()
+
+
+if __name__ == '__main__':
+    setup()
+    try:
+        loop()
+    except KeyboardInterrupt:
+        destroy()
+</code></pre>
+<p>报警灯可以正常的进行工作：</p>
+<p><img src="https://winking324.github.io/post-images/1562645805640.gif" alt=""></p>
+<h1 id="5-报警服务">5 报警服务</h1>
+<p>这里用 Nginx + uwsgi + flask 来搭建一个 web 服务，当有报警请求过来时，触发打开报警灯。</p>
+<h2 id="51-nginx-配置">5.1 Nginx 配置</h2>
+<p>在树莓派中执行以下命令：</p>
+<pre><code class="language-sh">cd /etc/nginx/sites-enabled/
+sudo mv default marmot.conf
+</code></pre>
+<p>修改 marmot.conf 文件，内容如下：</p>
+<pre><code class="language-nginx">server {
+        listen 80;
+        listen [::]:80;
+
+        location / {
+                include        uwsgi_params;
+                uwsgi_pass     127.0.0.1:5051;
+                uwsgi_param UWSGI_CHDIR /home/pi/marmot;
+                uwsgi_param UWSGI_SCRIPT app:app;
+        }
+}
+</code></pre>
+<p>重新加载 nginx 配置文件：</p>
+<pre><code class="language-sh">sudo service nginx reload
+</code></pre>
+<h2 id="52-uwsgi-配置">5.2 uwsgi 配置</h2>
+<p>创建 uwsgi 配置文件 <code>uwsgi_config.ini</code>：</p>
+<pre><code class="language-ini">[uwsgi]
+socket = 127.0.0.1:5051
+master = true
+project = /home/pi/marmot
+pythonpath = %(project)
+module = app
+wsgi-file = %(project)/app.py
+callable = app
+processes = 1
+threads = 1
+daemonize = %(project)/server.log
+stats = %(project)/uwsgi/uwsgi.status
+pidfile = %(project)/uwsgi/uwsgi.pid
+</code></pre>
+<h2 id="53-报警服务">5.3 报警服务</h2>
+<p>简单写一个 web 服务，有请求时，触发报警：</p>
+<pre><code class="language-python">import time
+import logging
+import RPi.GPIO as GPIO
+from flask import Flask
+
+
+app = Flask(__name__, instance_relative_config=True)
+app.logger.setLevel(logging.INFO)
+
+# GPIO 18
+relay_pin = 12
+
+
+def setup_marmot():
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(relay_pin, GPIO.OUT)
+    GPIO.output(relay_pin, GPIO.LOW)
+
+    
+def destroy_marmot():
+    GPIO.output(relay_pin, GPIO.LOW)
+    GPIO.cleanup()
+    
+    
+@app.route('/')
+def marmot():
+    app.logger.info('what does the marmot say')
+    setup_marmot()
+    GPIO.output(relay_pin, GPIO.HIGH)
+  	time.sleep(5)
+    destroy_marmot()
+    return 'Ahhhhhhhhhhhhhhh...'
+
+
+if __name__ == '__main__':
+    app.run()
+</code></pre>
+<p>启动服务：</p>
+<pre><code class="language-sh">uwsgi --ini uwsgi_config.ini
+</code></pre>
+<p>在浏览器里面，输入树莓派的地址，发送请求测试，报警成功。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://winking324.github.io/tag/q7UccH_pD" class="tag">
+                    RaspberryPi
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://winking324.github.io/post/raspberry-lirc">
+                  <h3 class="post-title">
+                    树莓派红外模块对接
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'cf71cf503e8d0441d9ac',
+        clientSecret: 'c1c3d8f77fa2a097546464880636cd5080d492e7',
+        repo: 'winking324.github.io',
+        owner: 'winking324',
+        admin: ['winking324'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
