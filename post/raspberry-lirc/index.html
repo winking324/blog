@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1562646206375">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1565244099784">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://winking324.github.io">
-        <img src="https://winking324.github.io/images/avatar.png?v=1562646206375" class="site-logo">
+        <img src="https://winking324.github.io/images/avatar.png?v=1565244099784" class="site-logo">
         <h1 class="site-title">Winking</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -180,7 +180,7 @@
 Info:   This overlay has been deprecated and removed - see gpio-ir
 Load:   &lt;Deprecated&gt;
 </code></pre>
-<p><code>lirc-rpi</code> 已经被标记成已废弃，并且==已经移除==，使用 <code>gpio-ir</code> 来替换。</p>
+<p><code>lirc-rpi</code> 已经被标记成已废弃，并且<mark>已经移除</mark>，使用 <code>gpio-ir</code> 来替换。</p>
 <p>所以首先要先确认自己的内核版本，并查看 <code>/boot/overlays/README</code>，确定 <code>lirc-rpi</code> 在自己的系统上是否可用（如果可用的话，可以直接找相关的集成文档，这部分有很多资料，这里就不多说了）。</p>
 <h2 id="22-安装-lirc">2.2 安装 lirc</h2>
 <p><a href="http://www.lirc.org/">lirc</a> 是 Linux 下，提供红外信号编解码，以及收发能力的一个模块。有了这个模块，我们不需要去实现红外信号处理等很复杂的逻辑。</p>

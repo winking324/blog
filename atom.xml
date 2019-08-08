@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-07-09T04:23:29.098Z</updated>
+    <updated>2019-08-08T06:01:43.800Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,136 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[斐讯 N1 盒子搭建 NAS]]></title>
+        <id>https://winking324.github.io/post/n1-nas</id>
+        <link href="https://winking324.github.io/post/n1-nas">
+        </link>
+        <updated>2019-08-08T05:51:46.000Z</updated>
+        <summary type="html"><![CDATA[<p>T1 盒子安装红外模块，并刷完系统后，N1 盒子就放在家里落灰了。为了充分发挥它的作用，把它刷成了一个 NAS，来管理家里的存储设备。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>T1 盒子安装红外模块，并刷完系统后，N1 盒子就放在家里落灰了。为了充分发挥它的作用，把它刷成了一个 NAS，来管理家里的存储设备。</p>
+<!-- more -->
+<h1 id="1-刷机准备">1 刷机准备</h1>
+<p>设备：</p>
+<ol>
+<li>N1 盒子一台；</li>
+<li>U 盘一个；</li>
+<li>显示器一台；</li>
+<li>网线一根；</li>
+<li>键盘一个；</li>
+<li>网络环境；</li>
+<li>电脑一台；</li>
+</ol>
+<p>工具：</p>
+<ol>
+<li>烧录工具：balenaEtcher；</li>
+<li>终端工具：iTerm；</li>
+<li>刷机系统：Armbian；</li>
+</ol>
+<p>打包地址：</p>
+<p><a href="https://pan.baidu.com/s/1A97UHfFccERz06iJ6gioXA">百度网盘</a> 提取码: nb2k</p>
+<h1 id="2-制作-armbian-系统盘">2 制作 Armbian 系统盘</h1>
+<p>这里安装的系统是 Armbian，是一个轻量级的 Debian 系统和为 ARM 开发板专门发行并重新编译的 Debian 系统。</p>
+<ol>
+<li>将 <code>Armbian_5.77_Aml-s905_Debian_stretch_default_5.1.0-rc1_20190408以boot以加入dtd、extlinux、uEnv.ini.img.xz</code> 解压；</li>
+<li>使用 balenaEtcher，将解压后的 <code>Armbian_5.77_Aml-s905_Debian_stretch_default_5.1.0-rc1_20190408以boot以加入dtd、extlinux、uEnv.ini.img</code> 烧录到 U 盘中；</li>
+<li>Armbian 系统盘制作成功；</li>
+</ol>
+<h1 id="3-安装-armbian">3 安装 Armbian</h1>
+<p>Mac 中，首先要安装 Android 工具包：</p>
+<p><code>brew cask install android-platform-tools</code></p>
+<ol>
+<li>
+<p>N1 接入网络并插入电源上电；</p>
+</li>
+<li>
+<p>查看 N1 的 IP，这里假设为 <code>192.168.1.30</code>；</p>
+</li>
+<li>
+<p>在终端工具中输入 <code>adb connect 192.168.1.30:5555</code> 连上 N1；</p>
+</li>
+<li>
+<p>在终端工具中输入 <code>adb shell reboot update</code> 使 N1 重启进入刷机模式；</p>
+</li>
+<li>
+<p>此时立即插入 U 盘到 HDMI 旁边的 USB 口；</p>
+</li>
+<li>
+<p>等待刷机结束；</p>
+</li>
+<li>
+<p>刷机结束后，会在控制台中显示 IP（假设仍为 <code>192.168.1.30</code>）和 Login 提示；</p>
+</li>
+<li>
+<p>在终端工具中输入 <code>ssh root@192.168.1.30</code>，密码 1234 登陆到 Armbian 中；</p>
+<p><img src="https://winking324.github.io/post-images/1565243675461.jpg" alt=""></p>
+</li>
+<li>
+<p>随便输入一个新的密码（因为后面会重新刷系统，这个密码只是临时用）；</p>
+</li>
+<li>
+<p>提示创建用户，按 Ctrl-C 取消；</p>
+</li>
+</ol>
+<p>Windows 中，可以使用之前 N1 刷机工具中的 <code>使N1进入线刷模式.zip</code> 中脚本来代替第 3、4 步的操作。</p>
+<h1 id="4-安装-fastnas">4 安装 FastNas</h1>
+<p>完成上面的 Armbian 系统的安装后，此时已经在 Armbian 系统中了，接下来需要将 FastNas 作者已经打好的系统包：<code>BACKUP-s9xxx-emmc.img.gz</code>，刷到 N1 上。</p>
+<ol>
+<li>
+<p>打开一个新的终端，将文件传到 N1 上（Windows 中可以使用 WinSCP 等工具来上传文件）；</p>
+<pre><code class="language-sh">scp -C -r BACKUP-s9xxx-emmc.img.gz root@192.168.1.30:~/
+</code></pre>
+</li>
+<li>
+<p>在已经登陆 N1 的终端中，将文件放到 <code>/ddbr</code> 路径下：</p>
+<pre><code class="language-sh">mkdir -p /ddbr
+mv BACKUP-s9xxx-emmc.img.gz /ddbr
+</code></pre>
+</li>
+<li>
+<p>执行 <code>ddbr</code> 命令进行 FastNas 安装：</p>
+<p><img src="https://winking324.github.io/post-images/1565243690309.jpg" alt=""></p>
+</li>
+<li>
+<p>执行 <code>poweroff</code> 将 N1 盒子关机；</p>
+</li>
+<li>
+<p>拔掉 U 盘，并重新上电开机；</p>
+</li>
+</ol>
+<h1 id="5-网络设置">5 网络设置</h1>
+<p>开机完成后，就已经进入了安装好 FastNas 的系统了，此时用户名为 root，密码为 media1984。</p>
+<p>目前系统的内核有个问题，每次重启，MAC 地址会变化，所以如果使用 DHCP 方式获取 IP，会导致每次重启，N1 的 IP 都发生变化。</p>
+<p>解决的办法如下：</p>
+<ol>
+<li>
+<p>终端登陆 N1；</p>
+</li>
+<li>
+<p>vi 打开编辑 <code>/etc/network/interfaces</code> 文件；</p>
+</li>
+<li>
+<p>增加 <code>hwaddress ether 6a:c8:0b:05:88:52</code> 到 eth0（有线）配置中；</p>
+<p><img src="https://winking324.github.io/post-images/1565243700384.jpg" alt=""></p>
+</li>
+<li>
+<p>输入 <code>reboot</code> 重启，可以看到 MAC 地址不会再发生变化；</p>
+</li>
+</ol>
+<p>如果使用无线网络，使用 <code>armbian-config</code> 命令进行无线网络的配置。</p>
+<h1 id="6-omv-设置">6 OMV 设置</h1>
+<p>在电脑中，打开浏览器，输入 <code>http://192.168.1.30</code>，便可以进入 OpenMediaVault 系统（用户名：admin，密码：openmediavault）。</p>
+<p><img src="https://winking324.github.io/post-images/1565243709299.jpg" alt=""></p>
+<h1 id="7-参考链接">7 参考链接</h1>
+<ul>
+<li><a href="https://www.right.com.cn/forum/thread-847725-1-1.html">一键安装 FastNas V1.0.320190731 for Armbian Debian 5.77+OMV集成了可道云桌面</a></li>
+<li><a href="https://www.right.com.cn/forum/thread-839364-1-1.html">N1盒子一键安装 FastNas V1.0.3 for Armbian Debian 5.77+OMV修复wifi 不可用</a></li>
+<li><a href="https://www.right.com.cn/forum/thread-847730-1-1.html">Fastnas OMV挂载硬盘</a></li>
+<li><a href="https://forum.armbian.com/topic/6354-does-nanopineos-gige-mac-address-randomly-change-from-time-to-time-after-rebooting/">Does NanoPiNEO's GigE Mac Address randomly change from time to time, after rebooting?</a></li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[树莓派报警器]]></title>
         <id>https://winking324.github.io/post/raspberry-alarm</id>
@@ -349,7 +479,7 @@ if __name__ == '__main__':
 Info:   This overlay has been deprecated and removed - see gpio-ir
 Load:   &lt;Deprecated&gt;
 </code></pre>
-<p><code>lirc-rpi</code> 已经被标记成已废弃，并且==已经移除==，使用 <code>gpio-ir</code> 来替换。</p>
+<p><code>lirc-rpi</code> 已经被标记成已废弃，并且<mark>已经移除</mark>，使用 <code>gpio-ir</code> 来替换。</p>
 <p>所以首先要先确认自己的内核版本，并查看 <code>/boot/overlays/README</code>，确定 <code>lirc-rpi</code> 在自己的系统上是否可用（如果可用的话，可以直接找相关的集成文档，这部分有很多资料，这里就不多说了）。</p>
 <h2 id="22-安装-lirc">2.2 安装 lirc</h2>
 <p><a href="http://www.lirc.org/">lirc</a> 是 Linux 下，提供红外信号编解码，以及收发能力的一个模块。有了这个模块，我们不需要去实现红外信号处理等很复杂的逻辑。</p>
@@ -1127,129 +1257,6 @@ sudo systemctl reload nginx
 <li>执行 <code>sudo raspi-config</code>；</li>
 <li>找到 WiFi 选项；</li>
 <li>输入 WiFi 名称和密码；</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Ubuntu 下 Jenkins 安装与配置]]></title>
-        <id>https://winking324.github.io/post/ubuntu-jenkins</id>
-        <link href="https://winking324.github.io/post/ubuntu-jenkins">
-        </link>
-        <updated>2018-10-25T08:45:32.000Z</updated>
-        <summary type="html"><![CDATA[<p>Jenkins 是一个开源软件项目，是基于 Java 开发的一种持续集成工具，用于监控持续重复的工作，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>Jenkins 是一个开源软件项目，是基于 Java 开发的一种持续集成工具，用于监控持续重复的工作，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。</p>
-<!-- more -->
-<h1 id="1-安装-java">1 安装 Java</h1>
-<p>Jenkins 依赖于 Java， 所以需要<a href="http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html">安装 JDK 环境</a>。</p>
-<ol>
-<li>
-<p>增加 java 源（只能装 Java8 版本，其他版本 Jenkins 不支持）；</p>
-<pre><code class="language-sh">sudo add-apt-repository ppa:webupd8team/java
-sudo apt update
-</code></pre>
-</li>
-<li>
-<p>安装 java 8；</p>
-<pre><code class="language-sh">sudo apt install oracle-java8-installer
-</code></pre>
-<p>确认 License：</p>
-<p><img src="https://winking324.github.io/post-images/1561193202986.png" alt=""></p>
-<p><img src="https://winking324.github.io/post-images/1561193220461.png" alt=""></p>
-</li>
-<li>
-<p>安装 java 环境设置；</p>
-<pre><code class="language-sh">sudo apt install oracle-java8-set-default
-</code></pre>
-</li>
-<li>
-<p>验证 java 版本 &gt;= 1.8；</p>
-<pre><code class="language-sh">java -version
-</code></pre>
-<p>出现以下结果：</p>
-<pre><code class="language-sh">java version &quot;1.8.0_191&quot;
-Java(TM) SE Runtime Environment (build 1.8.0_191-b12)
-Java HotSpot(TM) 64-Bit Server VM (build 25.191-b12, mixed mode)
-</code></pre>
-</li>
-<li>
-<p>打开编辑以下文件，设置 java 环境；</p>
-<pre><code class="language-sh">sudo vi /etc/environment
-</code></pre>
-</li>
-<li>
-<p>输入 Java 环境设置，保存并关闭文件；</p>
-<pre><code class="language-sh">JAVA_HOME=&quot;/usr/lib/jvm/java-8-oracle/&quot;
-JRE_HOME=&quot;/usr/lib/jvm/java-8-oracle/jre/&quot;
-</code></pre>
-</li>
-<li>
-<p>更新环境设置；</p>
-<pre><code class="language-sh">source /etc/environment
-</code></pre>
-</li>
-</ol>
-<h1 id="2-安装-jenkins">2 安装 Jenkins</h1>
-<pre><code class="language-sh"># 1. 增加 Jenkins 源；
-wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
-sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
-sudo apt-get update
-
-# 2. 安装 Jenkins；
-sudo apt-get install jenkins
-</code></pre>
-<h1 id="3-初始化-jenkins">3 初始化 Jenkins</h1>
-<ol>
-<li>
-<p>修改 Jenkins 配置；</p>
-<pre><code class="language-sh"># 1. 创建工作路径（方便迁移管理）；
-sudo mkdir /data/jenkins
-sudo chown -R jenkins:jenkins /data/jenkins
-
-# 2. 打开编辑环境变量文件；
-sudo vi /etc/environment
-
-# 3. 配置 JENKINS_HOME 环境变量，并保存退出
-JENKINS_HOME=&quot;/data/jenkins&quot;
-
-# 4. 更新配置；
-source /etc/environment
-
-# 5. 重启 Jenkins 服务；
-sudo service jenkins restart
-</code></pre>
-</li>
-<li>
-<p>查看初始密码；</p>
-<pre><code class="language-sh">sudo cat $JENKINS_HOME/secrets/initialAdminPassword
-</code></pre>
-</li>
-<li>
-<p>登录 Jenkins；</p>
-<p>打开浏览器，输入 <code>http://192.168.100.110:8080</code> 登录到 Jenkins，第一次登录需要初始密码。</p>
-<p><img src="https://winking324.github.io/post-images/1561193245385.png" alt=""></p>
-</li>
-<li>
-<p>安装插件，选择<code>建议安装的插件</code>即可，选择后等待安装；</p>
-<p><img src="https://winking324.github.io/post-images/1561193273723.png" alt=""></p>
-<p><img src="https://winking324.github.io/post-images/1561193302049.png" alt=""></p>
-</li>
-<li>
-<p>创建Admin用户，点击保存并完成；</p>
-<p><img src="https://winking324.github.io/post-images/1561193315181.png" alt=""></p>
-</li>
-<li>
-<p>实例配置，点击保存并完成；</p>
-<p><img src="https://winking324.github.io/post-images/1561193323980.png" alt=""></p>
-</li>
-<li>
-<p>结束配置；</p>
-<p><img src="https://winking324.github.io/post-images/1561193332769.png" alt=""></p>
-</li>
-<li>
-<p>进入 Jenkins；</p>
-<p><img src="https://winking324.github.io/post-images/1561193343039.png" alt=""></p>
-</li>
 </ol>
 ]]></content>
     </entry>
