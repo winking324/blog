@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-08-08T06:01:43.800Z</updated>
+    <updated>2019-08-12T06:16:33.481Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -137,6 +137,60 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 <li><a href="https://www.right.com.cn/forum/thread-839364-1-1.html">N1盒子一键安装 FastNas V1.0.3 for Armbian Debian 5.77+OMV修复wifi 不可用</a></li>
 <li><a href="https://www.right.com.cn/forum/thread-847730-1-1.html">Fastnas OMV挂载硬盘</a></li>
 <li><a href="https://forum.armbian.com/topic/6354-does-nanopineos-gige-mac-address-randomly-change-from-time-to-time-after-rebooting/">Does NanoPiNEO's GigE Mac Address randomly change from time to time, after rebooting?</a></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[斐讯 T1 增加红外遥控]]></title>
+        <id>https://winking324.github.io/post/t1-ir</id>
+        <link href="https://winking324.github.io/post/t1-ir">
+        </link>
+        <updated>2019-08-01T06:08:42.000Z</updated>
+        <content type="html"><![CDATA[<p>在用树莓派获取斐讯 N1 盒子遥控器红外信号时，发现读取不到信息，查了一下，N1 盒子是通过蓝牙遥控器来控制的。虽然网上有各路神仙给 N1 盒子加红外模块，但是没看到有成功的。</p>
+<p>但是看到斐讯 T1 盒子预留了红外模块，并且可以直接用红外遥控控制，所以又买了一个斐讯 T1 盒子，来达到红外控制的目的。</p>
+<h1 id="1-刷机">1 刷机</h1>
+<p>拿到盒子第一时间，不用说，先进行刷机，步骤和 N1 几乎完全一样，所以不再赘述，可以参考 N1 盒子来进行刷机。</p>
+<p>这里唯一需要说明的是：</p>
+<p>T1 在开机后，需要链接网络并进行账号注册，才能激活。需要跳过这一个步骤，进入到系统中，打开远程调试。</p>
+<p>首先，扫描 T1 包装盒上面的二维码，下载<a href="https://phiclouds.phicomm.com/ota/service/app/downloadpage?appid=2017060031&amp;channel=1PTR">手机遥控器 App</a>：</p>
+<p><img src="https://winking324.github.io/post-images/1565590380701.png" alt=""></p>
+<p>这样用遥控器设置链接网络之后，就可以使用手机遥控 App 来操作 T1 盒子，此时按手机遥控 App 上的菜单按钮，就可以跳过注册，直接进入到盒子中了，并在设置中打开远程调试。</p>
+<h1 id="2-安装红外">2 安装红外</h1>
+<p>刷完机之后，关机，准备安装红外模块。</p>
+<ol>
+<li>
+<p>撕开一点防滑条，将后盖拆下来；</p>
+<p><img src="https://winking324.github.io/post-images/1565590418260.jpg" alt=""></p>
+</li>
+<li>
+<p>给红外模块开一个孔，这里我用乐高（伪，如图后面的小车）的一个透明块，挡在中间；</p>
+<p><img src="https://winking324.github.io/post-images/1565590466267.jpeg" alt=""></p>
+</li>
+<li>
+<p>开孔结束，把乐高透明块放在中间；</p>
+<p><img src="https://winking324.github.io/post-images/1565590510352.jpeg" alt=""></p>
+</li>
+<li>
+<p>拆下主板，将红外模块焊接在上面；</p>
+<p><img src="https://winking324.github.io/post-images/1565590522079.jpeg" alt=""></p>
+</li>
+<li>
+<p>用小米手机的红外遥控测试工作是否正常，这里我用开博尔这个牌子的遥控，可以完美遥控，距离四到五米都没啥问题；</p>
+<p><img src="https://winking324.github.io/post-images/1565590542583.jpeg" alt=""></p>
+</li>
+<li>
+<p>工作正常，将主板和盒子安装回去；</p>
+<p><img src="https://winking324.github.io/post-images/1565590555823.jpeg" alt=""></p>
+</li>
+</ol>
+<h1 id="3-参考链接">3 参考链接</h1>
+<ul>
+<li>
+<p><a href="https://www.right.com.cn/forum/thread-321966-1-1.html">T1加装红外</a></p>
+</li>
+<li>
+<p><a href="https://www.right.com.cn/forum/forum.php?mod=viewthread&amp;tid=323450&amp;page=1">T1 加个红外接收头确实好用哦</a></p>
+</li>
 </ul>
 ]]></content>
     </entry>
@@ -1195,68 +1249,6 @@ sudo systemctl reload nginx
 <p>客户端连接；</p>
 <p>在文件浏览器中，打开 <code>smb://192.168.100.110</code> 以访问对应的 Samba 文件服务器。</p>
 </li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Raspberry Pi 初始化]]></title>
-        <id>https://winking324.github.io/post/raspberry-pi-init</id>
-        <link href="https://winking324.github.io/post/raspberry-pi-init">
-        </link>
-        <updated>2019-02-19T09:14:29.000Z</updated>
-        <summary type="html"><![CDATA[<p>树莓派是一款基于 ARM 的微型电脑主板，具备所有 PC 的基本功能。默认情况下其系统基于 Linux，可以在树莓派上安装一些简单的服务，提供访问。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>树莓派是一款基于 ARM 的微型电脑主板，具备所有 PC 的基本功能。默认情况下其系统基于 Linux，可以在树莓派上安装一些简单的服务，提供访问。</p>
-<!-- more -->
-<h1 id="1-安装系统">1 安装系统</h1>
-<ol>
-<li>从官网<a href="https://www.raspberrypi.org/downloads/">下载页面</a>下载系统镜像文件；</li>
-<li>下载镜像烧录软件，Mac 上可以使用 <a href="https://www.balena.io/etcher/">balenaEtcher</a>；</li>
-<li>将镜像烧录到 SD 卡上；</li>
-<li>将 SD 卡查到树莓派上，上电启动；</li>
-</ol>
-<p>注意:</p>
-<ol>
-<li>树莓派默认情况下只支持从 SD 卡上启动系统；</li>
-<li>树莓派 3 及以上版本支持从 U盘启动系统，但是需要先用 SD 卡启动后修改 boot 参数；</li>
-<li>树莓派 3b+ 及以上版本支持 1000 Mbps 网卡；</li>
-</ol>
-<h1 id="2-u盘启动系统">2 U盘启动系统</h1>
-<p>可以通过外部 U盘或者 SSD 进入系统，三种情况下有对应的<a href="https://www.raspberrypi.org/forums/viewtopic.php?t=199414">系统速度测试</a>，默认的 SD 卡速度最慢。</p>
-<p>所以这里<a href="https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/msd.md">使用 U盘启动系统</a>（实际因为手头 U盘太多，SD 卡反而没几个）。</p>
-<ol>
-<li>使用 SD 卡进入系统；</li>
-<li>执行 <code>echo program_usb_boot_mode=1 | sudo tee -a /boot/config.txt</code> 写入配置；</li>
-<li>执行 <code>sudo reboot</code> 重启系统；</li>
-<li>执行 <code>vcgencmd otp_dump | grep 17:</code> 查看是否成功，成功结果应该为 <code>17:3020000a</code>；</li>
-<li>执行 <code>sudo poweroff</code> 关机，并断电；</li>
-<li>拔出 SD 卡，插入烧录好系统的 U盘，上电启动；</li>
-<li>进入 U盘系统；</li>
-</ol>
-<h1 id="3-设置键盘布局">3 设置键盘布局</h1>
-<p>默认情况下，键盘布局为英式键盘布局，而我们常用的是美式键盘布局，很多键位是不一样的，所以需要更改键盘布局。</p>
-<ol>
-<li>执行 <code>sudo raspi-config</code>；</li>
-<li>找到键盘布局更改选项，并执行；</li>
-<li>选择 Generic 101-key pc；</li>
-<li>选择 Other；</li>
-<li>选择国家为 English(US)；</li>
-<li>选择布局为 English(US)；</li>
-<li>选择 The default for the keyboard layout；</li>
-<li>选择 No compose key；</li>
-<li>执行 <code>sudo reboot</code> 重启系统；</li>
-</ol>
-<h1 id="4-打开-ssh">4 打开 SSH</h1>
-<p>默认情况下，SSH 是关闭的，即不能远程登录，所以需要打开 SSH 以提供远程登录。</p>
-<ol>
-<li>执行 <code>sudo raspi-config</code>；</li>
-<li>找到 SSH 选项，选择打开；</li>
-</ol>
-<h1 id="5-配置-wifi">5 配置 WiFi</h1>
-<ol>
-<li>执行 <code>sudo raspi-config</code>；</li>
-<li>找到 WiFi 选项；</li>
-<li>输入 WiFi 名称和密码；</li>
 </ol>
 ]]></content>
     </entry>

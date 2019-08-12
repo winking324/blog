@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>VirtualBox 配置 Ubuntu 主机网络 | Winking</title>
+<title>斐讯 T1 增加红外遥控 | Winking</title>
 <meta name="description" content="还愣着干啥！点赞啊！">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,82 +111,66 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">VirtualBox 配置 Ubuntu 主机网络</h2>
-            <div class="post-date">2018-10-19</div>
+            <h2 class="post-title">斐讯 T1 增加红外遥控</h2>
+            <div class="post-date">2019-08-01</div>
             
-              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/virtualbox-hostonly.png')">
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/t1-ir.png')">
               </div>
             
             <div class="post-content">
-              <p>在公司等企业网中，一般不使用 DHCP 自动获取 IP 地址，所以一般虚拟机创建后会有无法联网的问题。如果使用 NAT 方式，则又无法从主机链接到虚拟机环境。这里介绍使用 Host-Only（主机网络）方式进行主机和虚拟机之间链接。</p>
-<!-- more -->
-<h1 id="1-创建主机网络">1 创建主机网络</h1>
+              <p>在用树莓派获取斐讯 N1 盒子遥控器红外信号时，发现读取不到信息，查了一下，N1 盒子是通过蓝牙遥控器来控制的。虽然网上有各路神仙给 N1 盒子加红外模块，但是没看到有成功的。</p>
+<p>但是看到斐讯 T1 盒子预留了红外模块，并且可以直接用红外遥控控制，所以又买了一个斐讯 T1 盒子，来达到红外控制的目的。</p>
+<h1 id="1-刷机">1 刷机</h1>
+<p>拿到盒子第一时间，不用说，先进行刷机，步骤和 N1 几乎完全一样，所以不再赘述，可以参考 N1 盒子来进行刷机。</p>
+<p>这里唯一需要说明的是：</p>
+<p>T1 在开机后，需要链接网络并进行账号注册，才能激活。需要跳过这一个步骤，进入到系统中，打开远程调试。</p>
+<p>首先，扫描 T1 包装盒上面的二维码，下载<a href="https://phiclouds.phicomm.com/ota/service/app/downloadpage?appid=2017060031&amp;channel=1PTR">手机遥控器 App</a>：</p>
+<p><img src="https://winking324.github.io/post-images/1565590380701.png" alt=""></p>
+<p>这样用遥控器设置链接网络之后，就可以使用手机遥控 App 来操作 T1 盒子，此时按手机遥控 App 上的菜单按钮，就可以跳过注册，直接进入到盒子中了，并在设置中打开远程调试。</p>
+<h1 id="2-安装红外">2 安装红外</h1>
+<p>刷完机之后，关机，准备安装红外模块。</p>
 <ol>
 <li>
-<p>关机已经打开的虚拟机；</p>
+<p>撕开一点防滑条，将后盖拆下来；</p>
+<p><img src="https://winking324.github.io/post-images/1565590418260.jpg" alt=""></p>
 </li>
 <li>
-<p>全局工具，选择主机网络管理器；</p>
-<p><img src="https://winking324.github.io/post-images/1561182841555.png" alt=""></p>
+<p>给红外模块开一个孔，这里我用乐高（伪，如图后面的小车）的一个透明块，挡在中间；</p>
+<p><img src="https://winking324.github.io/post-images/1565590466267.jpeg" alt=""></p>
 </li>
 <li>
-<p>创建主机网络；</p>
-<p><img src="https://winking324.github.io/post-images/1561182861315.png" alt=""></p>
+<p>开孔结束，把乐高透明块放在中间；</p>
+<p><img src="https://winking324.github.io/post-images/1565590510352.jpeg" alt=""></p>
 </li>
 <li>
-<p>修改主机网络属性；</p>
-<p><img src="https://winking324.github.io/post-images/1561182870810.png" alt=""></p>
+<p>拆下主板，将红外模块焊接在上面；</p>
+<p><img src="https://winking324.github.io/post-images/1565590522079.jpeg" alt=""></p>
+</li>
+<li>
+<p>用小米手机的红外遥控测试工作是否正常，这里我用开博尔这个牌子的遥控，可以完美遥控，距离四到五米都没啥问题；</p>
+<p><img src="https://winking324.github.io/post-images/1565590542583.jpeg" alt=""></p>
+</li>
+<li>
+<p>工作正常，将主板和盒子安装回去；</p>
+<p><img src="https://winking324.github.io/post-images/1565590555823.jpeg" alt=""></p>
 </li>
 </ol>
-<h1 id="2-配置服务器网卡">2 配置服务器网卡</h1>
-<ol>
+<h1 id="3-参考链接">3 参考链接</h1>
+<ul>
 <li>
-<p>选择需要配置的服务器，并点击设置；</p>
-<p><img src="https://winking324.github.io/post-images/1561182886261.png" alt=""></p>
+<p><a href="https://www.right.com.cn/forum/thread-321966-1-1.html">T1加装红外</a></p>
 </li>
 <li>
-<p>在网络中，点击网卡 2，进行以下设置；</p>
-<p><img src="https://winking324.github.io/post-images/1561182898489.png" alt=""></p>
+<p><a href="https://www.right.com.cn/forum/forum.php?mod=viewthread&amp;tid=323450&amp;page=1">T1 加个红外接收头确实好用哦</a></p>
 </li>
-</ol>
-<h1 id="3-配置服务器网络">3 配置服务器网络</h1>
-<ol>
-<li>
-<p>启动服务器并登陆；</p>
-<p><img src="https://winking324.github.io/post-images/1561182910432.png" alt=""></p>
-</li>
-<li>
-<p>查看当前网卡的信息，这里新增的网卡为 <code>enp0s8</code>；</p>
-<p><img src="https://winking324.github.io/post-images/1561182920307.png" alt=""></p>
-</li>
-<li>
-<p>进入 <code>/etc/netplan</code> 目录，并打开编辑 <code>50-cloud-init.yaml</code> 文件；</p>
-<p><img src="https://winking324.github.io/post-images/1561182933107.png" alt=""></p>
-</li>
-<li>
-<p>输入以下配置内容，保存关闭；</p>
-<p><img src="https://winking324.github.io/post-images/1561182942706.png" alt=""></p>
-</li>
-<li>
-<p>更新网络配置，并查看；</p>
-<p><img src="https://winking324.github.io/post-images/1561182953055.png" alt=""></p>
-</li>
-<li>
-<p>测试网络；</p>
-<p><img src="https://winking324.github.io/post-images/1561182962337.png" alt=""></p>
-</li>
-</ol>
+</ul>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://winking324.github.io/tag/DQac7d40n" class="tag">
-                    Ubuntu
-                  </a>
-                
-                  <a href="https://winking324.github.io/tag/b_9ddV3eS" class="tag">
-                    VirtualBox
+                  <a href="https://winking324.github.io/tag/Cd3bI17GT" class="tag">
+                    LIRC
                   </a>
                 
               </div>
@@ -194,9 +178,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://winking324.github.io/post/virtualbox-ubuntu">
+                <a href="https://winking324.github.io/post/raspberry-alarm">
                   <h3 class="post-title">
-                    VirtualBox 安装 Ubuntu 18.04
+                    树莓派报警器
                   </h3>
                 </a>
               </div>
