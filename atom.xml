@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-08-13T05:39:26.487Z</updated>
+    <updated>2019-09-25T05:32:17.628Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,156 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[Flask 中使用定时任务]]></title>
+        <id>https://winking324.github.io/post/flask-scheduler</id>
+        <link href="https://winking324.github.io/post/flask-scheduler">
+        </link>
+        <updated>2019-09-25T05:29:30.000Z</updated>
+        <summary type="html"><![CDATA[<p>最近在使用 Flask 时，需要定期从远端服务器拉取 IP 数据，以提供相关 API 使用。所以使用了 apscheduler 这个定时任务框架来执行数据库读取以及本地数据更新等功能。</p>
+<p>这里把踩过的一些坑整理一下。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>最近在使用 Flask 时，需要定期从远端服务器拉取 IP 数据，以提供相关 API 使用。所以使用了 apscheduler 这个定时任务框架来执行数据库读取以及本地数据更新等功能。</p>
+<p>这里把踩过的一些坑整理一下。</p>
+<!-- more -->
+<h1 id="1-如何设置定时任务">1 如何设置定时任务</h1>
+<p>安装 APScheduler（Advanced Python Scheduler）：</p>
+<pre><code class="language-shell">sudo pip3 install apscheduler
+</code></pre>
+<p>一个简单的定时任务如下：</p>
+<pre><code class="language-python">import sys
+import time
+import atexit
+from apscheduler.schedulers.background import BackgroundScheduler
+
+
+def task():
+    sys.stdout.write('\nrun task\n')
+    sys.stdout.flush()
+
+
+def main():
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=task, trigger=&quot;interval&quot;, seconds=10)
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown())
+
+    for i in range(60):
+        sys.stdout.write('.')
+        sys.stdout.flush()
+        time.sleep(1)
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p>输出内容如下：</p>
+<pre><code>..........
+run task
+..........
+run task
+..........
+run task
+..........
+run task
+..........
+run task
+..........
+run task
+</code></pre>
+<p>这个简单的测试代码，说明了以下问题：</p>
+<p>定时任务不是 start 时候立即执行，而是到期后执行第一次，所以对于读取数据库的任务，应该先调用触发一次，否则会有一段时间没有任何数据。</p>
+<h1 id="2-使用-apscheduler-遇到的问题">2 使用 APScheduler 遇到的问题</h1>
+<p>在 uwsgi + Flask 中使用 APScheduler 时，出现了以下问题：</p>
+<p>当 uwsgi 设置 processes 个数不为 0 时，APScheduler 定期读取数据库更新的数据，只在父进程得到了更新，而在 worker 子进程中的数据没有更新。所以当用户请求到 worker 进程时，会获取最新的数据失败。</p>
+<p>为了解决这个问题，尝试使用了几种方式：</p>
+<ol>
+<li>为每个 process 设置一个 APScheduler；</li>
+<li>将父进程的更新同步到子进程；</li>
+<li>使用 Flask-APScheduler；</li>
+</ol>
+<p>以上两个方式，最终均以失败告终，原因如下：</p>
+<ol>
+<li>APScheduler 官方文档中，有<a href="https://apscheduler.readthedocs.io/en/latest/faq.html#how-do-i-share-a-single-job-store-among-one-or-more-worker-processes">是否能够在多个 worker 间共享一个定期任务</a>，答案是否定的，并给出了相关的推荐做法；</li>
+<li>多个进程间共享数据，有读写锁的问题，解决更加复杂；</li>
+<li>Flask-APScheduler 仅仅是将 APScheduler 与 Flask 结合在一起，没有改变实际的实现方式，但是提供了更适合 Flask 的实践方式；</li>
+</ol>
+<h1 id="3-如何解决">3 如何解决</h1>
+<p>解决这个问题，有两种方式：</p>
+<ol>
+<li>APScheduler 官方建议的，通过单独的一个服务来提供数据访问；</li>
+<li>使用 redis 等数据库来达到数据同步；</li>
+</ol>
+<p>这里使用第二种方式，第 1 种方式需要自己来单独写服务，并且要保证服务的可用性，其实实现难度增大。并且使用 Flask-APScheduler 来提供统一的 APScheduler。</p>
+<p>安装 Flask-APScheduler：</p>
+<pre><code class="language-shell">sudo pip3 install Flask-APScheduler
+</code></pre>
+<p>实现逻辑如下：</p>
+<pre><code class="language-python">import redis
+import pymysql
+import flask
+import logging
+from flask_apscheduler import APScheduler
+
+app = flask.Flask(__name__)
+app.logger.setLevel(logging.INFO)
+app.config.from_mapping(
+    JOBS=[{
+        'id': 'reload_server',
+        'func': 'app:reload_server',
+        'args': (app.logger,),
+        'trigger': 'interval',
+        'seconds': 60
+    }],
+    SCHEDULER_API_ENABLED=True,
+)
+
+reload_scheduler = APScheduler()
+reload_scheduler.init_app(app)
+reload_scheduler.start()
+
+redis_pool = redis.ConnectionPool(decode_responses=True)
+redis_client = redis.Redis(connection_pool=redis_pool)
+
+
+def reload_server(logger):
+    logger.info('reload servers scheduler start')
+    conn = pymysql.connect(host='127.0.0.1', port=3306,
+                           user='root', passwd='root',
+                           db='servers')
+    exec_sql = 'SELECT `ip` FROM `servers`'
+    cur = conn.cursor()
+    cur.execute(exec_sql)
+    for ip in cur:
+        redis_client.set(ip, '', ex=60)
+    conn.close()
+    logger.info('reload servers scheduler stop')
+
+
+if __name__ == '__main__':
+    app.run()
+</code></pre>
+<p>在子进程中，则可以直接通过 redis 来读取数据。</p>
+<h1 id="4-解决-redis-写效率">4 解决 redis 写效率</h1>
+<p>测试过程中，发现 redis 从远端 mysql 获取到数据写到本地，速度是有点慢的，几千条数据需要花费几秒才能结束，所以针对写操作部分，进行了一定的优化。</p>
+<p>使用 pipeline 的方式批量写入 redis：</p>
+<pre><code class="language-python">def reload_server(logger):
+    logger.info('reload servers scheduler start')
+    conn = pymysql.connect(host='127.0.0.1', port=3306,
+                           user='root', passwd='root',
+                           db='servers')
+    exec_sql = 'SELECT `ip` FROM `servers`'
+    cur = conn.cursor()
+    cur.execute(exec_sql)
+    with redis_client.pipeline(transaction=False) as pipe:
+        for ip in cur:
+            pipe.set(ip, '', ex=60)
+        pipe.execute()
+    conn.close()
+    logger.info('reload servers scheduler stop')
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[斐讯 N1 盒子搭建 NAS]]></title>
         <id>https://winking324.github.io/post/n1-nas</id>
@@ -73,7 +223,7 @@
 </li>
 <li>
 <p>在终端工具中输入 <code>ssh root@192.168.1.30</code>，密码 1234 登陆到 Armbian 中；</p>
-<p><img src="https://winking324.github.io/post-images/1565243675461.jpg" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1565243675461.jpg" alt=""></figure>
 </li>
 <li>
 <p>随便输入一个新的密码（因为后面会重新刷系统，这个密码只是临时用）；</p>
@@ -99,7 +249,7 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 </li>
 <li>
 <p>执行 <code>ddbr</code> 命令进行 FastNas 安装：</p>
-<p><img src="https://winking324.github.io/post-images/1565243690309.jpg" alt=""></p>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1565243690309.jpg" alt=""></figure>
 </li>
 <li>
 <p>执行 <code>poweroff</code> 将 N1 盒子关机；</p>
@@ -121,7 +271,7 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 </li>
 <li>
 <p>增加 <code>hwaddress ether 6a:c8:0b:05:88:52</code> 到 eth0（有线）配置中；</p>
-<p><img src="https://winking324.github.io/post-images/1565243700384.jpg" alt=""></p>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1565243700384.jpg" alt=""></figure>
 </li>
 <li>
 <p>输入 <code>reboot</code> 重启，可以看到 MAC 地址不会再发生变化；</p>
@@ -130,7 +280,7 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 <p>如果使用无线网络，使用 <code>armbian-config</code> 命令进行无线网络的配置。</p>
 <h1 id="6-omv-设置">6 OMV 设置</h1>
 <p>在电脑中，打开浏览器，输入 <code>http://192.168.1.30</code>，便可以进入 OpenMediaVault 系统（用户名：admin，密码：openmediavault）。</p>
-<p><img src="https://winking324.github.io/post-images/1565243709299.jpg" alt=""></p>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1565243709299.jpg" alt=""></figure>
 <h1 id="7-参考链接">7 参考链接</h1>
 <ul>
 <li><a href="https://www.right.com.cn/forum/thread-847725-1-1.html">一键安装 FastNas V1.0.320190731 for Armbian Debian 5.77+OMV集成了可道云桌面</a></li>
@@ -157,34 +307,34 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 <p>这里唯一需要说明的是：</p>
 <p>T1 在开机后，需要链接网络并进行账号注册，才能激活。需要跳过这一个步骤，进入到系统中，打开远程调试。</p>
 <p>首先，扫描 T1 包装盒上面的二维码，下载<a href="https://phiclouds.phicomm.com/ota/service/app/downloadpage?appid=2017060031&amp;channel=1PTR">手机遥控器 App</a>：</p>
-<p><img src="https://winking324.github.io/post-images/1565590380701.png" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1565590380701.png" alt=""></figure>
 <p>这样用遥控器设置链接网络之后，就可以使用手机遥控 App 来操作 T1 盒子，此时按手机遥控 App 上的菜单按钮，就可以跳过注册，直接进入到盒子中了，并在设置中打开远程调试。</p>
 <h1 id="2-安装红外">2 安装红外</h1>
 <p>刷完机之后，关机，准备安装红外模块。</p>
 <ol>
 <li>
 <p>撕开一点防滑条，将后盖拆下来；</p>
-<p><img src="https://winking324.github.io/post-images/1565590418260.jpg" alt=""></p>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1565590418260.jpg" alt=""></figure>
 </li>
 <li>
 <p>给红外模块开一个孔，这里我用乐高（伪，如图后面的小车）的一个透明块，挡在中间；</p>
-<p><img src="https://winking324.github.io/post-images/1565590466267.jpeg" alt=""></p>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1565590466267.jpeg" alt=""></figure>
 </li>
 <li>
 <p>开孔结束，把乐高透明块放在中间；</p>
-<p><img src="https://winking324.github.io/post-images/1565590510352.jpeg" alt=""></p>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1565590510352.jpeg" alt=""></figure>
 </li>
 <li>
 <p>拆下主板，将红外模块焊接在上面；</p>
-<p><img src="https://winking324.github.io/post-images/1565590522079.jpeg" alt=""></p>
+<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1565590522079.jpeg" alt=""></figure>
 </li>
 <li>
 <p>用小米手机的红外遥控测试工作是否正常，这里我用开博尔这个牌子的遥控，可以完美遥控，距离四到五米都没啥问题；</p>
-<p><img src="https://winking324.github.io/post-images/1565590542583.jpeg" alt=""></p>
+<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1565590542583.jpeg" alt=""></figure>
 </li>
 <li>
 <p>工作正常，将主板和盒子安装回去；</p>
-<p><img src="https://winking324.github.io/post-images/1565590555823.jpeg" alt=""></p>
+<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1565590555823.jpeg" alt=""></figure>
 </li>
 </ol>
 <h1 id="3-参考链接">3 参考链接</h1>
@@ -243,7 +393,7 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 </li>
 </ul>
 <p>主要设备如下：</p>
-<p><img src="https://winking324.github.io/post-images/1562645732607.png" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1562645732607.png" alt=""></figure>
 <h1 id="2-安装环境">2 安装环境</h1>
 <h2 id="21-烧录系统">2.1 烧录系统</h2>
 <p>准备好一个<a href="https://www.raspberrypi.org/downloads/">树莓派镜像</a>，这里使用的是 <a href="https://downloads.raspberrypi.org/raspbian_lite_latest.torrent">Raspbian Buster Lite</a>。</p>
@@ -251,11 +401,11 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 <ol>
 <li>
 <p>选择镜像，并选择对应的 SD 卡，点击烧录；</p>
-<p><img src="https://winking324.github.io/post-images/1562645746399.png" alt=""></p>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1562645746399.png" alt=""></figure>
 </li>
 <li>
 <p>烧录成功；</p>
-<p><img src="https://winking324.github.io/post-images/1562645756401.png" alt=""></p>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1562645756401.png" alt=""></figure>
 </li>
 </ol>
 <h2 id="22-初始化环境">2.2 初始化环境</h2>
@@ -282,7 +432,7 @@ sudo pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple flask uwsgi
 <p>由于报警灯默认是用 220V 的交流电，上来直接测试，会有比较大的安全风险，所以我们这里先用 LED 灯来进行测试，如果成功，再将 LED 灯替换为报警灯。</p>
 <h2 id="31-继电器">3.1 继电器</h2>
 <p>继电器很简单，一端接树莓派进行开关控制，另外一端接设备，如图：</p>
-<p><img src="https://winking324.github.io/post-images/1562645785924.png" alt=""></p>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1562645785924.png" alt=""></figure>
 <p>这个继电器对内是直接用树莓派的 5V 电压，对外可以接：</p>
 <ul>
 <li>10A 250V 交流电</li>
@@ -294,7 +444,7 @@ sudo pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple flask uwsgi
 <h2 id="32-led">3.2 LED</h2>
 <p>LED 灯就比较简单了，直接两个阵脚，一个接入 GPIO，一个接入负极。</p>
 <p>最后整体如图：</p>
-<p><img src="https://winking324.github.io/post-images/1562645777502.png" alt=""></p>
+<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1562645777502.png" alt=""></figure>
 <h2 id="32-调试">3.2 调试</h2>
 <p>这里用 Python3 简单调试一下，代码如下：</p>
 <pre><code class="language-python">import RPi.GPIO as GPIO
@@ -345,7 +495,7 @@ if __name__ == '__main__':
 <p>逻辑很简单，当输入 1 时，继电器进入闭合状态，LED 会亮起来；当输入 0 时，继电器进入打开状态，LED 会关闭。</p>
 <h1 id="4-调试报警灯">4 调试报警灯</h1>
 <p>链接报警灯：</p>
-<p><img src="https://winking324.github.io/post-images/1562645797278.png" alt=""></p>
+<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1562645797278.png" alt=""></figure>
 <p>当然这是初步连接，用于给大家展示接口，有需要尝试的小伙伴，一定要用电工胶布，把裸露的电线包好，避免出现意外事故。</p>
 <p>连接好之后，插入电源，用下面的代码进行测试。</p>
 <pre><code class="language-python">import RPi.GPIO as GPIO
@@ -382,7 +532,7 @@ if __name__ == '__main__':
         destroy()
 </code></pre>
 <p>报警灯可以正常的进行工作：</p>
-<p><img src="https://winking324.github.io/post-images/1562645805640.gif" alt=""></p>
+<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1562645805640.gif" alt=""></figure>
 <h1 id="5-报警服务">5 报警服务</h1>
 <p>这里用 Nginx + uwsgi + flask 来搭建一个 web 服务，当有报警请求过来时，触发打开报警灯。</p>
 <h2 id="51-nginx-配置">5.1 Nginx 配置</h2>
@@ -481,12 +631,12 @@ if __name__ == '__main__':
 <p>所以计划用树莓派和红外模块来进行电器的整体控制。</p>
 <h1 id="1-红外模块">1 红外模块</h1>
 <p>树莓派已经有了，那现在缺的是一个红外模块，所以先淘宝和各种论坛搜了一下，找到了这个不错的红外模块。</p>
-<p><img src="https://winking324.github.io/post-images/1562216778147.png" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1562216778147.png" alt=""></figure>
 <p>这个模块有接收和发送两个部分，另外让淘宝老板多加了一个红外发射器 D2，到货时，老板已经贴心的帮忙焊了上去。</p>
 <p>但是我的树莓派加了一个合金的外壳，并且有散热风扇，如下：</p>
-<p><img src="https://winking324.github.io/post-images/1562216791197.png" alt=""></p>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1562216791197.png" alt=""></figure>
 <p>另外看了一下树莓派阵脚的定义，如下（这个是扩展模块，每一列都是一样的，所以只看一列就可以了）：</p>
-<p><img src="https://winking324.github.io/post-images/1562216808667.png" alt=""></p>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1562216808667.png" alt=""></figure>
 <p>就会有两个问题：</p>
 <ol>
 <li>插上这个模块，需要把外壳移除；</li>
@@ -503,8 +653,8 @@ if __name__ == '__main__':
 </ol>
 <p>所以用排线把这几个阵脚对应连起来就可以了，这样好处就是解决了上面的两个问题，但是缺点是加了排线，导致整体看起来比较乱，不够精简。不过后面可以放到自制的盒子里面，把这些遮挡起来，就可以解决了。</p>
 <p>具体的阵脚链接，大家可以参考：</p>
-<p><img src="https://winking324.github.io/post-images/1562216822476.png" alt=""></p>
-<p><img src="https://winking324.github.io/post-images/1562216832768.png" alt=""></p>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1562216822476.png" alt=""></figure>
+<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1562216832768.png" alt=""></figure>
 <h1 id="2-测试模块">2 测试模块</h1>
 <p>接线结束后，首先要测试一下模块是不是工作正常，如果整体工作正常，才能细化各部分逻辑。否则开发了半天，发现模块工作不正常，各种事情都要返工，就得不偿失了。</p>
 <p>测试过程中，查了不少资料，也绕了不少弯路，主要问题总结如下：</p>
@@ -1004,7 +1154,7 @@ if __name__ == '__main__':
 <ol>
 <li>
 <p>N1 连接显示器/网线/鼠标/电源，开机，进入以下界面；</p>
-<p><img src="https://winking324.github.io/post-images/1561197081153.jpg" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1561197081153.jpg" alt=""></figure>
 </li>
 <li>
 <p>鼠标连续点击固件版本这行字，直到出现下方“打开adb”；</p>
@@ -1014,14 +1164,14 @@ if __name__ == '__main__':
 </li>
 <li>
 <p>在 Windows 上，打开驱动人生，打开外设驱动，安装安卓驱动；</p>
-<p><img src="https://winking324.github.io/post-images/1561340510118.jpg" alt=""></p>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1561340510118.jpg" alt=""></figure>
 </li>
 <li>
 <p>在 Windows 电脑上，解压 《N1-T1降刷机助手v1.1版本》压缩包；</p>
 </li>
 <li>
 <p>进入解压后的目录中，运行 <code>T1_N1降级工具v1.1.exe</code>；</p>
-<p><img src="https://winking324.github.io/post-images/1561340522634.jpg" alt=""></p>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1561340522634.jpg" alt=""></figure>
 </li>
 <li>
 <p>选择降级设备为 N1，设备 IP 为 N1 盒子对应的 IP，点击开始降级；</p>
@@ -1044,11 +1194,11 @@ if __name__ == '__main__':
 </li>
 <li>
 <p>安装 UsbBurningTool，软件会自动安装 USB 驱动；</p>
-<p><img src="https://winking324.github.io/post-images/1561340535289.jpg" alt=""></p>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1561340535289.jpg" alt=""></figure>
 </li>
 <li>
 <p>打开 UsbBurningTool，在“文件”中加载刷机包，加载完成后，点击开始按钮（<strong>注意擦除 FLASH 和擦除Bootloader 前面的对号要去掉</strong>）；</p>
-<p><img src="https://winking324.github.io/post-images/1561340546055.jpg" alt=""></p>
+<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1561340546055.jpg" alt=""></figure>
 </li>
 <li>
 <p>解压《使N1进入线刷模式》压缩包，双击运行 <code>reboot_to_usb_burn/进入线刷模式.bat</code> 脚本；</p>
@@ -1061,10 +1211,10 @@ if __name__ == '__main__':
 </li>
 <li>
 <p>在我的电脑上右键，选择管理，并打开设备管理器，然后在操作中，添加过时硬件；</p>
-<p><img src="https://winking324.github.io/post-images/1561340557223.jpg" alt=""></p>
-<p><img src="https://winking324.github.io/post-images/1561340568358.jpg" alt=""></p>
-<p><img src="https://winking324.github.io/post-images/1561340578604.jpg" alt=""></p>
-<p><img src="https://winking324.github.io/post-images/1561340586822.jpg" alt=""></p>
+<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1561340557223.jpg" alt=""></figure>
+<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1561340568358.jpg" alt=""></figure>
+<figure data-type="image" tabindex="8"><img src="https://winking324.github.io/post-images/1561340578604.jpg" alt=""></figure>
+<figure data-type="image" tabindex="9"><img src="https://winking324.github.io/post-images/1561340586822.jpg" alt=""></figure>
 </li>
 <li>
 <p>驱动安装完成后，N1 进行断电重启；</p>
@@ -1074,11 +1224,11 @@ if __name__ == '__main__':
 </li>
 <li>
 <p>这时候，UsbBurningTool 可以识别到设备，并开始进行刷机；</p>
-<p><img src="https://winking324.github.io/post-images/1561340596193.jpg" alt=""></p>
+<figure data-type="image" tabindex="10"><img src="https://winking324.github.io/post-images/1561340596193.jpg" alt=""></figure>
 </li>
 <li>
 <p>刷机完成后，关掉 UsbBurningTool，并断电重启 N1，之后可以进入刷机的系统；</p>
-<p><img src="https://winking324.github.io/post-images/1561340605374.jpg" alt=""></p>
+<figure data-type="image" tabindex="11"><img src="https://winking324.github.io/post-images/1561340605374.jpg" alt=""></figure>
 </li>
 </ol>
 <h2 id="4-参考地址">4 参考地址</h2>
@@ -1207,53 +1357,6 @@ sudo systemctl reload nginx
 <li><a href="https://www.linuxidc.com/Linux/2017-03/142248.htm">部署Let’s Encrypt免费SSL证书&amp;&amp;自动续期</a></li>
 <li><a href="https://www.jianshu.com/p/3c67562b88a5">使用let's encrypt工具配置Nginx HTTPS</a></li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Ubuntu 下 Samba 安装与配置]]></title>
-        <id>https://winking324.github.io/post/ubuntu-samba</id>
-        <link href="https://winking324.github.io/post/ubuntu-samba">
-        </link>
-        <updated>2019-02-19T09:25:51.000Z</updated>
-        <summary type="html"><![CDATA[<p>SMB（Server Messages Block，信息服务块）是一种在局域网上共享文件和打印机的一种通信协议，它为局域网内的不同计算机之间提供文件及打印机等资源的共享服务。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>SMB（Server Messages Block，信息服务块）是一种在局域网上共享文件和打印机的一种通信协议，它为局域网内的不同计算机之间提供文件及打印机等资源的共享服务。</p>
-<!-- more -->
-<p>Samba 是在 Linux 和 UNIX 系统上实现 SMB 协议的一个免费软件，由服务器及客户端程序构成。</p>
-<ol>
-<li>
-<p>安装 Samba 服务；</p>
-<p><code>sudo apt-get install samba</code></p>
-</li>
-<li>
-<p>添加系统用户 <code>share</code>；</p>
-<p><code>sudo adduser share</code></p>
-</li>
-<li>
-<p>为该用户创建 Samba 密码；</p>
-<p><code>sudo smbpasswd -a share</code></p>
-</li>
-<li>
-<p>修改 Samba 配置，设置更新目录；</p>
-<p><code>sudo vi /etc/samba/smb.conf</code></p>
-<pre><code>[share]
-   comment = Share
-   path = /data/share
-   public = yes
-   writable = yes
-   guest ok = no
-   valid user = share
-</code></pre>
-</li>
-<li>
-<p>重启 Samba 服务；</p>
-<p><code>sudo service samba restart</code></p>
-</li>
-<li>
-<p>客户端连接；</p>
-<p>在文件浏览器中，打开 <code>smb://192.168.100.110</code> 以访问对应的 Samba 文件服务器。</p>
-</li>
-</ol>
 ]]></content>
     </entry>
 </feed>

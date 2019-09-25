@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Flask 中使用定时任务 | Winking</title>
+<meta name="description" content="还愣着干啥！点赞啊！">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1569389533570">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143048051-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-143048051-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://winking324.github.io">
+        <img src="https://winking324.github.io/images/avatar.png?v=1569389533570" class="site-logo">
+        <h1 class="site-title">Winking</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/winking324" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      还愣着干啥！点赞啊！
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/winking324/winking324.github.io" target="_blank">winking324</a> | <a class="rss" href="https://winking324.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Flask 中使用定时任务</h2>
+            <div class="post-date">2019-09-25</div>
+            
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/flask-scheduler.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>最近在使用 Flask 时，需要定期从远端服务器拉取 IP 数据，以提供相关 API 使用。所以使用了 apscheduler 这个定时任务框架来执行数据库读取以及本地数据更新等功能。</p>
+<p>这里把踩过的一些坑整理一下。</p>
+<!-- more -->
+<h1 id="1-如何设置定时任务">1 如何设置定时任务</h1>
+<p>安装 APScheduler（Advanced Python Scheduler）：</p>
+<pre><code class="language-shell">sudo pip3 install apscheduler
+</code></pre>
+<p>一个简单的定时任务如下：</p>
+<pre><code class="language-python">import sys
+import time
+import atexit
+from apscheduler.schedulers.background import BackgroundScheduler
+
+
+def task():
+    sys.stdout.write('\nrun task\n')
+    sys.stdout.flush()
+
+
+def main():
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=task, trigger=&quot;interval&quot;, seconds=10)
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown())
+
+    for i in range(60):
+        sys.stdout.write('.')
+        sys.stdout.flush()
+        time.sleep(1)
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p>输出内容如下：</p>
+<pre><code>..........
+run task
+..........
+run task
+..........
+run task
+..........
+run task
+..........
+run task
+..........
+run task
+</code></pre>
+<p>这个简单的测试代码，说明了以下问题：</p>
+<p>定时任务不是 start 时候立即执行，而是到期后执行第一次，所以对于读取数据库的任务，应该先调用触发一次，否则会有一段时间没有任何数据。</p>
+<h1 id="2-使用-apscheduler-遇到的问题">2 使用 APScheduler 遇到的问题</h1>
+<p>在 uwsgi + Flask 中使用 APScheduler 时，出现了以下问题：</p>
+<p>当 uwsgi 设置 processes 个数不为 0 时，APScheduler 定期读取数据库更新的数据，只在父进程得到了更新，而在 worker 子进程中的数据没有更新。所以当用户请求到 worker 进程时，会获取最新的数据失败。</p>
+<p>为了解决这个问题，尝试使用了几种方式：</p>
+<ol>
+<li>为每个 process 设置一个 APScheduler；</li>
+<li>将父进程的更新同步到子进程；</li>
+<li>使用 Flask-APScheduler；</li>
+</ol>
+<p>以上两个方式，最终均以失败告终，原因如下：</p>
+<ol>
+<li>APScheduler 官方文档中，有<a href="https://apscheduler.readthedocs.io/en/latest/faq.html#how-do-i-share-a-single-job-store-among-one-or-more-worker-processes">是否能够在多个 worker 间共享一个定期任务</a>，答案是否定的，并给出了相关的推荐做法；</li>
+<li>多个进程间共享数据，有读写锁的问题，解决更加复杂；</li>
+<li>Flask-APScheduler 仅仅是将 APScheduler 与 Flask 结合在一起，没有改变实际的实现方式，但是提供了更适合 Flask 的实践方式；</li>
+</ol>
+<h1 id="3-如何解决">3 如何解决</h1>
+<p>解决这个问题，有两种方式：</p>
+<ol>
+<li>APScheduler 官方建议的，通过单独的一个服务来提供数据访问；</li>
+<li>使用 redis 等数据库来达到数据同步；</li>
+</ol>
+<p>这里使用第二种方式，第 1 种方式需要自己来单独写服务，并且要保证服务的可用性，其实实现难度增大。并且使用 Flask-APScheduler 来提供统一的 APScheduler。</p>
+<p>安装 Flask-APScheduler：</p>
+<pre><code class="language-shell">sudo pip3 install Flask-APScheduler
+</code></pre>
+<p>实现逻辑如下：</p>
+<pre><code class="language-python">import redis
+import pymysql
+import flask
+import logging
+from flask_apscheduler import APScheduler
+
+app = flask.Flask(__name__)
+app.logger.setLevel(logging.INFO)
+app.config.from_mapping(
+    JOBS=[{
+        'id': 'reload_server',
+        'func': 'app:reload_server',
+        'args': (app.logger,),
+        'trigger': 'interval',
+        'seconds': 60
+    }],
+    SCHEDULER_API_ENABLED=True,
+)
+
+reload_scheduler = APScheduler()
+reload_scheduler.init_app(app)
+reload_scheduler.start()
+
+redis_pool = redis.ConnectionPool(decode_responses=True)
+redis_client = redis.Redis(connection_pool=redis_pool)
+
+
+def reload_server(logger):
+    logger.info('reload servers scheduler start')
+    conn = pymysql.connect(host='127.0.0.1', port=3306,
+                           user='root', passwd='root',
+                           db='servers')
+    exec_sql = 'SELECT `ip` FROM `servers`'
+    cur = conn.cursor()
+    cur.execute(exec_sql)
+    for ip in cur:
+        redis_client.set(ip, '', ex=60)
+    conn.close()
+    logger.info('reload servers scheduler stop')
+
+
+if __name__ == '__main__':
+    app.run()
+</code></pre>
+<p>在子进程中，则可以直接通过 redis 来读取数据。</p>
+<h1 id="4-解决-redis-写效率">4 解决 redis 写效率</h1>
+<p>测试过程中，发现 redis 从远端 mysql 获取到数据写到本地，速度是有点慢的，几千条数据需要花费几秒才能结束，所以针对写操作部分，进行了一定的优化。</p>
+<p>使用 pipeline 的方式批量写入 redis：</p>
+<pre><code class="language-python">def reload_server(logger):
+    logger.info('reload servers scheduler start')
+    conn = pymysql.connect(host='127.0.0.1', port=3306,
+                           user='root', passwd='root',
+                           db='servers')
+    exec_sql = 'SELECT `ip` FROM `servers`'
+    cur = conn.cursor()
+    cur.execute(exec_sql)
+    with redis_client.pipeline(transaction=False) as pipe:
+        for ip in cur:
+            pipe.set(ip, '', ex=60)
+        pipe.execute()
+    conn.close()
+    logger.info('reload servers scheduler stop')
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://winking324.github.io/tag/j4moLT6pe" class="tag">
+                    Flask
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://winking324.github.io/post/n1-nas">
+                  <h3 class="post-title">
+                    斐讯 N1 盒子搭建 NAS
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'cf71cf503e8d0441d9ac',
+        clientSecret: 'c1c3d8f77fa2a097546464880636cd5080d492e7',
+        repo: 'winking324.github.io',
+        owner: 'winking324',
+        admin: ['winking324'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
