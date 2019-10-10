@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Linux 系统错误码 | Winking</title>
+<meta name="description" content="还愣着干啥！点赞啊！">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1570689416966">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143048051-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-143048051-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://winking324.github.io">
+        <img src="https://winking324.github.io/images/avatar.png?v=1570689416966" class="site-logo">
+        <h1 class="site-title">Winking</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/winking324" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      还愣着干啥！点赞啊！
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/winking324/winking324.github.io" target="_blank">winking324</a> | <a class="rss" href="https://winking324.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Linux 系统错误码</h2>
+            <div class="post-date">2019-10-10</div>
+            
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/linux-error-codes.png')">
+              </div>
+            
+            <div class="post-content">
+              <p>When system requests fail, error code are returned. To understand the nature of the error these codes need to be interpreted.</p>
+<!-- more -->
+<p>They are recorded in:-<br>
+/usr/include/asm/errno.h</p>
+<p>Here is a copy of that file as of Aug 2004 on RedHat 7.3</p>
+<pre><code class="language-c++">#define EPERM            1      /* Operation not permitted */
+#define ENOENT           2      /* No such file or directory */
+#define ESRCH            3      /* No such process */
+#define EINTR            4      /* Interrupted system call */
+#define EIO              5      /* I/O error */
+#define ENXIO            6      /* No such device or address */
+#define E2BIG            7      /* Arg list too long */
+#define ENOEXEC          8      /* Exec format error */
+#define EBADF            9      /* Bad file number */
+#define ECHILD          10      /* No child processes */
+#define EAGAIN          11      /* Try again */
+#define ENOMEM          12      /* Out of memory */
+#define EACCES          13      /* Permission denied */
+#define EFAULT          14      /* Bad address */
+#define ENOTBLK         15      /* Block device required */
+#define EBUSY           16      /* Device or resource busy */
+#define EEXIST          17      /* File exists */
+#define EXDEV           18      /* Cross-device link */
+#define ENODEV          19      /* No such device */
+#define ENOTDIR         20      /* Not a directory */
+#define EISDIR          21      /* Is a directory */
+#define EINVAL          22      /* Invalid argument */
+#define ENFILE          23      /* File table overflow */
+#define EMFILE          24      /* Too many open files */
+#define ENOTTY          25      /* Not a typewriter */
+#define ETXTBSY         26      /* Text file busy */
+#define EFBIG           27      /* File too large */
+#define ENOSPC          28      /* No space left on device */
+#define ESPIPE          29      /* Illegal seek */
+#define EROFS           30      /* Read-only file system */
+#define EMLINK          31      /* Too many links */
+#define EPIPE           32      /* Broken pipe */
+#define EDOM            33      /* Math argument out of domain of func */
+#define ERANGE          34      /* Math result not representable */
+#define EDEADLK         35      /* Resource deadlock would occur */
+#define ENAMETOOLONG    36      /* File name too long */
+#define ENOLCK          37      /* No record locks available */
+#define ENOSYS          38      /* Function not implemented */
+#define ENOTEMPTY       39      /* Directory not empty */
+#define ELOOP           40      /* Too many symbolic links encountered */
+#define EWOULDBLOCK     EAGAIN  /* Operation would block */
+#define ENOMSG          42      /* No message of desired type */
+#define EIDRM           43      /* Identifier removed */
+#define ECHRNG          44      /* Channel number out of range */
+#define EL2NSYNC        45      /* Level 2 not synchronized */
+#define EL3HLT          46      /* Level 3 halted */
+#define EL3RST          47      /* Level 3 reset */
+#define ELNRNG          48      /* Link number out of range */
+#define EUNATCH         49      /* Protocol driver not attached */
+#define ENOCSI          50      /* No CSI structure available */
+#define EL2HLT          51      /* Level 2 halted */
+#define EBADE           52      /* Invalid exchange */
+#define EBADR           53      /* Invalid request descriptor */
+#define EXFULL          54      /* Exchange full */
+#define ENOANO          55      /* No anode */
+#define EBADRQC         56      /* Invalid request code */
+#define EBADSLT         57      /* Invalid slot */
+
+#define EDEADLOCK       EDEADLK
+
+#define EBFONT          59      /* Bad font file format */
+#define ENOSTR          60      /* Device not a stream */
+#define ENODATA         61      /* No data available */
+#define ETIME           62      /* Timer expired */
+#define ENOSR           63      /* Out of streams resources */
+#define ENONET          64      /* Machine is not on the network */
+#define ENOPKG          65      /* Package not installed */
+#define EREMOTE         66      /* Object is remote */
+#define ENOLINK         67      /* Link has been severed */
+#define EADV            68      /* Advertise error */
+#define ESRMNT          69      /* Srmount error */
+#define ECOMM           70      /* Communication error on send */
+#define EPROTO          71      /* Protocol error */
+#define EMULTIHOP       72      /* Multihop attempted */
+#define EDOTDOT         73      /* RFS specific error */
+#define EBADMSG         74      /* Not a data message */
+#define EOVERFLOW       75      /* Value too large for defined data type */
+#define ENOTUNIQ        76      /* Name not unique on network */
+#define EBADFD          77      /* File descriptor in bad state */
+#define EREMCHG         78      /* Remote address changed */
+#define ELIBACC         79      /* Can not access a needed shared library */
+#define ELIBBAD         80      /* Accessing a corrupted shared library */
+#define ELIBSCN         81      /* .lib section in a.out corrupted */
+#define ELIBMAX         82      /* Attempting to link in too many shared libraries */
+#define ELIBEXEC        83      /* Cannot exec a shared library directly */
+#define EILSEQ          84      /* Illegal byte sequence */
+#define ERESTART        85      /* Interrupted system call should be restarted */
+#define ESTRPIPE        86      /* Streams pipe error */
+#define EUSERS          87      /* Too many users */
+#define ENOTSOCK        88      /* Socket operation on non-socket */
+#define EDESTADDRREQ    89      /* Destination address required */
+#define EMSGSIZE        90      /* Message too long */
+#define EPROTOTYPE      91      /* Protocol wrong type for socket */
+#define ENOPROTOOPT     92      /* Protocol not available */
+#define EPROTONOSUPPORT 93      /* Protocol not supported */
+#define ESOCKTNOSUPPORT 94      /* Socket type not supported */
+#define EOPNOTSUPP      95      /* Operation not supported on transport endpoint */
+#define EPFNOSUPPORT    96      /* Protocol family not supported */
+#define EAFNOSUPPORT    97      /* Address family not supported by protocol */
+#define EADDRINUSE      98      /* Address already in use */
+#define EADDRNOTAVAIL   99      /* Cannot assign requested address */
+#define ENETDOWN        100     /* Network is down */
+#define ENETUNREACH     101     /* Network is unreachable */
+#define ENETRESET       102     /* Network dropped connection because of reset */
+#define ECONNABORTED    103     /* Software caused connection abort */
+#define ECONNRESET      104     /* Connection reset by peer */
+#define ENOBUFS         105     /* No buffer space available */
+#define EISCONN         106     /* Transport endpoint is already connected */
+#define ENOTCONN        107     /* Transport endpoint is not connected */
+#define ESHUTDOWN       108     /* Cannot send after transport endpoint shutdown */
+#define ETOOMANYREFS    109     /* Too many references: cannot splice */
+#define ETIMEDOUT       110     /* Connection timed out */
+#define ECONNREFUSED    111     /* Connection refused */
+#define EHOSTDOWN       112     /* Host is down */
+#define EHOSTUNREACH    113     /* No route to host */
+#define EALREADY        114     /* Operation already in progress */
+#define EINPROGRESS     115     /* Operation now in progress */
+#define ESTALE          116     /* Stale NFS file handle */
+#define EUCLEAN         117     /* Structure needs cleaning */
+#define ENOTNAM         118     /* Not a XENIX named type file */
+#define ENAVAIL         119     /* No XENIX semaphores available */
+#define EISNAM          120     /* Is a named type file */
+#define EREMOTEIO       121     /* Remote I/O error */
+#define EDQUOT          122     /* Quota exceeded */
+
+#define ENOMEDIUM       123     /* No medium found */
+#define EMEDIUMTYPE     124     /* Wrong medium type */
+</code></pre>
+<p>Reference:</p>
+<ul>
+<li><a href="https://www-numi.fnal.gov/offline_software/srt_public_context/WebDocs/Errors/unix_system_errors.html">Errors: Linux System Errors</a></li>
+</ul>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://winking324.github.io/post/flask-scheduler">
+                  <h3 class="post-title">
+                    Flask 中使用定时任务
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'cf71cf503e8d0441d9ac',
+        clientSecret: 'c1c3d8f77fa2a097546464880636cd5080d492e7',
+        repo: 'winking324.github.io',
+        owner: 'winking324',
+        admin: ['winking324'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
