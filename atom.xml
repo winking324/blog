@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-10-10T06:37:02.735Z</updated>
+    <updated>2019-10-18T02:24:44.558Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,48 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[F460 路由器端口映射]]></title>
+        <id>https://winking324.github.io/post/f460-nat</id>
+        <link href="https://winking324.github.io/post/f460-nat">
+        </link>
+        <updated>2019-10-18T02:17:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>家装电信，很多都采用中兴 F460 光猫（路由器），家里自己部署了一个服务器，想要映射到公网上，SSH 登陆上来。但是默认情况下，为了保证安全和防止黑客攻击，光猫上面是不允许将内部端口映射到公网上的。所以这里需要获取到光猫的超级管理员权限，进行端口映射的配置。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>家装电信，很多都采用中兴 F460 光猫（路由器），家里自己部署了一个服务器，想要映射到公网上，SSH 登陆上来。但是默认情况下，为了保证安全和防止黑客攻击，光猫上面是不允许将内部端口映射到公网上的。所以这里需要获取到光猫的超级管理员权限，进行端口映射的配置。</p>
+<!-- more -->
+<h1 id="1-获取密码">1 获取密码</h1>
+<ol>
+<li>链接电脑到光猫上，注意不要用第三个网口，这个网口是给 IPTV 预留的，分配的 IP 跟其他网口不一样；</li>
+<li>打开浏览器，访问 <code>http://192.168.1.1/manager_dev_config_t.gch</code>，选择导出配置；</li>
+<li>下载 <a href="http://aluigi.altervista.org/mytoolz.htm#Offzip">Offzip</a>，默认情况有 Windows 下的 offzip.exe，可以直接用，其他平台，执行 make 编译一下；</li>
+<li>在命令行下，执行 <code>offzip.exe -a config.bin . 0</code> 来解压配置文件；</li>
+<li>解压后会有多个文件，用文本编辑器打开各个文件，搜索 <code>telecomadmin</code>，对应的密码在相同位置；</li>
+<li>打开浏览器，访问 <code>http://192.168.1.1</code>，输入对应的用户名密码，登陆成功；</li>
+</ol>
+<h1 id="2-配置端口映射">2 配置端口映射</h1>
+<ol>
+<li>超级管理员登陆；</li>
+<li>点击菜单栏 <strong>应用</strong>；</li>
+<li>选择 <strong>高级 NAT 配置</strong>；</li>
+<li>选择 <strong>虚拟主机配置</strong>；</li>
+<li>勾选 <strong>应用</strong>，打开虚拟主机配置；</li>
+<li>名称填写自己的命名；</li>
+<li>广域网主机起始 IP 地址，广域网主机结束 IP 地址：允许任意地址访问则不填写，否则填写指定的 IP 地址；</li>
+<li>广域网连接：选择路由模式的连接，也就是当前电脑使用的联网模式，一般下拉菜单中只有一项，选择即可；</li>
+<li>广域网起始端口，广域网结束端口：打开给外网访问的端口；</li>
+<li>启用 MAC 映射：不勾选；</li>
+<li>虚拟主机 IP 地址：局域网内部 IP 地址，例如说你内网服务器地址是 <code>192.168.1.5</code>，则填写这个地址；</li>
+<li>虚拟主机起始端口，虚拟主机结束端口：局域网内部服务器允许对外访问的端口；</li>
+</ol>
+<h1 id="3-参考链接">3 参考链接</h1>
+<ul>
+<li><a href="http://www.myxzy.com/post-410.html">中兴光纤猫F460端口映射</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_6c9aadc80102wvoz.html">破解电信路由器中兴F460</a></li>
+<li><a href="https://pan.baidu.com/s/1d6ztZNOH6RvNVKx6I6xMGQ&amp;shfl=shareset">Offzip 下载</a> 提取码: f8ds</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Linux 系统错误码]]></title>
         <id>https://winking324.github.io/post/linux-error-codes</id>
@@ -1263,126 +1305,6 @@ if __name__ == '__main__':
 <li><a href="https://www.jianshu.com/p/29f66eb4e55a">说说我对 WSGI 的理解</a></li>
 <li><a href="https://uwsgi-docs-zh.readthedocs.io/zh_CN/latest/index.html">uWSGI 项目文档</a></li>
 <li><a href="https://www.cnblogs.com/Xjng/p/aa4dd23918359c6414d54e4b972e9081.html">Nginx+uWSGI+Django原理</a></li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[斐讯 N1 盒子刷机]]></title>
-        <id>https://winking324.github.io/post/reinstall-n1</id>
-        <link href="https://winking324.github.io/post/reinstall-n1">
-        </link>
-        <updated>2019-06-16T09:50:25.000Z</updated>
-        <summary type="html"><![CDATA[<p>现在市面上的各种盒子，广告很多，体验很差。618 入了一个明基投影仪，打算买一个盒子的前提下，刚好好多朋友推荐斐讯 N1 盒子，优点是性能很强大，价格便宜，刷机后非常给力。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>现在市面上的各种盒子，广告很多，体验很差。618 入了一个明基投影仪，打算买一个盒子的前提下，刚好好多朋友推荐斐讯 N1 盒子，优点是性能很强大，价格便宜，刷机后非常给力。</p>
-<!-- more -->
-<p>所以从拼多多上入了一个 N1 盒子 + T1 原装遥控器 + 刷机线，总价 119.9 元（斐讯在淘宝/京东/咸鱼/拼多多上都已经被屏蔽，需要搜索 N1 盒子来查找）。</p>
-<h2 id="1-刷机准备">1 刷机准备</h2>
-<p>设备：</p>
-<ol>
-<li>N1 盒子一台；</li>
-<li>刷机线一根；</li>
-<li>显示器一台；</li>
-<li>网线一根；</li>
-<li>鼠标一个；</li>
-<li>Windows 电脑一台；</li>
-<li>网络环境；</li>
-</ol>
-<p>工具：</p>
-<ol>
-<li>系统降级工具；</li>
-<li>进入线刷模式工具；</li>
-<li>刷机软件：UsbBurningTool；</li>
-<li>刷机系统 Rom；</li>
-<li>驱动人生；</li>
-</ol>
-<h2 id="2-系统降级">2 系统降级</h2>
-<p>由于 N1 最新的系统固件，已经被加密，所以在不降级的前提下，无法进行刷机。</p>
-<ol>
-<li>
-<p>N1 连接显示器/网线/鼠标/电源，开机，进入以下界面；</p>
-<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1561197081153.jpg" alt=""></figure>
-</li>
-<li>
-<p>鼠标连续点击固件版本这行字，直到出现下方“打开adb”；</p>
-</li>
-<li>
-<p>连接刷机线，注意 N1 盒子是对应 HDMI 旁边 USB 口；</p>
-</li>
-<li>
-<p>在 Windows 上，打开驱动人生，打开外设驱动，安装安卓驱动；</p>
-<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1561340510118.jpg" alt=""></figure>
-</li>
-<li>
-<p>在 Windows 电脑上，解压 《N1-T1降刷机助手v1.1版本》压缩包；</p>
-</li>
-<li>
-<p>进入解压后的目录中，运行 <code>T1_N1降级工具v1.1.exe</code>；</p>
-<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1561340522634.jpg" alt=""></figure>
-</li>
-<li>
-<p>选择降级设备为 N1，设备 IP 为 N1 盒子对应的 IP，点击开始降级；</p>
-</li>
-<li>
-<p>没有意外的话，最终工作状态会显示为降级成功；</p>
-</li>
-<li>
-<p>断开 USB 和电源，重启 N1 盒子；</p>
-</li>
-<li>
-<p>重启后，进入初始界面，但是上面固件版本仍然为原来的版本，这个不要在意，因为刷机的固件版本，跟显示的这个固件版本，是两个东西，只要降级工具里面显示成功即可；</p>
-</li>
-</ol>
-<h2 id="3-刷机">3 刷机</h2>
-<p>系统降级成功后，可以选择需要的 Rom 进行刷机，常见的 Rom 有很多，大家可以自行百度查找适合自己的 Rom，这里以常见的《斐讯盒子N1_YYFROM讯飞语音实用版190421》进行示例。</p>
-<ol>
-<li>
-<p>连接刷机线；</p>
-</li>
-<li>
-<p>安装 UsbBurningTool，软件会自动安装 USB 驱动；</p>
-<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1561340535289.jpg" alt=""></figure>
-</li>
-<li>
-<p>打开 UsbBurningTool，在“文件”中加载刷机包，加载完成后，点击开始按钮（<strong>注意擦除 FLASH 和擦除Bootloader 前面的对号要去掉</strong>）；</p>
-<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1561340546055.jpg" alt=""></figure>
-</li>
-<li>
-<p>解压《使N1进入线刷模式》压缩包，双击运行 <code>reboot_to_usb_burn/进入线刷模式.bat</code> 脚本；</p>
-</li>
-<li>
-<p>这时候盒子会进入重启状态（如果显示器有内容显示，先不要管），对应 Windows 电脑会有 USB 设备插入的提示声；</p>
-</li>
-<li>
-<p>XP 以上 Windows 系统，需要手动添加驱动；</p>
-</li>
-<li>
-<p>在我的电脑上右键，选择管理，并打开设备管理器，然后在操作中，添加过时硬件；</p>
-<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1561340557223.jpg" alt=""></figure>
-<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1561340568358.jpg" alt=""></figure>
-<figure data-type="image" tabindex="8"><img src="https://winking324.github.io/post-images/1561340578604.jpg" alt=""></figure>
-<figure data-type="image" tabindex="9"><img src="https://winking324.github.io/post-images/1561340586822.jpg" alt=""></figure>
-</li>
-<li>
-<p>驱动安装完成后，N1 进行断电重启；</p>
-</li>
-<li>
-<p>重启后，重新运行  <code>reboot_to_usb_burn/进入线刷模式.bat</code> 脚本；</p>
-</li>
-<li>
-<p>这时候，UsbBurningTool 可以识别到设备，并开始进行刷机；</p>
-<figure data-type="image" tabindex="10"><img src="https://winking324.github.io/post-images/1561340596193.jpg" alt=""></figure>
-</li>
-<li>
-<p>刷机完成后，关掉 UsbBurningTool，并断电重启 N1，之后可以进入刷机的系统；</p>
-<figure data-type="image" tabindex="11"><img src="https://winking324.github.io/post-images/1561340605374.jpg" alt=""></figure>
-</li>
-</ol>
-<h2 id="4-参考地址">4 参考地址</h2>
-<ul>
-<li><a href="https://www.right.com.cn/forum/thread-318044-1-1.html">斐讯天天链N1刷机小白教程</a></li>
-<li><a href="https://www.right.com.cn/forum/thread-336688-1-1.html">T1_N1一键降级工具v1.1版本</a></li>
-<li><a href="https://pan.baidu.com/s/11ll1an5qHuYKTIIotuRuwA">其他工具(czez)</a></li>
 </ul>
 ]]></content>
     </entry>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Nginx + uWSGI + Flask + WebSocket | Winking</title>
+<title>F460 路由器端口映射 | Winking</title>
 <meta name="description" content="还愣着干啥！点赞啊！">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,108 +111,54 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Nginx + uWSGI + Flask + WebSocket</h2>
-            <div class="post-date">2019-07-02</div>
+            <h2 class="post-title">F460 路由器端口映射</h2>
+            <div class="post-date">2019-10-18</div>
             
-              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/nginx-uwsgi-flask-websocket.png')">
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/f460-nat.png')">
               </div>
             
             <div class="post-content">
-              <p>一个应用服务器，想要提供短链接和长连接两类服务类型时，一般短链接用 HTTP 方式，而长链接采用 WebSocket 方式。</p>
-<p>所以用 Flask 如何提供这两种服务类型呢？</p>
+              <p>家装电信，很多都采用中兴 F460 光猫（路由器），家里自己部署了一个服务器，想要映射到公网上，SSH 登陆上来。但是默认情况下，为了保证安全和防止黑客攻击，光猫上面是不允许将内部端口映射到公网上的。所以这里需要获取到光猫的超级管理员权限，进行端口映射的配置。</p>
 <!-- more -->
-<p>这里使用 <a href="https://github.com/zeekay/flask-uwsgi-websocket">Flask-uWSGI-WebSocket</a> 这个插件，采用 Nginx + uWSGI + Flask + WebSocket 的方式来提供 HTTP 和 WebSocket 两种服务类型。</p>
+<h1 id="1-获取密码">1 获取密码</h1>
 <ol>
-<li>
-<p>安装 Flask-uWSGI-WebSocket 插件；</p>
-<pre><code class="language-sh">sudo pip3 install Flask-uWSGI-WebSocket
-</code></pre>
-</li>
-<li>
-<p>修改 uwsgi 配置文件：</p>
-<pre><code class="language-ini">[uwsgi]
-socket = 127.0.0.1:5051
-master = true
-project = /data/projects/flaskr/
-pythonpath = %(project)
-module = app
-wsgi-file = %(project)/app.py
-callable = app
-processes = 1
-threads = 1
-daemonize = %(project)/server.log
-stats = %(project)/uwsgi/uwsgi.status
-pidfile = %(project)/uwsgi/uwsgi.pid
-
-# 增加
-gevent = 100
-</code></pre>
-</li>
-<li>
-<p>修改 Flask 相关逻辑；</p>
-<pre><code class="language-python"># -*- coding: utf-8 -*-
-__author__ = &quot;winking324@gmail.com&quot;
-__copyright__ = &quot;Copyright (c) 2019 winking.io, Inc.&quot;
-
-
-from flask import Flask
-from flask_uwsgi_websocket import GeventWebSocket
-
-
-app = Flask(__name__, instance_relative_config=True)
-websocket = GeventWebSocket(app)
-
-
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
-  
-@websocket.route('/echo')
-def echo(ws):
-    while True:
-        msg = ws.receive()
-        if msg is not None:
-            if msg:
-                ws.send(msg)
-        else:
-            return
-
-              
-if __name__ == '__main__':
-    app.run()
-</code></pre>
-</li>
-<li>
-<p>重启 uwsgi；</p>
-<pre><code class="language-sh">uwsgi --reload /data/projects/flaskr/uwsgi/uwsgi.pid
-</code></pre>
-</li>
-<li>
-<p>测试 WebSocket 服务；</p>
-</li>
+<li>链接电脑到光猫上，注意不要用第三个网口，这个网口是给 IPTV 预留的，分配的 IP 跟其他网口不一样；</li>
+<li>打开浏览器，访问 <code>http://192.168.1.1/manager_dev_config_t.gch</code>，选择导出配置；</li>
+<li>下载 <a href="http://aluigi.altervista.org/mytoolz.htm#Offzip">Offzip</a>，默认情况有 Windows 下的 offzip.exe，可以直接用，其他平台，执行 make 编译一下；</li>
+<li>在命令行下，执行 <code>offzip.exe -a config.bin . 0</code> 来解压配置文件；</li>
+<li>解压后会有多个文件，用文本编辑器打开各个文件，搜索 <code>telecomadmin</code>，对应的密码在相同位置；</li>
+<li>打开浏览器，访问 <code>http://192.168.1.1</code>，输入对应的用户名密码，登陆成功；</li>
 </ol>
+<h1 id="2-配置端口映射">2 配置端口映射</h1>
+<ol>
+<li>超级管理员登陆；</li>
+<li>点击菜单栏 <strong>应用</strong>；</li>
+<li>选择 <strong>高级 NAT 配置</strong>；</li>
+<li>选择 <strong>虚拟主机配置</strong>；</li>
+<li>勾选 <strong>应用</strong>，打开虚拟主机配置；</li>
+<li>名称填写自己的命名；</li>
+<li>广域网主机起始 IP 地址，广域网主机结束 IP 地址：允许任意地址访问则不填写，否则填写指定的 IP 地址；</li>
+<li>广域网连接：选择路由模式的连接，也就是当前电脑使用的联网模式，一般下拉菜单中只有一项，选择即可；</li>
+<li>广域网起始端口，广域网结束端口：打开给外网访问的端口；</li>
+<li>启用 MAC 映射：不勾选；</li>
+<li>虚拟主机 IP 地址：局域网内部 IP 地址，例如说你内网服务器地址是 <code>192.168.1.5</code>，则填写这个地址；</li>
+<li>虚拟主机起始端口，虚拟主机结束端口：局域网内部服务器允许对外访问的端口；</li>
+</ol>
+<h1 id="3-参考链接">3 参考链接</h1>
+<ul>
+<li><a href="http://www.myxzy.com/post-410.html">中兴光纤猫F460端口映射</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_6c9aadc80102wvoz.html">破解电信路由器中兴F460</a></li>
+<li><a href="https://pan.baidu.com/s/1d6ztZNOH6RvNVKx6I6xMGQ&amp;shfl=shareset">Offzip 下载</a> 提取码: f8ds</li>
+</ul>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://winking324.github.io/tag/j4moLT6pe" class="tag">
-                    Flask
-                  </a>
-                
-                  <a href="https://winking324.github.io/tag/2FjjLFFx4" class="tag">
-                    Nginx
-                  </a>
-                
-              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://winking324.github.io/post/nginx-uwsgi-flask">
+                <a href="https://winking324.github.io/post/linux-error-codes">
                   <h3 class="post-title">
-                    Nginx + uWSGI + Flask
+                    Linux 系统错误码
                   </h3>
                 </a>
               </div>
