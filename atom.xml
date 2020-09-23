@@ -2,18 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2019-12-20T09:16:48.458Z</updated>
+    <updated>2020-09-23T02:12:16.962Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
     <subtitle>还愣着干啥！点赞啊！</subtitle>
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2019, Winking</rights>
+    <rights>All rights reserved 2020, Winking</rights>
     <entry>
         <title type="html"><![CDATA[F460 路由器端口映射]]></title>
-        <id>https://winking324.github.io/post/f460-nat</id>
-        <link href="https://winking324.github.io/post/f460-nat">
+        <id>https://winking324.github.io/post/f460-nat/</id>
+        <link href="https://winking324.github.io/post/f460-nat/">
         </link>
         <updated>2019-10-18T02:17:47.000Z</updated>
         <summary type="html"><![CDATA[<p>家装电信，很多都采用中兴 F460 光猫（路由器），家里自己部署了一个服务器，想要映射到公网上，SSH 登陆上来。但是默认情况下，为了保证安全和防止黑客攻击，光猫上面是不允许将内部端口映射到公网上的。所以这里需要获取到光猫的超级管理员权限，进行端口映射的配置。</p>
@@ -54,8 +54,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Linux 系统错误码]]></title>
-        <id>https://winking324.github.io/post/linux-error-codes</id>
-        <link href="https://winking324.github.io/post/linux-error-codes">
+        <id>https://winking324.github.io/post/linux-error-codes/</id>
+        <link href="https://winking324.github.io/post/linux-error-codes/">
         </link>
         <updated>2019-10-10T06:26:56.000Z</updated>
         <summary type="html"><![CDATA[<p>When system requests fail, error code are returned. To understand the nature of the error these codes need to be interpreted.</p>
@@ -201,8 +201,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Flask 中使用定时任务]]></title>
-        <id>https://winking324.github.io/post/flask-scheduler</id>
-        <link href="https://winking324.github.io/post/flask-scheduler">
+        <id>https://winking324.github.io/post/flask-scheduler/</id>
+        <link href="https://winking324.github.io/post/flask-scheduler/">
         </link>
         <updated>2019-09-25T05:29:30.000Z</updated>
         <summary type="html"><![CDATA[<p>最近在使用 Flask 时，需要定期从远端服务器拉取 IP 数据，以提供相关 API 使用。所以使用了 apscheduler 这个定时任务框架来执行数据库读取以及本地数据更新等功能。</p>
@@ -351,8 +351,8 @@ if __name__ == '__main__':
     </entry>
     <entry>
         <title type="html"><![CDATA[斐讯 N1 盒子搭建 NAS]]></title>
-        <id>https://winking324.github.io/post/n1-nas</id>
-        <link href="https://winking324.github.io/post/n1-nas">
+        <id>https://winking324.github.io/post/n1-nas/</id>
+        <link href="https://winking324.github.io/post/n1-nas/">
         </link>
         <updated>2019-08-08T05:51:46.000Z</updated>
         <summary type="html"><![CDATA[<p>T1 盒子安装红外模块，并刷完系统后，N1 盒子就放在家里落灰了。为了充分发挥它的作用，把它刷成了一个 NAS，来管理家里的存储设备。</p>
@@ -412,7 +412,7 @@ if __name__ == '__main__':
 </li>
 <li>
 <p>在终端工具中输入 <code>ssh root@192.168.1.30</code>，密码 1234 登陆到 Armbian 中；</p>
-<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1565243675461.jpg" alt=""></figure>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1565243675461.jpg" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>随便输入一个新的密码（因为后面会重新刷系统，这个密码只是临时用）；</p>
@@ -438,7 +438,7 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 </li>
 <li>
 <p>执行 <code>ddbr</code> 命令进行 FastNas 安装：</p>
-<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1565243690309.jpg" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1565243690309.jpg" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>执行 <code>poweroff</code> 将 N1 盒子关机；</p>
@@ -460,7 +460,7 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 </li>
 <li>
 <p>增加 <code>hwaddress ether 6a:c8:0b:05:88:52</code> 到 eth0（有线）配置中；</p>
-<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1565243700384.jpg" alt=""></figure>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1565243700384.jpg" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>输入 <code>reboot</code> 重启，可以看到 MAC 地址不会再发生变化；</p>
@@ -469,7 +469,7 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 <p>如果使用无线网络，使用 <code>armbian-config</code> 命令进行无线网络的配置。</p>
 <h1 id="6-omv-设置">6 OMV 设置</h1>
 <p>在电脑中，打开浏览器，输入 <code>http://192.168.1.30</code>，便可以进入 OpenMediaVault 系统（用户名：admin，密码：openmediavault）。</p>
-<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1565243709299.jpg" alt=""></figure>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1565243709299.jpg" alt="" loading="lazy"></figure>
 <h1 id="7-参考链接">7 参考链接</h1>
 <ul>
 <li><a href="https://www.right.com.cn/forum/thread-847725-1-1.html">一键安装 FastNas V1.0.320190731 for Armbian Debian 5.77+OMV集成了可道云桌面</a></li>
@@ -481,8 +481,8 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
     </entry>
     <entry>
         <title type="html"><![CDATA[斐讯 T1 增加红外遥控]]></title>
-        <id>https://winking324.github.io/post/t1-ir</id>
-        <link href="https://winking324.github.io/post/t1-ir">
+        <id>https://winking324.github.io/post/t1-ir/</id>
+        <link href="https://winking324.github.io/post/t1-ir/">
         </link>
         <updated>2019-08-01T06:08:42.000Z</updated>
         <summary type="html"><![CDATA[<p>在用树莓派获取斐讯 N1 盒子遥控器红外信号时，发现读取不到信息，查了一下，N1 盒子是通过蓝牙遥控器来控制的。虽然网上有各路神仙给 N1 盒子加红外模块，但是没看到有成功的。</p>
@@ -496,34 +496,34 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 <p>这里唯一需要说明的是：</p>
 <p>T1 在开机后，需要链接网络并进行账号注册，才能激活。需要跳过这一个步骤，进入到系统中，打开远程调试。</p>
 <p>首先，扫描 T1 包装盒上面的二维码，下载<a href="https://phiclouds.phicomm.com/ota/service/app/downloadpage?appid=2017060031&amp;channel=1PTR">手机遥控器 App</a>：</p>
-<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1565590380701.png" alt=""></figure>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1565590380701.png" alt="" loading="lazy"></figure>
 <p>这样用遥控器设置链接网络之后，就可以使用手机遥控 App 来操作 T1 盒子，此时按手机遥控 App 上的菜单按钮，就可以跳过注册，直接进入到盒子中了，并在设置中打开远程调试。</p>
 <h1 id="2-安装红外">2 安装红外</h1>
 <p>刷完机之后，关机，准备安装红外模块。</p>
 <ol>
 <li>
 <p>撕开一点防滑条，将后盖拆下来；</p>
-<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1565590418260.jpg" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1565590418260.jpg" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>给红外模块开一个孔，这里我用乐高（伪，如图后面的小车）的一个透明块，挡在中间；</p>
-<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1565590466267.jpeg" alt=""></figure>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1565590466267.jpeg" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>开孔结束，把乐高透明块放在中间；</p>
-<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1565590510352.jpeg" alt=""></figure>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1565590510352.jpeg" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>拆下主板，将红外模块焊接在上面；</p>
-<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1565590522079.jpeg" alt=""></figure>
+<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1565590522079.jpeg" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>用小米手机的红外遥控测试工作是否正常，这里我用开博尔这个牌子的遥控，可以完美遥控，距离四到五米都没啥问题；</p>
-<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1565590542583.jpeg" alt=""></figure>
+<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1565590542583.jpeg" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>工作正常，将主板和盒子安装回去；</p>
-<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1565590555823.jpeg" alt=""></figure>
+<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1565590555823.jpeg" alt="" loading="lazy"></figure>
 </li>
 </ol>
 <h1 id="3-参考链接">3 参考链接</h1>
@@ -539,8 +539,8 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
     </entry>
     <entry>
         <title type="html"><![CDATA[树莓派报警器]]></title>
-        <id>https://winking324.github.io/post/raspberry-alarm</id>
-        <link href="https://winking324.github.io/post/raspberry-alarm">
+        <id>https://winking324.github.io/post/raspberry-alarm/</id>
+        <link href="https://winking324.github.io/post/raspberry-alarm/">
         </link>
         <updated>2019-07-09T04:13:45.000Z</updated>
         <summary type="html"><![CDATA[<p>随着公司不断变大，作为报警监控用的“大电视”也越来越重要。但是更换位置之后，“大电视”被各种显示器遮挡，出现情况后，无法第一眼看到，所以做一个报警器来监控一下。</p>
@@ -582,7 +582,7 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 </li>
 </ul>
 <p>主要设备如下：</p>
-<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1562645732607.png" alt=""></figure>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1562645732607.png" alt="" loading="lazy"></figure>
 <h1 id="2-安装环境">2 安装环境</h1>
 <h2 id="21-烧录系统">2.1 烧录系统</h2>
 <p>准备好一个<a href="https://www.raspberrypi.org/downloads/">树莓派镜像</a>，这里使用的是 <a href="https://downloads.raspberrypi.org/raspbian_lite_latest.torrent">Raspbian Buster Lite</a>。</p>
@@ -590,11 +590,11 @@ mv BACKUP-s9xxx-emmc.img.gz /ddbr
 <ol>
 <li>
 <p>选择镜像，并选择对应的 SD 卡，点击烧录；</p>
-<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1562645746399.png" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1562645746399.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>烧录成功；</p>
-<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1562645756401.png" alt=""></figure>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1562645756401.png" alt="" loading="lazy"></figure>
 </li>
 </ol>
 <h2 id="22-初始化环境">2.2 初始化环境</h2>
@@ -621,7 +621,7 @@ sudo pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple flask uwsgi
 <p>由于报警灯默认是用 220V 的交流电，上来直接测试，会有比较大的安全风险，所以我们这里先用 LED 灯来进行测试，如果成功，再将 LED 灯替换为报警灯。</p>
 <h2 id="31-继电器">3.1 继电器</h2>
 <p>继电器很简单，一端接树莓派进行开关控制，另外一端接设备，如图：</p>
-<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1562645785924.png" alt=""></figure>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1562645785924.png" alt="" loading="lazy"></figure>
 <p>这个继电器对内是直接用树莓派的 5V 电压，对外可以接：</p>
 <ul>
 <li>10A 250V 交流电</li>
@@ -633,7 +633,7 @@ sudo pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple flask uwsgi
 <h2 id="32-led">3.2 LED</h2>
 <p>LED 灯就比较简单了，直接两个阵脚，一个接入 GPIO，一个接入负极。</p>
 <p>最后整体如图：</p>
-<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1562645777502.png" alt=""></figure>
+<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1562645777502.png" alt="" loading="lazy"></figure>
 <h2 id="32-调试">3.2 调试</h2>
 <p>这里用 Python3 简单调试一下，代码如下：</p>
 <pre><code class="language-python">import RPi.GPIO as GPIO
@@ -684,7 +684,7 @@ if __name__ == '__main__':
 <p>逻辑很简单，当输入 1 时，继电器进入闭合状态，LED 会亮起来；当输入 0 时，继电器进入打开状态，LED 会关闭。</p>
 <h1 id="4-调试报警灯">4 调试报警灯</h1>
 <p>链接报警灯：</p>
-<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1562645797278.png" alt=""></figure>
+<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1562645797278.png" alt="" loading="lazy"></figure>
 <p>当然这是初步连接，用于给大家展示接口，有需要尝试的小伙伴，一定要用电工胶布，把裸露的电线包好，避免出现意外事故。</p>
 <p>连接好之后，插入电源，用下面的代码进行测试。</p>
 <pre><code class="language-python">import RPi.GPIO as GPIO
@@ -721,7 +721,7 @@ if __name__ == '__main__':
         destroy()
 </code></pre>
 <p>报警灯可以正常的进行工作：</p>
-<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1562645805640.gif" alt=""></figure>
+<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1562645805640.gif" alt="" loading="lazy"></figure>
 <h1 id="5-报警服务">5 报警服务</h1>
 <p>这里用 Nginx + uwsgi + flask 来搭建一个 web 服务，当有报警请求过来时，触发打开报警灯。</p>
 <h2 id="51-nginx-配置">5.1 Nginx 配置</h2>
@@ -808,8 +808,8 @@ if __name__ == '__main__':
     </entry>
     <entry>
         <title type="html"><![CDATA[树莓派红外模块对接]]></title>
-        <id>https://winking324.github.io/post/raspberry-lirc</id>
-        <link href="https://winking324.github.io/post/raspberry-lirc">
+        <id>https://winking324.github.io/post/raspberry-lirc/</id>
+        <link href="https://winking324.github.io/post/raspberry-lirc/">
         </link>
         <updated>2019-07-04T04:56:38.000Z</updated>
         <summary type="html"><![CDATA[<p>随着家里的电器越来越多，遥控器也越来越多，例如投影仪遥控、电视盒子遥控、HDMI 分线器遥控、NAS 存储遥控、音响遥控、电灯遥控、小夜灯遥控、空调遥控等等。所以当我想看一部电影时，需要用先打开投影仪，再打开电视盒子，然后打开 NAS 存储，接着打开 HDMI 分线器，跟着打开音响，甚至还要关上电灯。</p>
@@ -820,12 +820,12 @@ if __name__ == '__main__':
 <p>所以计划用树莓派和红外模块来进行电器的整体控制。</p>
 <h1 id="1-红外模块">1 红外模块</h1>
 <p>树莓派已经有了，那现在缺的是一个红外模块，所以先淘宝和各种论坛搜了一下，找到了这个不错的红外模块。</p>
-<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1562216778147.png" alt=""></figure>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1562216778147.png" alt="" loading="lazy"></figure>
 <p>这个模块有接收和发送两个部分，另外让淘宝老板多加了一个红外发射器 D2，到货时，老板已经贴心的帮忙焊了上去。</p>
 <p>但是我的树莓派加了一个合金的外壳，并且有散热风扇，如下：</p>
-<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1562216791197.png" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1562216791197.png" alt="" loading="lazy"></figure>
 <p>另外看了一下树莓派阵脚的定义，如下（这个是扩展模块，每一列都是一样的，所以只看一列就可以了）：</p>
-<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1562216808667.png" alt=""></figure>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1562216808667.png" alt="" loading="lazy"></figure>
 <p>就会有两个问题：</p>
 <ol>
 <li>插上这个模块，需要把外壳移除；</li>
@@ -842,8 +842,8 @@ if __name__ == '__main__':
 </ol>
 <p>所以用排线把这几个阵脚对应连起来就可以了，这样好处就是解决了上面的两个问题，但是缺点是加了排线，导致整体看起来比较乱，不够精简。不过后面可以放到自制的盒子里面，把这些遮挡起来，就可以解决了。</p>
 <p>具体的阵脚链接，大家可以参考：</p>
-<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1562216822476.png" alt=""></figure>
-<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1562216832768.png" alt=""></figure>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1562216822476.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1562216832768.png" alt="" loading="lazy"></figure>
 <h1 id="2-测试模块">2 测试模块</h1>
 <p>接线结束后，首先要测试一下模块是不是工作正常，如果整体工作正常，才能细化各部分逻辑。否则开发了半天，发现模块工作不正常，各种事情都要返工，就得不偿失了。</p>
 <p>测试过程中，查了不少资料，也绕了不少弯路，主要问题总结如下：</p>
@@ -1066,8 +1066,8 @@ pulse 19764
     </entry>
     <entry>
         <title type="html"><![CDATA[Nginx + uWSGI + Flask + WebSocket]]></title>
-        <id>https://winking324.github.io/post/nginx-uwsgi-flask-websocket</id>
-        <link href="https://winking324.github.io/post/nginx-uwsgi-flask-websocket">
+        <id>https://winking324.github.io/post/nginx-uwsgi-flask-websocket/</id>
+        <link href="https://winking324.github.io/post/nginx-uwsgi-flask-websocket/">
         </link>
         <updated>2019-07-02T11:31:38.000Z</updated>
         <summary type="html"><![CDATA[<p>一个应用服务器，想要提供短链接和长连接两类服务类型时，一般短链接用 HTTP 方式，而长链接采用 WebSocket 方式。</p>
@@ -1151,8 +1151,8 @@ if __name__ == '__main__':
     </entry>
     <entry>
         <title type="html"><![CDATA[Nginx + uWSGI + Flask]]></title>
-        <id>https://winking324.github.io/post/nginx-uwsgi-flask</id>
-        <link href="https://winking324.github.io/post/nginx-uwsgi-flask">
+        <id>https://winking324.github.io/post/nginx-uwsgi-flask/</id>
+        <link href="https://winking324.github.io/post/nginx-uwsgi-flask/">
         </link>
         <updated>2019-07-02T11:00:29.000Z</updated>
         <summary type="html"><![CDATA[<p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式。</p>
@@ -1246,8 +1246,8 @@ if __name__ == '__main__':
     </entry>
     <entry>
         <title type="html"><![CDATA[WSGI + uWSGI + uwsgi]]></title>
-        <id>https://winking324.github.io/post/uwsgi</id>
-        <link href="https://winking324.github.io/post/uwsgi">
+        <id>https://winking324.github.io/post/uwsgi/</id>
+        <link href="https://winking324.github.io/post/uwsgi/">
         </link>
         <updated>2019-06-28T05:36:18.000Z</updated>
         <summary type="html"><![CDATA[<p>一直以来，给外部系统提供服务，都是使用 RESTful API 方式。但是对于更多的用户来说，更喜欢的是使用浏览器直接打开页面，点击几个按钮来操作。所以在此基础上，学习了一下 Flask，接触到了 uWSGI，这里进行总结一下。</p>

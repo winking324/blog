@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1576833400197">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1600827134005">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://winking324.github.io">
-        <img src="https://winking324.github.io/images/avatar.png?v=1576833400197" class="site-logo">
+        <img src="https://winking324.github.io/images/avatar.png?v=1600827134005" class="site-logo">
         <h1 class="site-title">Winking</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -155,7 +155,7 @@
 </li>
 </ul>
 <p>主要设备如下：</p>
-<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1562645732607.png" alt=""></figure>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1562645732607.png" alt="" loading="lazy"></figure>
 <h1 id="2-安装环境">2 安装环境</h1>
 <h2 id="21-烧录系统">2.1 烧录系统</h2>
 <p>准备好一个<a href="https://www.raspberrypi.org/downloads/">树莓派镜像</a>，这里使用的是 <a href="https://downloads.raspberrypi.org/raspbian_lite_latest.torrent">Raspbian Buster Lite</a>。</p>
@@ -163,11 +163,11 @@
 <ol>
 <li>
 <p>选择镜像，并选择对应的 SD 卡，点击烧录；</p>
-<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1562645746399.png" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1562645746399.png" alt="" loading="lazy"></figure>
 </li>
 <li>
 <p>烧录成功；</p>
-<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1562645756401.png" alt=""></figure>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1562645756401.png" alt="" loading="lazy"></figure>
 </li>
 </ol>
 <h2 id="22-初始化环境">2.2 初始化环境</h2>
@@ -194,7 +194,7 @@ sudo pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple flask uwsgi
 <p>由于报警灯默认是用 220V 的交流电，上来直接测试，会有比较大的安全风险，所以我们这里先用 LED 灯来进行测试，如果成功，再将 LED 灯替换为报警灯。</p>
 <h2 id="31-继电器">3.1 继电器</h2>
 <p>继电器很简单，一端接树莓派进行开关控制，另外一端接设备，如图：</p>
-<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1562645785924.png" alt=""></figure>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1562645785924.png" alt="" loading="lazy"></figure>
 <p>这个继电器对内是直接用树莓派的 5V 电压，对外可以接：</p>
 <ul>
 <li>10A 250V 交流电</li>
@@ -206,7 +206,7 @@ sudo pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple flask uwsgi
 <h2 id="32-led">3.2 LED</h2>
 <p>LED 灯就比较简单了，直接两个阵脚，一个接入 GPIO，一个接入负极。</p>
 <p>最后整体如图：</p>
-<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1562645777502.png" alt=""></figure>
+<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1562645777502.png" alt="" loading="lazy"></figure>
 <h2 id="32-调试">3.2 调试</h2>
 <p>这里用 Python3 简单调试一下，代码如下：</p>
 <pre><code class="language-python">import RPi.GPIO as GPIO
@@ -257,7 +257,7 @@ if __name__ == '__main__':
 <p>逻辑很简单，当输入 1 时，继电器进入闭合状态，LED 会亮起来；当输入 0 时，继电器进入打开状态，LED 会关闭。</p>
 <h1 id="4-调试报警灯">4 调试报警灯</h1>
 <p>链接报警灯：</p>
-<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1562645797278.png" alt=""></figure>
+<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1562645797278.png" alt="" loading="lazy"></figure>
 <p>当然这是初步连接，用于给大家展示接口，有需要尝试的小伙伴，一定要用电工胶布，把裸露的电线包好，避免出现意外事故。</p>
 <p>连接好之后，插入电源，用下面的代码进行测试。</p>
 <pre><code class="language-python">import RPi.GPIO as GPIO
@@ -294,7 +294,7 @@ if __name__ == '__main__':
         destroy()
 </code></pre>
 <p>报警灯可以正常的进行工作：</p>
-<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1562645805640.gif" alt=""></figure>
+<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1562645805640.gif" alt="" loading="lazy"></figure>
 <h1 id="5-报警服务">5 报警服务</h1>
 <p>这里用 Nginx + uwsgi + flask 来搭建一个 web 服务，当有报警请求过来时，触发打开报警灯。</p>
 <h2 id="51-nginx-配置">5.1 Nginx 配置</h2>
@@ -382,7 +382,7 @@ if __name__ == '__main__':
             
               <div class="tag-container">
                 
-                  <a href="https://winking324.github.io/tag/q7UccH_pD" class="tag">
+                  <a href="https://winking324.github.io/tag/q7UccH_pD/" class="tag">
                     RaspberryPi
                   </a>
                 
@@ -391,7 +391,7 @@ if __name__ == '__main__':
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://winking324.github.io/post/raspberry-lirc">
+                <a href="https://winking324.github.io/post/raspberry-lirc/">
                   <h3 class="post-title">
                     树莓派红外模块对接
                   </h3>
