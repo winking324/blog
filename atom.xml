@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2021-12-22T02:23:46.334Z</updated>
+    <updated>2021-12-22T02:34:53.434Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -91,7 +91,7 @@
 <li>序言的长短取决于读者的需要和主题的要求；</li>
 <li>为每个关键句要点写一段引言；</li>
 </ol>
-<h1 id="关键概念-4">关键概念</h1>
+<h2 id="关键概念-4">关键概念</h2>
 <h3 id="写序言">写序言</h3>
 <ul>
 <li>说明背景；</li>
