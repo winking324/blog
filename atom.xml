@@ -2,14 +2,33 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2021-12-22T02:47:09.491Z</updated>
+    <updated>2022-01-18T06:59:02.504Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
     <subtitle>还愣着干啥！点赞啊！</subtitle>
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Winking</rights>
+    <rights>All rights reserved 2022, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[GoCookbook - 初始化]]></title>
+        <id>https://winking324.github.io/post/gocookbook-init/</id>
+        <link href="https://winking324.github.io/post/gocookbook-init/">
+        </link>
+        <updated>2022-01-18T11:45:09.000Z</updated>
+        <summary type="html"><![CDATA[<p>当你准备开始写一个 Go 的项目，第一件事肯定是考虑创建一个工程文件夹，但是文件夹中的结构是怎样组成的呢？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>当你准备开始写一个 Go 的项目，第一件事肯定是考虑创建一个工程文件夹，但是文件夹中的结构是怎样组成的呢？</p>
+<!-- more -->
+<h1 id="go-mod-init">Go mod init</h1>
+<p>使用 <code>go mod</code> 命令初始化目录，此步骤会创建 <code>go.mod</code>，<code>go.sum</code> 等文件。</p>
+<pre><code class="language-shell"> go mod init github.com/winking324/rzap
+ go mod tidy
+</code></pre>
+<h1 id="project-layout">Project Layout</h1>
+<p>可以参考 <a href="https://github.com/golang-standards/project-layout">Standard Go Project Layout</a> 进行目录结构的创建。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[金字塔原理要点汇总]]></title>
         <id>https://winking324.github.io/post/the-minto-pyramid-principle/</id>
@@ -1432,101 +1451,6 @@ if __name__ == '__main__':
 <p>测试 WebSocket 服务；</p>
 </li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Nginx + uWSGI + Flask]]></title>
-        <id>https://winking324.github.io/post/nginx-uwsgi-flask/</id>
-        <link href="https://winking324.github.io/post/nginx-uwsgi-flask/">
-        </link>
-        <updated>2019-07-02T11:00:29.000Z</updated>
-        <summary type="html"><![CDATA[<p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>上次说到了 Flask，接触到 uWSGI。在实际生产环境，一般采用 Nginx + uWSGI + Flask 的组合方式。</p>
-<!-- more -->
-<ul>
-<li>Nginx 负责提供对外的 Web 服务；</li>
-<li>uWSGI 充当中间件，桥接对外的 Web 服务和实际的应用服务；</li>
-<li>Flask 提供应用服务，完成业务逻辑；</li>
-</ul>
-<h1 id="1-nginx-配置">1 Nginx 配置</h1>
-<p>在这里，使用 Nginx 的主要目的如下：</p>
-<ol>
-<li>安全。客户端对 Web 服务器的访问需要先经过 Nginx。这样可以防止外部程序直接对应用服务器的恶意攻击；</li>
-<li>负载均衡。在有多个应用服务器的情况下，Nginx 可以根据应用服务器的负载情况，动态地把请求交给不同的应用服务器来处理；</li>
-<li>提升 IO 性能。一个 HTTP 请求的数据，从客户端传输给服务器，是需要时间的，例如 N 秒，如果直接传给应用服务器，应用服务器就需要让一个进程（或线程）阻塞 N 秒，进行 IO 操作，这样会降低应用服务器的性能。如果先让 Nginx 接收完整的 HTTP 请求，再把请求发给应用服务器，就能提升应用服务器的性能。还有一些静态文件的请求，可以直接交给 Nginx 来处理，不需要经过应用服务器，降低了应用服务器的 QPS。</li>
-</ol>
-<p>但是默认情况下，Nginx 不具备 WSGI 规范的能力，需要通过 <a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html">ngx_http_uwsgi_module</a> 模块进行扩展，这个模块默认已经集成在 Nginx，所以不需要重新编译 Nginx。</p>
-<pre><code class="language-sh"># 修改 Nginx 配置
-sudo vi /etc/nginx/sites-enabled/default
-
-# 修改 location 部分
-location / {
-	include        uwsgi_params;
-	uwsgi_pass     127.0.0.1:5051;
-	uwsgi_param UWSGI_CHDIR  /data/projects/flaskr;
-	uwsgi_param UWSGI_SCRIPT app:app;
-}
-
-# 保存配置，并重新加载
-sudo systemctl reload nginx
-</code></pre>
-<h1 id="2-uwsgi-配置">2 uWSGI 配置</h1>
-<p>Python 默认情况下，没有 uWSGI，所以需要手动安装一下：</p>
-<pre><code class="language-sh">sudo pip3 install uwsgi
-</code></pre>
-<p>之后，在 Flask 项目中，创建 uWSGI 的配置文件 <code>/data/projects/flaskr/uwsgi_config.ini</code>，并配置如下：</p>
-<pre><code class="language-ini">[uwsgi]
-socket = 127.0.0.1:5051
-master = true
-project = /data/projects/flaskr/
-pythonpath = %(project)
-module = app
-wsgi-file = %(project)/app.py
-callable = app
-processes = 1
-threads = 1
-daemonize = %(project)/server.log
-stats = %(project)/uwsgi/uwsgi.status
-pidfile = %(project)/uwsgi/uwsgi.pid
-</code></pre>
-<h1 id="3-flask-应用">3 Flask 应用</h1>
-<p>编写一个简单的 Flask 应用，先用来测试。创建 <code>/data/projects/flaskr/app.py</code> 文件，并输入：</p>
-<pre><code class="language-python"># -*- coding: utf-8 -*-
-__author__ = &quot;winking324@gmail.com&quot;
-__copyright__ = &quot;Copyright (c) 2019 winking.io, Inc.&quot;
-
-
-from flask import Flask
-
-
-app = Flask(__name__, instance_relative_config=True)
-
-
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
-
-if __name__ == '__main__':
-    app.run()
-</code></pre>
-<p>使用 uwsgi 命令启动 Flask 应用服务：</p>
-<pre><code class="language-sh">uwsgi --ini /data/projects/flaskr/uwsgi_config.ini
-</code></pre>
-<p>如果需要重启 uwsgi，使用：</p>
-<pre><code class="language-sh">uwsgi --reload /data/projects/flaskr/uwsgi/uwsgi.pid
-</code></pre>
-<p>如果需要停止服务，使用：</p>
-<pre><code class="language-sh">uwsgi --stop /data/projects/flaskr/uwsgi/uwsgi.pid
-</code></pre>
-<h1 id="4-请求测试">4 请求测试</h1>
-<p>在浏览器中，访问对应 Nginx 的地址，会在浏览器中显示 <code>Hello world!</code>。</p>
-<h1 id="5-参考链接">5 参考链接</h1>
-<ul>
-<li><a href="http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html">ngx_http_uwsgi_module 说明文档</a></li>
-<li><a href="https://www.cnblogs.com/cuchadanfan/p/6237584.html">ngx_http_uwsgi_module 中文文档</a></li>
-</ul>
 ]]></content>
     </entry>
 </feed>

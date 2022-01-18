@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Samba | Winking</title>
+<title>GoCookbook - 初始化 | Winking</title>
 <meta name="description" content="还愣着干啥！点赞啊！">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -104,34 +110,54 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: Samba</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://winking324.github.io/post/ubuntu-samba/">
-                  <h2 class="post-title">Ubuntu 下 Samba 安装与配置</h2>
-                </a>
-                <div class="post-date">
-                  2019-02-19
-                </div>
-                <div class="post-abstract">
-                  <p>SMB（Server Messages Block，信息服务块）是一种在局域网上共享文件和打印机的一种通信协议，它为局域网内的不同计算机之间提供文件及打印机等资源的共享服务。</p>
-
-                </div>
+          <div class="post-detail">
+            <h2 class="post-title">GoCookbook - 初始化</h2>
+            <div class="post-date">2022-01-18</div>
+            
+              <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/gocookbook-init.png')">
               </div>
-              
-                <a class="right" href="https://winking324.github.io/post/ubuntu-samba/">
-                  <div class="feature-container" style="background-image: url('https://winking324.github.io/post-images/ubuntu-samba.png')">
-                  </div>
-                </a>
-              
-            </article>
-          
+            
+            <div class="post-content">
+              <p>当你准备开始写一个 Go 的项目，第一件事肯定是考虑创建一个工程文件夹，但是文件夹中的结构是怎样组成的呢？</p>
+<!-- more -->
+<h1 id="go-mod-init">Go mod init</h1>
+<p>使用 <code>go mod</code> 命令初始化目录，此步骤会创建 <code>go.mod</code>，<code>go.sum</code> 等文件。</p>
+<pre><code class="language-shell"> go mod init github.com/winking324/rzap
+ go mod tidy
+</code></pre>
+<h1 id="project-layout">Project Layout</h1>
+<p>可以参考 <a href="https://github.com/golang-standards/project-layout">Standard Go Project Layout</a> 进行目录结构的创建。</p>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://winking324.github.io/tag/_lhH4w_eu/" class="tag">
+                    GoCookbook
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://winking324.github.io/post/the-minto-pyramid-principle/">
+                  <h3 class="post-title">
+                    金字塔原理要点汇总
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -153,6 +179,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'cf71cf503e8d0441d9ac',
+        clientSecret: 'c1c3d8f77fa2a097546464880636cd5080d492e7',
+        repo: 'winking324.github.io',
+        owner: 'winking324',
+        admin: ['winking324'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
