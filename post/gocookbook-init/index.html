@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1642494435380">
+<link rel="shortcut icon" href="https://winking324.github.io/favicon.ico?v=1642667323399">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://winking324.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://winking324.github.io">
-        <img src="https://winking324.github.io/images/avatar.png?v=1642494435380" class="site-logo">
+        <img src="https://winking324.github.io/images/avatar.png?v=1642667323399" class="site-logo">
         <h1 class="site-title">Winking</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -120,12 +120,13 @@
             <div class="post-content">
               <p>当你准备开始写一个 Go 的项目，第一件事肯定是考虑创建一个工程文件夹，但是文件夹中的结构是怎样组成的呢？</p>
 <!-- more -->
-<h1 id="go-mod-init">Go mod init</h1>
+<h1 id="1-go-mod-init">1 Go mod init</h1>
 <p>使用 <code>go mod</code> 命令初始化目录，此步骤会创建 <code>go.mod</code>，<code>go.sum</code> 等文件。</p>
-<pre><code class="language-shell"> go mod init github.com/winking324/rzap
+<pre><code class="language-shell"># 例如
+ go mod init github.com/winking324/rzap
  go mod tidy
 </code></pre>
-<h1 id="project-layout">Project Layout</h1>
+<h1 id="2-project-layout">2 Project Layout</h1>
 <p>可以参考 <a href="https://github.com/golang-standards/project-layout">Standard Go Project Layout</a> 进行目录结构的创建。</p>
 
             </div>
