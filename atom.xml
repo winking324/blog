@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://winking324.github.io</id>
     <title>Winking</title>
-    <updated>2022-01-20T08:28:53.841Z</updated>
+    <updated>2022-01-25T08:44:02.518Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://winking324.github.io"/>
     <link rel="self" href="https://winking324.github.io/atom.xml"/>
@@ -10,6 +10,279 @@
     <logo>https://winking324.github.io/images/avatar.png</logo>
     <icon>https://winking324.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Winking</rights>
+    <entry>
+        <title type="html"><![CDATA[MacOS 必备应用 - 网络篇]]></title>
+        <id>https://winking324.github.io/post/macos-apps-network/</id>
+        <link href="https://winking324.github.io/post/macos-apps-network/">
+        </link>
+        <updated>2022-01-25T11:13:25.000Z</updated>
+        <summary type="html"><![CDATA[<p>工欲善其事，必先利其器。对比 Windows 来说，MacOS 是一个干净纯粹的系统，8 年前，当我第一次用上这个系统时，我就立马跟 Windows 说“再见”了。这么多年使用下来，沉淀了一些对于开发者来说是必备的应用。当然大部分对于普通用户来说，也可以说是必备利器，能让你更好的上手 MacOS，然后拍手称快！</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>工欲善其事，必先利其器。对比 Windows 来说，MacOS 是一个干净纯粹的系统，8 年前，当我第一次用上这个系统时，我就立马跟 Windows 说“再见”了。这么多年使用下来，沉淀了一些对于开发者来说是必备的应用。当然大部分对于普通用户来说，也可以说是必备利器，能让你更好的上手 MacOS，然后拍手称快！</p>
+<!-- more -->
+<p>这篇主要介绍在 MacOS 上常用的一些网络工具，这些工具有不少也是常驻于上篇介绍的 Menu Bar Extras 部分，没有将这些也列为插件，主要是为了保证文章比较简短，可以让大家快速找到想要的部分。</p>
+<h1 id="1-代理">1 代理</h1>
+<p>这一部分就简单介绍一下，不具体展开了，因为大家还是要在一个安全可靠的网络下，做一个守法守纪的好公民。</p>
+<h2 id="11-shimo">1.1 Shimo</h2>
+<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1643093481494.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>否（可买断）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★☆</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://www.shimovpn.com/">Shimo</a> 是一个专业的 VPN 工具，国内还是有不少比较大的企业（尤其是多省市分布的），访问内网服务的时候，需要经过公司统一的 VPN 网络。虽然 MacOS 上配置 VPN 不是很复杂，但是 Shimo 做到了更好的易用性和稳定性，并且支持的协议也非常多。</p>
+<h2 id="12-surge">1.2 Surge</h2>
+<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1643093865294.jpg" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>否（可买断）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★☆☆</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://nssurge.com/">Surge</a> 据说是 MacOS 上科学上网最好用的工具了，但是价格过高，让人望而止步，另外这方面目前免费的应用也越来越多，性价比较低。</p>
+<h2 id="13-clashx">1.3 ClashX</h2>
+<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1643094274283.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>是</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★★</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://github.com/yichengchen/clashX/releases">ClashX</a> 是一款免费开源的科学上网工具，应该是除了 Surge 外最佳可选了，功能强大，被大家广泛推荐。</p>
+<h2 id="14-proxifier">1.4 Proxifier</h2>
+<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1643095668916.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>否（可买断）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★☆</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://www.proxifier.com/">Proxifier</a> 是一款本地的代理客户端，可以制定复杂的网络规则，让不支持通过代理服务器工作的应用能通过本地代理网络访问互联网。Proxifier 可以很好的跟 ClashX 等代理应用搭配使用，获得最佳体验。唯一的缺点是，Proxifier 目前不能运行在后台，通过 Menu Bar Extras 上的图标进行操作，而必须占用一个 Dock 的位置。</p>
+<h1 id="2-过滤">2 过滤</h1>
+<p>上面刚刚提到的 Proxifier 其实也是一个很好的过滤工具，可以通过规则，将符合规则的互联网请求进行一定的处理，但是更多是代理方面的处理，所以没有放在这一段中。</p>
+<h2 id="21-little-snitch">2.1 Little Snitch</h2>
+<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1643096482170.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>否（可买断）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★☆</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://www.obdev.at/products/littlesnitch/index.html">Little Snitch</a> 是一款个人安全防护软件，能防止应用在你不知道的情况下自动访问网络，并且可以查看应用访问互联网的具体情况，功能非常强大。</p>
+<h2 id="22-adgurad">2.2 AdGurad</h2>
+<figure data-type="image" tabindex="6"><img src="https://winking324.github.io/post-images/1643097188282.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>否（可买断）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★★</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://adguard.com/en/welcome.html">AdGuard</a> 是一个功能强大的广告和弹出窗口的拦截工具，适用于所有安装的浏览器。Adguard 可以去除烦人的页面广告，减少了页面加载时间，并节省大量的流量，还可以拦截跟踪器和危险的网站，保证一定的安全性。我作为一个不太看网页的用户，一年间累计拦截广告 107798 次，拦截跟踪器 300393 次，节省 20.98G 流量，其效果非常明显。</p>
+<h1 id="3-下载上传">3 下载/上传</h1>
+<p>这部分其实没有太多可以介绍的，简单介绍一些大家可能不太了解的工具，例如说各类网盘、迅雷这种常见的就不介绍了。</p>
+<h2 id="31-aria2gui">3.1 Aria2GUI</h2>
+<figure data-type="image" tabindex="7"><img src="https://winking324.github.io/post-images/1643097853905.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>是</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★☆</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://github.com/yangshun1029/aria2gui/releases">Aria2GUI</a> 是一款基于 aria2 的免费开源下载工具，可帮助简化不同设备和服务器之间的下载过程。它支持磁力链接、BT 种子、HTTP 等类型的文件下载，Aria2GUI 有着优秀的性能及较低的资源占用，尤其适合于下载 HTTP 类型的大文件。缺点是该项目于 2018 年已停止更新，只是功能处于可用的状态而已，很多细节其实并不完善。</p>
+<h2 id="32-transmit">3.2 Transmit</h2>
+<figure data-type="image" tabindex="8"><img src="https://winking324.github.io/post-images/1643098266899.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>否（可买断）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★★</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://panic.com/transmit/">Transmit</a> 是一款功能齐全的上传/下载客户端。支持 FTP、SFTP、WebDAV、Amazon S3 等等各类协议，直接通过文件拖拽就能实现上传/下载功能，非常方便。</p>
+<h2 id="33-downie">3.3 Downie</h2>
+<figure data-type="image" tabindex="9"><img src="https://winking324.github.io/post-images/1643098669563.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>否（可买断）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★★</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://software.charliemonroe.net/downie/">Downie</a> 是一个超级易于使用的视频下载工具，支持 YouTube，Vimeo 等大部分主流视频网站。可以非常方便的将页面上的视频下载下来，这样可以在没有网络的环境下，继续观看。</p>
+<h1 id="4-开发">4 开发</h1>
+<p>这部分主要是有开发或者测试相关需求的应用，这里只简单介绍几款常见的，其他就不展开介绍了，毕竟大多数人不是从事开发相关工作的。</p>
+<h2 id="41-wireshark">4.1 Wireshark</h2>
+<figure data-type="image" tabindex="10"><img src="https://winking324.github.io/post-images/1643099257993.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>是</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★★</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://www.wireshark.org/">Wireshark</a> 是一款开源免费的跨平台抓包工具，应该没有比 Wireshark 更强大的抓包工具了，大多数网络相关的开发、测试、运维等，都使用该工具来分析调查网络问题。</p>
+<h2 id="42-paw">4.2 Paw</h2>
+<figure data-type="image" tabindex="11"><img src="https://winking324.github.io/post-images/1643099449237.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>否（可买断）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★★</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://paw.cloud/">Paw</a> 是一款强大的 HTTP 客户端工具，可以用于开发测试 OpenAPI。相比免费的 Postman 来说，它更加易用，功能也更加强大，有丰富的扩展插件，并且用户也可以很快很方便的开发属于自己的扩展插件。曾经有一段时间，可以在 Twitter 上免费领取，不知道你上车了没？</p>
+<h2 id="43-charles">4.3 Charles</h2>
+<figure data-type="image" tabindex="12"><img src="https://winking324.github.io/post-images/1643099897562.png" alt="" loading="lazy"></figure>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免费</td>
+<td>否（可买断）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>★★★★★</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://www.charlesproxy.com/">Charles</a> 是 MacOS 上最强大的 HTTP 请求抓包的工具，可以快速有效的获得请求以及回复的 HTTP 信息。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[MacOS 必备应用 - 插件篇]]></title>
         <id>https://winking324.github.io/post/macos-apps-plugins/</id>
@@ -1568,264 +1841,6 @@ if __name__ == '__main__':
 <pre><code class="language-sh">uwsgi --ini uwsgi_config.ini
 </code></pre>
 <p>在浏览器里面，输入树莓派的地址，发送请求测试，报警成功。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[树莓派红外模块对接]]></title>
-        <id>https://winking324.github.io/post/raspberry-lirc/</id>
-        <link href="https://winking324.github.io/post/raspberry-lirc/">
-        </link>
-        <updated>2019-07-04T04:56:38.000Z</updated>
-        <summary type="html"><![CDATA[<p>随着家里的电器越来越多，遥控器也越来越多，例如投影仪遥控、电视盒子遥控、HDMI 分线器遥控、NAS 存储遥控、音响遥控、电灯遥控、小夜灯遥控、空调遥控等等。所以当我想看一部电影时，需要用先打开投影仪，再打开电视盒子，然后打开 NAS 存储，接着打开 HDMI 分线器，跟着打开音响，甚至还要关上电灯。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>随着家里的电器越来越多，遥控器也越来越多，例如投影仪遥控、电视盒子遥控、HDMI 分线器遥控、NAS 存储遥控、音响遥控、电灯遥控、小夜灯遥控、空调遥控等等。所以当我想看一部电影时，需要用先打开投影仪，再打开电视盒子，然后打开 NAS 存储，接着打开 HDMI 分线器，跟着打开音响，甚至还要关上电灯。</p>
-<!-- more -->
-<p>一系列的操作简直烦不胜烦，然后就想是不是可以用一个遥控器，控制所有电器呢？毕竟大部分电器的遥控器，无非也就是按一下开关键而已。</p>
-<p>所以计划用树莓派和红外模块来进行电器的整体控制。</p>
-<h1 id="1-红外模块">1 红外模块</h1>
-<p>树莓派已经有了，那现在缺的是一个红外模块，所以先淘宝和各种论坛搜了一下，找到了这个不错的红外模块。</p>
-<figure data-type="image" tabindex="1"><img src="https://winking324.github.io/post-images/1562216778147.png" alt="" loading="lazy"></figure>
-<p>这个模块有接收和发送两个部分，另外让淘宝老板多加了一个红外发射器 D2，到货时，老板已经贴心的帮忙焊了上去。</p>
-<p>但是我的树莓派加了一个合金的外壳，并且有散热风扇，如下：</p>
-<figure data-type="image" tabindex="2"><img src="https://winking324.github.io/post-images/1562216791197.png" alt="" loading="lazy"></figure>
-<p>另外看了一下树莓派阵脚的定义，如下（这个是扩展模块，每一列都是一样的，所以只看一列就可以了）：</p>
-<figure data-type="image" tabindex="3"><img src="https://winking324.github.io/post-images/1562216808667.png" alt="" loading="lazy"></figure>
-<p>就会有两个问题：</p>
-<ol>
-<li>插上这个模块，需要把外壳移除；</li>
-<li>这个模块占用了 5v 正极，导致散热风扇也没法用；</li>
-</ol>
-<p>所以大概看了一下红外模块的阵脚，发现其实它只用了以下几个阵脚：</p>
-<ol>
-<li>3.3v：正极；</li>
-<li>GND：负极；</li>
-<li>P17：红外发射；</li>
-<li>P18：红外接收；</li>
-<li>P27：开关1；</li>
-<li>P22：开关2；</li>
-</ol>
-<p>所以用排线把这几个阵脚对应连起来就可以了，这样好处就是解决了上面的两个问题，但是缺点是加了排线，导致整体看起来比较乱，不够精简。不过后面可以放到自制的盒子里面，把这些遮挡起来，就可以解决了。</p>
-<p>具体的阵脚链接，大家可以参考：</p>
-<figure data-type="image" tabindex="4"><img src="https://winking324.github.io/post-images/1562216822476.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="5"><img src="https://winking324.github.io/post-images/1562216832768.png" alt="" loading="lazy"></figure>
-<h1 id="2-测试模块">2 测试模块</h1>
-<p>接线结束后，首先要测试一下模块是不是工作正常，如果整体工作正常，才能细化各部分逻辑。否则开发了半天，发现模块工作不正常，各种事情都要返工，就得不偿失了。</p>
-<p>测试过程中，查了不少资料，也绕了不少弯路，主要问题总结如下：</p>
-<ol>
-<li>
-<p>很多资料比较老，在内核 4.19.x 以上版本，都不能跟资料介绍的那样正常工作；</p>
-<p>由于在内核 4.19.x 以上版本，移除了对 <code>dtoverlay=lirc-rpi</code> 的支持，改为 <code>dtoverlay=gpio-ir</code> 以及 <code>dtoverlay=gpio-ir-tx</code> 方式。所以如果查看资料中，是以 <code>lirc-rpi</code> 方式集成的，那就可以无视这个资料了；</p>
-</li>
-<li>
-<p>lirc 这个模块的最新版本，配置也跟之前老版本的不同，不需要 <code>/etc/lirc/hardware.conf</code> 等配置文件；</p>
-</li>
-</ol>
-<p>踩了好多坑，正确的姿势应该按照下面的步骤执行。</p>
-<h2 id="21-确认内核版本">2.1 确认内核版本</h2>
-<pre><code class="language-sh">uname -a
-# 输出如下
-# Linux raspberrypi 4.14.79-v7+ #1159 SMP Sun Nov 4 17:50:20 GMT 2018 armv7l GNU/Linux
-</code></pre>
-<p>对于输出内容的说明如下：</p>
-<ul>
-<li><code>Linux</code>：kernel name</li>
-<li><code>raspberrypi</code>：network node hostname</li>
-<li><code>4.14.79-v7+</code>：kernel release</li>
-<li><code>#1159 SMP Sun Nov 4 17:50:20 GMT 2018</code>：kernel version</li>
-<li><code>armv7l</code>：machine hardware name</li>
-<li><code>GNU/Linux</code>：operating system</li>
-</ul>
-<p>可以看到当前的内核版本为 <code>4.14.79-v7+</code>。打开 <code>/boot/overlays/README</code> 并搜索 <code>lirc-rpi</code> 后，发现：</p>
-<pre><code>Name:   lirc-rpi
-Info:   This overlay has been deprecated and removed - see gpio-ir
-Load:   &lt;Deprecated&gt;
-</code></pre>
-<p><code>lirc-rpi</code> 已经被标记成已废弃，并且<mark>已经移除</mark>，使用 <code>gpio-ir</code> 来替换。</p>
-<p>所以首先要先确认自己的内核版本，并查看 <code>/boot/overlays/README</code>，确定 <code>lirc-rpi</code> 在自己的系统上是否可用（如果可用的话，可以直接找相关的集成文档，这部分有很多资料，这里就不多说了）。</p>
-<h2 id="22-安装-lirc">2.2 安装 lirc</h2>
-<p><a href="http://www.lirc.org/">lirc</a> 是 Linux 下，提供红外信号编解码，以及收发能力的一个模块。有了这个模块，我们不需要去实现红外信号处理等很复杂的逻辑。</p>
-<p>安装：</p>
-<pre><code class="language-sh">sudo apt-get install -y lirc
-</code></pre>
-<h2 id="23-配置-gpio">2.3 配置 gpio</h2>
-<p>首先，配置 gpio，让系统知道红外模块是通过哪几个引脚来进行控制的。</p>
-<p>在前面，我们在接线的时候，提到：</p>
-<ul>
-<li>
-<p>P17：红外发射；</p>
-</li>
-<li>
-<p>P18：红外接收；</p>
-</li>
-</ul>
-<p>所以需要将这两个引脚配置到系统中。</p>
-<pre><code class="language-sh"># 打开编辑 /boot/config.txt 文件
-sudo vi /boot/config.txt
-
-# 找到 dtoverlay 的声明位置，增加以下声明
-dtoverlay=gpio-ir,gpio_pin=18
-dtoverlay=gpio-ir-tx,gpio_pin=17
-
-# 保存退出，并重启树莓派
-sudo reboot
-</code></pre>
-<p>重启后，进入系统，执行 <code>ls /dev</code> 可以看到 <code>lirc0</code> 和 <code>lirc1</code> 这两个设备，说明配置成功。</p>
-<h2 id="24-测试红外接收">2.4 测试红外接收</h2>
-<p>停掉 lircd 服务：</p>
-<pre><code class="language-sh">sudo systemctl stop lircd.socket
-sudo systemctl stop lircd.service
-</code></pre>
-<p>读取红外模块接收的内容：</p>
-<pre><code class="language-sh">mode2 --driver default --device /dev/lirc1
-</code></pre>
-<p>进入红外读取状态：</p>
-<pre><code class="language-sh">Using driver devinput on device /dev/lirc1
-Trying device: /dev/lirc1
-Using device: /dev/lirc1
-</code></pre>
-<p>然后用遥控器随便按一个键，会出现以下内容：</p>
-<pre><code class="language-sh">space 16777215
-pulse 95
-space 182
-pulse 1616
-space 221
-pulse 766
-space 76
-pulse 443
-space 277
-pulse 149
-space 387
-pulse 908
-space 168
-pulse 94
-space 348
-pulse 741
-space 80
-pulse 738
-space 485
-pulse 82
-space 152
-pulse 344
-space 74
-pulse 132
-space 4898
-pulse 515
-space 641
-pulse 443
-space 748
-pulse 94
-space 170
-pulse 89
-space 1894
-pulse 383
-space 647
-pulse 86
-space 256
-pulse 179
-space 797
-pulse 89
-space 944
-pulse 198
-space 1061
-pulse 314
-space 1883
-pulse 257
-space 1861
-pulse 116
-space 224
-pulse 84
-space 1884
-pulse 454
-space 1698
-pulse 87
-space 175
-pulse 120
-space 1932
-pulse 476
-space 1778
-pulse 496
-space 1802
-pulse 96
-space 2153
-pulse 355
-space 1953
-pulse 375
-space 591
-pulse 545
-space 1726
-pulse 334
-space 933
-pulse 386
-space 643
-pulse 493
-space 643
-pulse 386
-space 2091
-pulse 239
-space 641
-pulse 340
-space 798
-pulse 486
-space 1779
-pulse 496
-space 747
-pulse 90
-space 2209
-pulse 308
-space 1805
-pulse 84
-space 115
-pulse 241
-space 1751
-pulse 87
-space 175
-pulse 174
-space 719
-pulse 471
-space 1857
-pulse 92
-pulse 21981
-space 61979
-space 40451
-pulse 89
-space 143
-pulse 96
-space 221
-pulse 904
-space 121
-pulse 1057
-space 84
-pulse 2610
-space 303
-pulse 1550
-space 83
-pulse 95
-space 188
-pulse 1004
-space 2820
-pulse 381
-pulse 19764
-</code></pre>
-<h2 id="25-测试红外发送">2.5 测试红外发送</h2>
-<p>waiting for update</p>
-<h1 id="3-参考链接">3 参考链接</h1>
-<ul>
-<li>
-<p><a href="http://www.lirc.org/">LIRC</a></p>
-</li>
-<li>
-<p><a href="https://www.raspberrypi.org/forums/viewtopic.php?t=235256">Using LIRC with kernel 4.19.X and gpio-ir</a></p>
-</li>
-<li>
-<p><a href="https://superuser.com/questions/1441396/rpi-3b-lirc-wont-setup-device-could-not-get-file-information-for-dev-lirc0">RPi 3B — LIRC won't setup device: could not get file information for /dev/lirc0</a></p>
-</li>
-<li>
-<p><a href="https://www.raspberrypi.org/forums/viewtopic.php?t=235918">lirc on Raspberry Pi Zero W with gpio-ir</a></p>
-</li>
-<li>
-<p><a href="https://www.sunfounder.com/learn/sensor-kit-v2-0-for-raspberry-pi-b-plus/lesson-23-ir-remote-control-sensor-kit-v2-0-for-b-plus.html">Lesson 23 IR Remote Control</a></p>
-</li>
-</ul>
 ]]></content>
     </entry>
 </feed>
